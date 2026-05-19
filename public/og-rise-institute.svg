@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#063D2A"/>
+  <rect width="1200" height="630" fill="url(#grad)" opacity="0.9"/>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B5D3B"/>
+      <stop offset="1" stop-color="#063D2A"/>
+    </linearGradient>
+  </defs>
+  <rect x="80" y="80" width="64" height="6" rx="3" fill="#C89B3C"/>
+  <text x="80" y="200" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="56" font-weight="700">Rise Institute</text>
+  <text x="80" y="270" fill="#EAF7F0" font-family="system-ui, sans-serif" font-size="28" font-weight="500">QCTO Accredited Occupational Training</text>
+  <text x="80" y="330" fill="#C89B3C" font-family="system-ui, sans-serif" font-size="22">Midrand, Gauteng · South Africa</text>
+  <text x="80" y="520" fill="#FFFFFF" opacity="0.7" font-family="system-ui, sans-serif" font-size="20">www.riseinstitute.co.za</text>
+</svg>

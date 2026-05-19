@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #0b5d3b;
+  --color-forest: #063d2a;
+  --color-accent: #16a34a;
+  --color-mint: #eaf7f0;
+  --color-gold: #c89b3c;
+  --color-charcoal: #1f2933;
+  --color-muted: #6b7280;
+  --color-light: #f8fafc;
+  --color-border: #e5e7eb;
+
+  --font-heading: 'Poppins', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --shadow-soft: 0 4px 24px -4px rgb(6 61 42 / 0.08);
+  --shadow-card: 0 8px 30px -12px rgb(6 61 42 / 0.12);
+  --shadow-card-hover: 0 16px 40px -16px rgb(6 61 42 / 0.18);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white font-body text-charcoal antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+}
+
+@layer utilities {
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .hero-pattern {
+    background-image:
+      radial-gradient(circle at 20% 80%, rgb(22 163 74 / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgb(200 155 60 / 0.08) 0%, transparent 40%),
+      linear-gradient(135deg, #063d2a 0%, #0b5d3b 50%, #063d2a 100%);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
