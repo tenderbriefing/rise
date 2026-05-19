@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { trackCtaClick, trackDownloadProfile } from '../utils/analytics'
 
 const variants = {
   primary:
-    'bg-primary text-white hover:bg-forest border border-transparent focus-visible:ring-primary',
+    'bg-primary text-white hover:bg-forest border border-transparent shadow-sm hover:shadow-md focus-visible:ring-primary',
   secondary:
     'bg-white text-primary border border-primary hover:bg-mint focus-visible:ring-primary',
-  gold: 'bg-gold text-white hover:bg-gold/90 border border-transparent focus-visible:ring-gold',
-  ghost: 'bg-transparent text-white border border-white/40 hover:bg-white/10',
+  gold:
+    'bg-gold text-white hover:bg-gold/90 border border-transparent shadow-sm hover:shadow-md focus-visible:ring-gold',
+  ghost:
+    'bg-transparent text-white border border-white/40 hover:bg-white/10 focus-visible:ring-white',
 }
 
 const sizes = {
@@ -28,20 +31,40 @@ export default function Button({
   disabled = false,
   external = false,
   download = false,
+  analyticsLabel,
+  analyticsLocation = 'button',
   ...props
 }) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 ${variants[variant]} ${sizes[size]} ${className}`
+  const classes = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 ${variants[variant]} ${sizes[size]} ${className}`
 
   const motionProps = {
-    whileHover: disabled ? {} : { scale: 1.02 },
+    whileHover: disabled ? {} : { scale: 1.02, y: -1 },
     whileTap: disabled ? {} : { scale: 0.98 },
     transition: { duration: 0.2 },
+  }
+
+  const handleClick = (e) => {
+    const label =
+      analyticsLabel ||
+      (typeof children === 'string' ? children : 'cta_click')
+
+    if (download || href?.includes('corporate-profile')) {
+      trackDownloadProfile({ location: analyticsLocation })
+    } else if (to || href) {
+      trackCtaClick({
+        label,
+        destination: to || href,
+        location: analyticsLocation,
+      })
+    }
+
+    onClick?.(e)
   }
 
   if (to) {
     return (
       <motion.div {...motionProps} className="inline-flex">
-        <Link to={to} className={classes} {...props}>
+        <Link to={to} className={classes} onClick={handleClick} {...props}>
           {children}
         </Link>
       </motion.div>
@@ -54,6 +77,7 @@ export default function Button({
         <a
           href={href}
           className={classes}
+          onClick={handleClick}
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
           download={download || undefined}
@@ -69,7 +93,7 @@ export default function Button({
     <motion.button
       type={type}
       className={classes}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
       {...motionProps}
       {...props}

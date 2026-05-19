@@ -3,9 +3,10 @@ import PageHero from '../components/PageHero'
 import Container from '../components/Container'
 import SectionHeader from '../components/SectionHeader'
 import QualificationCard from '../components/QualificationCard'
-import CTASection from '../components/CTASection'
+import PremiumCTA from '../components/PremiumCTA'
+import { getCanonical } from '../data/seoRoutes'
+import { ctaPresets } from '../data/ctaPresets'
 import AnimatedSection from '../components/AnimatedSection'
-import { siteConfig } from '../data/navigation'
 import { faculties } from '../data/qualifications'
 
 export default function Qualifications() {
@@ -13,7 +14,7 @@ export default function Qualifications() {
     <>
       <SEO
         title="QCTO Accredited Qualifications | Rise Institute"
-        canonical={`${siteConfig.domain}/qualifications`}
+        canonical={getCanonical('/qualifications')}
       />
 
       <PageHero
@@ -44,13 +45,7 @@ export default function Qualifications() {
         </AnimatedSection>
       ))}
 
-      <CTASection
-        title="Discuss Qualification Implementation"
-        description="Speak with our team about learnership placement, workplace hosting, and corporate rollout of QCTO-accredited programmes."
-        primaryCta={{ label: 'Request a Consultation', to: '/contact' }}
-        secondaryCta={{ label: 'Corporate & Funding', to: '/corporate-funding' }}
-        showDownload={false}
-      />
+      <PremiumCTA {...ctaPresets.qualifications} location="qualifications_footer" />
     </>
   )
 }

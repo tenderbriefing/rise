@@ -3,9 +3,10 @@ import SEO from '../components/SEO'
 import PageHero from '../components/PageHero'
 import Container from '../components/Container'
 import SectionHeader from '../components/SectionHeader'
-import CTASection from '../components/CTASection'
+import PremiumCTA from '../components/PremiumCTA'
+import { getCanonical } from '../data/seoRoutes'
+import { ctaPresets } from '../data/ctaPresets'
 import AnimatedSection from '../components/AnimatedSection'
-import { siteConfig } from '../data/navigation'
 import {
   corporateBenefits,
   corporateSolutions,
@@ -19,7 +20,7 @@ export default function CorporateFunding() {
     <>
       <SEO
         title="B-BBEE Skills Development & SETA Funding Solutions | Rise Institute"
-        canonical={`${siteConfig.domain}/corporate-funding`}
+        canonical={getCanonical('/corporate-funding')}
       />
 
       <PageHero
@@ -143,11 +144,7 @@ export default function CorporateFunding() {
         </Container>
       </AnimatedSection>
 
-      <CTASection
-        title="Optimise Your Skills Development Investment"
-        primaryCta={{ label: 'Partner With Us', to: '/contact' }}
-        showDownload
-      />
+      <PremiumCTA {...ctaPresets.corporate} location="corporate_footer" />
     </>
   )
 }

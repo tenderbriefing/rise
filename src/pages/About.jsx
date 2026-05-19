@@ -3,7 +3,9 @@ import SEO from '../components/SEO'
 import PageHero from '../components/PageHero'
 import Container from '../components/Container'
 import SectionHeader from '../components/SectionHeader'
-import CTASection from '../components/CTASection'
+import PremiumCTA from '../components/PremiumCTA'
+import { getCanonical } from '../data/seoRoutes'
+import { ctaPresets } from '../data/ctaPresets'
 import AnimatedSection from '../components/AnimatedSection'
 import VisualPanel from '../components/VisualPanel'
 import { siteConfig } from '../data/navigation'
@@ -14,7 +16,7 @@ export default function About() {
     <>
       <SEO
         title="About Rise Institute | QCTO-Aligned Skills Development Institution"
-        canonical={`${siteConfig.domain}/about`}
+        canonical={getCanonical('/about')}
       />
 
       <PageHero
@@ -114,12 +116,7 @@ export default function About() {
         </Container>
       </AnimatedSection>
 
-      <CTASection
-        title="Ready to Partner With Rise Institute?"
-        primaryCta={{ label: 'Contact Our Team', to: '/contact' }}
-        secondaryCta={{ label: 'View Qualifications', to: '/qualifications' }}
-        showDownload={false}
-      />
+      <PremiumCTA {...ctaPresets.about} location="about_footer" />
     </>
   )
 }

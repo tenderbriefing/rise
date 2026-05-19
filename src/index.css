@@ -17,6 +17,7 @@
   --shadow-soft: 0 4px 24px -4px rgb(6 61 42 / 0.08);
   --shadow-card: 0 8px 30px -12px rgb(6 61 42 / 0.12);
   --shadow-card-hover: 0 16px 40px -16px rgb(6 61 42 / 0.18);
+  --shadow-nav: 0 4px 30px -8px rgb(6 61 42 / 0.12);
 }
 
 @layer base {
@@ -40,6 +41,20 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer utilities {
@@ -54,7 +69,37 @@
       linear-gradient(135deg, #063d2a 0%, #0b5d3b 50%, #063d2a 100%);
   }
 
+  .hero-animated {
+    background: linear-gradient(135deg, #063d2a 0%, #0b5d3b 45%, #063d2a 100%);
+  }
+
+  .hero-gradient-shift {
+    background: linear-gradient(
+      125deg,
+      #063d2a 0%,
+      #0b5d3b 35%,
+      #0d7048 55%,
+      #063d2a 100%
+    );
+    background-size: 200% 200%;
+    animation: gradient-shift 14s ease infinite;
+  }
+
   .text-balance {
     text-wrap: balance;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white;
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
