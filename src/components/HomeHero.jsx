@@ -4,8 +4,9 @@ import Container from './Container'
 import Button from './Button'
 import FloatingBadge from './FloatingBadge'
 import GradientOrb from './GradientOrb'
-import GlassCard from './GlassCard'
+import ImageFeatureCard from './ImageFeatureCard'
 import StatsStrip from './StatsStrip'
+import { heroHomeImage } from '../data/homeImages'
 import { staggerContainer, staggerItem } from '../utils/motion'
 
 const badges = [
@@ -14,7 +15,16 @@ const badges = [
   { label: 'Midrand, Gauteng', icon: MapPin },
 ]
 
+const authorityItems = [
+  { label: 'QCTO Accredited', icon: Award },
+  { label: 'NQF Levels 3–5', icon: BadgeCheck },
+  { label: 'Midrand, Gauteng', icon: MapPin },
+  { label: 'Workplace-Integrated Learning', icon: ShieldCheck },
+]
+
 export default function HomeHero() {
+  const heroImage = heroHomeImage
+
   return (
     <section className="hero-animated relative min-h-[92vh] overflow-hidden pt-28 text-white">
       <div className="hero-gradient-shift pointer-events-none absolute inset-0" aria-hidden="true" />
@@ -28,10 +38,9 @@ export default function HomeHero() {
 
       <GradientOrb className="left-[10%] top-[15%]" size="xl" color="accent" />
       <GradientOrb className="right-[5%] top-[40%]" size="lg" color="gold" delay={1} />
-      <GradientOrb className="bottom-[10%] left-[40%]" size="md" color="mint" delay={2} />
 
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/80 via-transparent to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-forest/95 via-forest/75 to-forest/30 lg:to-transparent"
         aria-hidden="true"
       />
 
@@ -87,39 +96,38 @@ export default function HomeHero() {
                 Partner With Us
               </Button>
             </motion.div>
+
+            <motion.ul
+              variants={staggerItem}
+              className="mt-10 hidden flex-wrap gap-x-6 gap-y-2 text-sm text-white/80 sm:flex"
+            >
+              {authorityItems.map(({ label }) => (
+                <li key={label} className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />
+                  {label}
+                </li>
+              ))}
+            </motion.ul>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 32 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.65, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
           >
-            <GlassCard padding="lg" className="relative">
-              <div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/20 to-transparent"
-                aria-hidden="true"
-              />
-              <div className="relative">
-                <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-                  Institutional Authority
-                </p>
-                <ul className="mt-6 space-y-5">
-                  {[
-                    { label: 'QCTO Accredited', icon: Award },
-                    { label: 'NQF Levels 3–5', icon: BadgeCheck },
-                    { label: 'Midrand, Gauteng', icon: MapPin },
-                    { label: 'Workplace-Integrated Learning', icon: ShieldCheck },
-                  ].map(({ label, icon: Icon }) => (
-                    <li key={label} className="flex items-center gap-4">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-gold ring-1 ring-white/20">
-                        <Icon className="h-6 w-6" aria-hidden="true" />
-                      </span>
-                      <span className="font-heading text-lg font-semibold">{label}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </GlassCard>
+            <div className="absolute -inset-3 rounded-3xl bg-gold/20 blur-2xl" aria-hidden="true" />
+            <ImageFeatureCard
+              title={heroImage.title}
+              description={heroImage.description}
+              image={heroImage.image}
+              alt={heroImage.alt}
+              icon={heroImage.icon}
+              fallbackGradient={heroImage.fallbackGradient}
+              priority
+              aspectClass="aspect-[4/5] min-h-[420px] sm:min-h-[480px]"
+              className="border-white/20 shadow-card ring-1 ring-white/10"
+            />
           </motion.div>
         </div>
 

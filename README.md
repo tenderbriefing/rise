@@ -151,9 +151,41 @@ Link GA4 property in Firebase Console → Project settings → Integrations.
 | `public/apple-touch-icon.svg` | iOS home screen |
 | `src/assets/brand/` | Logo SVG source files |
 | `src/assets/images/` | Section photography (see READMEs in subfolders) |
-| `src/data/images.js` | Image registry — set `src` when photos are added |
+| `src/data/images.js` | General image registry |
+| `src/data/homeImages.js` | Homepage visual story (5 strategic slots) |
+| `src/data/imageCredits.js` | Homepage photography attribution |
 
-Until photos exist, **gradient panels** are used (no broken imports, no stock fakes).
+### Homepage imagery system
+
+Place real photos in `src/assets/images/home/`:
+
+- `classroom-training.jpg` — hero & classroom learning
+- `boardroom-training.jpg` — corporate positioning section
+- `workplace-learning.jpg` — workplace-integrated learning
+- `agricultural-training.jpg` — agriculture qualifications preview
+- `ohs-training.jpg` — occupational health & safety preview
+
+Files are picked up automatically via Vite `import.meta.glob`. **No code changes** are needed when images are added.
+
+If an image fails to load, the UI falls back to **premium gradients** with Lucide icons (no broken imports).
+
+Components: `ImageFeatureCard`, `ImageFeatureGrid`, `HomeVisualStory`, updated `HomeHero`.
+
+---
+
+## Image Credits
+
+Homepage photography is sourced from [Pexels](https://www.pexels.com) under the Pexels License. Full metadata: `src/data/imageCredits.js`.
+
+| Category | Photographer | Platform | Source |
+|----------|--------------|----------|--------|
+| Modern Classroom Training | fauxels | Pexels | [View photo](https://www.pexels.com/photo/man-standing-beside-people-sitting-beside-table-with-laptops-3184395/) |
+| Corporate Boardroom Strategy | Pavel Danilyuk | Pexels | [View photo](https://www.pexels.com/photo/a-group-of-men-in-black-suit-sitting-near-the-table-while-having-conversation-5520287/) |
+| Workplace Practical Learning | SHVETS production | Pexels | [View photo](https://www.pexels.com/photo/woman-explaining-detail-of-project-to-colleague-7176287/) |
+| Agricultural Training | Şeyhmus Kino | Pexels | [View photo](https://www.pexels.com/photo/rural-african-farmers-with-agricultural-supplies-30403190/) |
+| Occupational Health & Safety | Mikael Blomkvist | Pexels | [View photo](https://www.pexels.com/photo/a-man-and-a-woman-with-ppe-s-talking-at-a-construction-site-8961065/) |
+
+**License note:** Free to use under the Pexels License (attribution appreciated, not required).
 
 ---
 

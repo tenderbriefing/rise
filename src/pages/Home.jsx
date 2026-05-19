@@ -7,10 +7,10 @@ import TrustBadges from '../components/TrustBadges'
 import PillarCard from '../components/PillarCard'
 import PremiumCTA from '../components/PremiumCTA'
 import AnimatedSection from '../components/AnimatedSection'
-import VisualPanel from '../components/VisualPanel'
 import HomeHero from '../components/HomeHero'
 import SectionDivider from '../components/SectionDivider'
-import StatsStrip from '../components/StatsStrip'
+import ImageFeatureGrid from '../components/ImageFeatureGrid'
+import HomeVisualStory from '../components/HomeVisualStory'
 import { getCanonical } from '../data/seoRoutes'
 import { homeTrustStrip } from '../data/trustBadges'
 import { corePillars, whyChooseUs } from '../data/pillars'
@@ -47,9 +47,11 @@ export default function Home() {
         </Container>
       </AnimatedSection>
 
-      <StatsStrip variant="page" />
+      <ImageFeatureGrid />
 
-      <AnimatedSection className="section-padding bg-light">
+      <HomeVisualStory />
+
+      <AnimatedSection className="section-padding bg-white">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
@@ -77,26 +79,17 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <VisualPanel imageKey="corporateTraining" variant="corporate" className="min-h-[320px]" />
-          </div>
-        </Container>
-      </AnimatedSection>
-
-      <AnimatedSection className="section-padding bg-white">
-        <Container size="content">
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <VisualPanel imageKey="classroomLearning" variant="classroom" className="min-h-[280px] order-2 lg:order-1" />
-            <div className="order-1 lg:order-2">
+            <div className="rounded-2xl border border-border bg-mint p-8">
               <SectionHeader
                 eyebrow="Executive Overview"
                 title="Bridging the Gap Between Education and Employment"
                 align="left"
               />
-              <p className="mt-6 leading-relaxed text-muted">
+              <p className="mt-4 leading-relaxed text-muted">
                 At Rise Institute, we believe skills development must deliver measurable economic
                 impact. Our demand-driven occupational qualifications combine structured theoretical
-                learning, practical simulation, and mandatory workplace experience to ensure learners
-                are workplace-ready from day one.
+                learning, practical simulation, and mandatory workplace experience to ensure
+                learners are workplace-ready from day one.
               </p>
             </div>
           </div>
