@@ -1,119 +1,48 @@
 # Rise Institute Website
 
-Official institutional website for **Rise Institute** — a QCTO-accredited occupational training institution in Midrand, Gauteng. Built for corporate clients, SETAs, government stakeholders, and funding partners.
+Official institutional website for **Rise Institute** — QCTO-accredited occupational training in Midrand, Gauteng.
 
-**Repository:** [https://github.com/tenderbriefing/rise](https://github.com/tenderbriefing/rise)  
-**Production URL:** [https://www.riseinstitute.co.za](https://www.riseinstitute.co.za)
+**GitHub:** [https://github.com/tenderbriefing/rise](https://github.com/tenderbriefing/rise)  
+**Production:** [https://riseinstitute.co.za](https://riseinstitute.co.za)  
+**Firebase project:** `rise-f62a4`
 
 ---
 
-## Project Overview
+## Project overview
 
-A premium, production-ready React SPA delivering:
+Launch-ready React SPA with:
 
-- Five core pages (Home, About, Qualifications, Corporate & Funding, Contact)
-- QCTO-aligned content and institutional positioning
+- Five pages: Home, About, Qualifications, Corporate & Funding, Contact
+- **Firestore lead capture** (`enquiries` collection)
+- **Firebase Analytics** / GA4 conversion events
+- SEO, sitemap, Search Console verification support
 - Firebase Hosting deployment
-- Firebase Analytics event tracking
-- Advanced SEO (JSON-LD, Open Graph, breadcrumbs, canonical URLs)
-- Accessible, mobile-first corporate UX
 
 ---
 
-## Tech Stack
+## Tech stack
 
-| Layer | Technology |
-|-------|------------|
-| Framework | React 19 + Vite 8 |
-| Styling | Tailwind CSS v4 |
-| Routing | React Router DOM v7 |
-| Animation | Framer Motion |
-| SEO | React Helmet Async |
-| Icons | Lucide React |
-| Analytics | Firebase Analytics |
-| Hosting | Firebase Hosting |
+React · Vite · Tailwind CSS v4 · React Router · Framer Motion · React Helmet Async · Firebase (Hosting, Firestore, Analytics) · Lucide React
 
 ---
 
-## Architecture
-
-```
-src/
-├── components/       # Reusable UI (Header, PremiumCTA, ContactForm, etc.)
-├── data/             # Content, navigation, CTA presets, SEO routes
-├── hooks/            # usePageAnalytics
-├── lib/              # Firebase initialization
-├── pages/            # Route-level page components
-├── services/         # contactService (Firestore/EmailJS-ready)
-└── utils/            # motion presets, analytics helpers
-```
-
-### Key patterns
-
-- **Data-driven content** — qualifications, pillars, and CTAs live in `src/data/`
-- **Service layer** — `contactService.js` abstracts form submission (currently mock; swap provider when ready)
-- **Analytics abstraction** — `utils/analytics.js` wraps Firebase Analytics with dev fallbacks
-- **Motion system** — standardized Framer Motion presets in `utils/motion.js`
-
----
-
-## Installation
+## Local development
 
 ```bash
+cd /Users/billionaire/Projects/rise
 npm install
-```
-
-Copy environment template and add your Firebase project credentials:
-
-```bash
 cp .env.example .env.local
-```
-
----
-
-## Development
-
-```bash
+# Add Firebase web app credentials to .env.local
 npm run dev
 ```
 
-Runs at `http://localhost:5173` by default.
-
 ---
 
-## Production Build
+## Firebase setup
 
-```bash
-npm run build
-```
-
-Output: `dist/` (served by Firebase Hosting).
-
-Preview locally:
-
-```bash
-npm run preview
-```
-
----
-
-## Firebase Setup
-
-### 1. Login & init (first time)
-
-```bash
-firebase login
-firebase init hosting
-```
-
-Use:
-
-- **Public directory:** `dist`
-- **Single-page app:** Yes
-
-### 2. Environment variables
-
-Add to `.env.local` (from Firebase Console → Project settings):
+1. Create/use project **rise-f62a4** (or your project).
+2. Enable **Firestore** and **Analytics**.
+3. Copy web app config into `.env.local`:
 
 ```
 VITE_FIREBASE_API_KEY=
@@ -125,113 +54,152 @@ VITE_FIREBASE_APP_ID=
 VITE_FIREBASE_MEASUREMENT_ID=
 ```
 
-Analytics initializes automatically when these are set.
+4. Link CLI: `firebase use rise-f62a4`
 
-### 3. Deploy
+---
+
+## Firestore enquiry collection
+
+Contact form writes to **`enquiries`** with:
+
+- `fullName`, `company`, `email`, `phone`, `interest`, `message`
+- `source`: `website-contact-form`
+- `status`: `new`
+- `createdAt`: server timestamp
+- `page`, `userAgent`
+
+Service: `src/services/contactService.js`  
+Future notifications: `src/services/leadNotificationService.js` (placeholders for Cloud Functions)
+
+---
+
+## Firestore rules deployment
+
+Rules file: `firestore.rules` — public **create only** on `/enquiries`, no public read/update/delete.
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+Deploy hosting + rules together:
 
 ```bash
 npm run build
 firebase deploy
 ```
 
-Or combined:
+---
+
+## Google Search Console setup
+
+1. Open [Google Search Console](https://search.google.com/search-console)
+2. Add property: `https://riseinstitute.co.za`
+3. Choose **HTML tag** verification
+4. Copy the `content` value from Google
+5. Replace in `index.html`:
+
+   ```html
+   <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_CODE" />
+   ```
+
+6. Build and deploy:
+
+   ```bash
+   npm run build
+   firebase deploy --only hosting
+   ```
+
+7. Click **Verify** in Search Console
+
+---
+
+## Sitemap submission
+
+`public/sitemap.xml` lists all primary URLs on `https://riseinstitute.co.za`.
+
+`public/robots.txt` references the sitemap.
+
+After verification:
+
+1. Search Console → **Sitemaps**
+2. Submit: `sitemap.xml`
+
+---
+
+## GA4 conversion tracking
+
+Implemented in `src/utils/analytics.js` (Firebase Analytics → GA4 when linked).
+
+| Event | When |
+|-------|------|
+| `form_start` | First interaction with contact form |
+| `form_submit` | Submit attempt |
+| `generate_lead` | Successful Firestore submission |
+| `file_download` | Corporate profile PDF |
+| `click` / `cta_click` | CTA buttons |
+| `contact` | Phone (`tel:`) or email (`mailto:`) clicks |
+
+Link GA4 property in Firebase Console → Project settings → Integrations.
+
+---
+
+## Brand assets & imagery
+
+| Path | Purpose |
+|------|---------|
+| `public/favicon.svg` | Browser favicon |
+| `public/apple-touch-icon.svg` | iOS home screen |
+| `src/assets/brand/` | Logo SVG source files |
+| `src/assets/images/` | Section photography (see READMEs in subfolders) |
+| `src/data/images.js` | Image registry — set `src` when photos are added |
+
+Until photos exist, **gradient panels** are used (no broken imports, no stock fakes).
+
+---
+
+## Firebase Hosting deployment
 
 ```bash
-npm run build && firebase deploy
+npm run build
+firebase deploy --only hosting
 ```
 
-### Hosting configuration
+Full deploy (hosting + Firestore rules):
 
-`firebase.json` includes:
-
-- SPA rewrites to `/index.html`
-- Long-cache headers for hashed JS/CSS
-- Security headers (X-Frame-Options, HSTS, Referrer-Policy, etc.)
-- `index.html` no-cache for fresh deploys
-
----
-
-## Analytics Setup
-
-Events tracked via `src/utils/analytics.js`:
-
-| Event | Trigger |
-|-------|---------|
-| `page_view` | Route change |
-| `cta_click` | Button / CTA clicks |
-| `nav_click` | Navigation links |
-| `form_submit` | Contact form success |
-| `download_corporate_profile` | PDF download clicks |
-
-In development, events log to the console when Firebase is not configured.
-
----
-
-## SEO Setup
-
-- Per-page `<title>`, description, canonical URL
-- Open Graph + Twitter Card metadata
-- JSON-LD: WebSite, Organization, EducationalOrganization, LocalBusiness, BreadcrumbList
-- `public/robots.txt` and `public/sitemap.xml`
-- Font preloading in `index.html`
-
----
-
-## Scalability Notes
-
-### Contact form backends
-
-Edit `ACTIVE_PROVIDER` in `src/services/contactService.js`:
-
-- `MOCK` — current (client-side simulation)
-- `FIRESTORE` — implement `submitToFirestore`
-- `EMAILJS` — implement `submitViaEmailJS`
-- `CLOUD_FUNCTION` — implement `submitViaCloudFunction`
-- `API` — implement `submitViaApi`
-
-### Future enhancements
-
-- CMS integration for qualifications content
-- Blog/articles with `SEO` `article` prop
-- Real photography replacing gradient visual panels
-- Corporate profile PDF in `public/`
-
----
-
-## Folder Structure
-
-```
-rise/
-├── public/              # Static assets, robots, sitemap
-├── src/
-│   ├── components/
-│   ├── data/
-│   ├── hooks/
-│   ├── lib/
-│   ├── pages/
-│   ├── services/
-│   └── utils/
-├── firebase.json
-├── .env.example
-└── README.md
+```bash
+npm run build
+firebase deploy
 ```
 
 ---
 
-## Quality Checklist
+## Quality checks
 
 ```bash
 npm run lint
 npm run build
 ```
 
-- Responsive: mobile → desktop
-- Keyboard navigation + skip link
-- Reduced motion support
-- No lorem ipsum or fake testimonials
+---
+
+## Folder structure
+
+```
+src/
+  components/     UI including ContactForm, BrandLogo, PremiumCTA
+  data/           Content, images registry, CTA presets
+  hooks/          usePageAnalytics
+  lib/            Firebase app, Firestore, Analytics
+  pages/          Route pages
+  services/       contactService, leadNotificationService
+  assets/         brand + images (placeholders)
+public/           favicon, sitemap, robots.txt
+firestore.rules   Security rules
+firebase.json   Hosting + Firestore config
+```
 
 ---
 
 ## License
 
-Proprietary — Rise Institute. All rights reserved.
+Proprietary — Rise Institute.

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { navLinks } from '../data/navigation'
 import Button from './Button'
+import BrandLogo from './BrandLogo'
 import { trackNavClick } from '../utils/analytics'
 import { menuSlide } from '../utils/motion'
 
@@ -113,15 +114,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
-        <Link
-          to="/"
-          className={`font-heading text-xl font-bold tracking-tight transition-colors sm:text-2xl ${
-            onHero ? 'text-white' : 'text-primary'
-          }`}
-          onClick={closeMobile}
-        >
-          Rise Institute
-        </Link>
+        <BrandLogo onHero={onHero} onClick={closeMobile} />
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
           {navLinks.map((link) => (

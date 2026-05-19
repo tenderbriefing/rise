@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import Container from './Container'
 import TrustBadges from './TrustBadges'
+import BrandLogo from './BrandLogo'
 import { footerQuickLinks, siteConfig } from '../data/navigation'
 import { footerTrustBadges } from '../data/trustBadges'
+import { trackEmailClick, trackPhoneClick } from '../utils/analytics'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -13,10 +15,10 @@ export default function Footer() {
       <Container className="section-padding !pb-12">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="font-heading text-2xl font-bold">Rise Institute</p>
-            <p className="mt-2 text-sm text-white/70">
-              QCTO Accredited · CSD Registered
-            </p>
+            <div className="[&_span]:text-white [&_img]:brightness-0 [&_img]:invert">
+              <BrandLogo showText className="pointer-events-none" />
+            </div>
+            <p className="mt-3 text-sm text-white/70">QCTO Accredited · CSD Registered</p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
               {siteConfig.tagline} based in Midrand, Gauteng, delivering workplace-integrated
               occupational qualifications across South Africa.
@@ -46,7 +48,11 @@ export default function Footer() {
             <ul className="mt-4 space-y-3 text-sm text-white/80">
               <li className="flex gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
-                <a href={`mailto:${siteConfig.email}`} className="hover:text-white">
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="hover:text-white"
+                  onClick={() => trackEmailClick('footer')}
+                >
                   {siteConfig.email}
                 </a>
               </li>
@@ -54,12 +60,20 @@ export default function Footer() {
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
                 <span>
                   Landline:{' '}
-                  <a href="tel:+27100133423" className="hover:text-white">
+                  <a
+                    href="tel:+27100133423"
+                    className="hover:text-white"
+                    onClick={() => trackPhoneClick('footer', 'landline')}
+                  >
                     {siteConfig.landline}
                   </a>
                   <br />
                   Mobile:{' '}
-                  <a href="tel:+27720708467" className="hover:text-white">
+                  <a
+                    href="tel:+27720708467"
+                    className="hover:text-white"
+                    onClick={() => trackPhoneClick('footer', 'mobile')}
+                  >
                     {siteConfig.mobile}
                   </a>
                 </span>

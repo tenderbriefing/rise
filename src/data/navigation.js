@@ -16,7 +16,7 @@ export const footerQuickLinks = [
 
 export const siteConfig = {
   name: 'Rise Institute',
-  domain: 'https://www.riseinstitute.co.za',
+  domain: 'https://riseinstitute.co.za',
   email: 'info@riseinstitute.co.za',
   landline: '+27 10 013 3423',
   mobile: '+27 72 070 8467',

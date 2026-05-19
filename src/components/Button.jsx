@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { trackCtaClick, trackDownloadProfile } from '../utils/analytics'
+import { trackCTAClick, trackCorporateProfileDownload } from '../utils/analytics'
 
 const variants = {
   primary:
@@ -45,17 +45,12 @@ export default function Button({
 
   const handleClick = (e) => {
     const label =
-      analyticsLabel ||
-      (typeof children === 'string' ? children : 'cta_click')
+      analyticsLabel || (typeof children === 'string' ? children : 'cta_click')
 
     if (download || href?.includes('corporate-profile')) {
-      trackDownloadProfile({ location: analyticsLocation })
+      trackCorporateProfileDownload(analyticsLocation)
     } else if (to || href) {
-      trackCtaClick({
-        label,
-        destination: to || href,
-        location: analyticsLocation,
-      })
+      trackCTAClick(label, analyticsLocation, to || href)
     }
 
     onClick?.(e)

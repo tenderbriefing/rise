@@ -101,7 +101,7 @@ export default function About() {
                 {siteConfig.address}
               </p>
             </div>
-            <VisualPanel variant="workplace" className="min-h-[300px]" />
+            <VisualPanel imageKey="midrandOffice" variant="workplace" className="min-h-[300px]" />
           </div>
         </Container>
       </AnimatedSection>

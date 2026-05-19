@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" fill="none" role="img" aria-label="Rise Institute">
+  <g fill="none">
+    <path d="M8 38 L20 10 L26 10 L14 38 Z" fill="#0B5D3B"/>
+    <path d="M22 10 L34 38 L28 38 L16 10 Z" fill="#0B5D3B"/>
+    <rect x="6" y="8" width="28" height="3" rx="1.5" fill="#C89B3C"/>
+    <circle cx="20" cy="32" r="3" fill="#16A34A"/>
+  </g>
+  <text x="44" y="32" font-family="Poppins, system-ui, sans-serif" font-size="22" font-weight="700" fill="#0B5D3B">Rise Institute</text>
+</svg>

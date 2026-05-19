@@ -77,7 +77,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <VisualPanel variant="corporate" className="min-h-[320px]" />
+            <VisualPanel imageKey="corporateTraining" variant="corporate" className="min-h-[320px]" />
           </div>
         </Container>
       </AnimatedSection>
@@ -85,7 +85,7 @@ export default function Home() {
       <AnimatedSection className="section-padding bg-white">
         <Container size="content">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <VisualPanel variant="classroom" className="min-h-[280px] order-2 lg:order-1" />
+            <VisualPanel imageKey="classroomLearning" variant="classroom" className="min-h-[280px] order-2 lg:order-1" />
             <div className="order-1 lg:order-2">
               <SectionHeader
                 eyebrow="Executive Overview"

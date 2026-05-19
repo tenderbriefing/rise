@@ -12,6 +12,7 @@ import AnimatedSection from '../components/AnimatedSection'
 import { siteConfig } from '../data/navigation'
 import { getCanonical } from '../data/seoRoutes'
 import { ctaPresets } from '../data/ctaPresets'
+import { trackEmailClick, trackPhoneClick } from '../utils/analytics'
 
 export default function Contact() {
   const [toast, setToast] = useState(false)
@@ -71,13 +72,21 @@ export default function Contact() {
                     <p className="text-sm font-semibold text-charcoal">Telephone</p>
                     <p className="mt-1 text-muted">
                       Landline:{' '}
-                      <a href="tel:+27100133423" className="text-primary hover:underline">
+                      <a
+                        href="tel:+27100133423"
+                        className="text-primary hover:underline"
+                        onClick={() => trackPhoneClick('contact_page', 'landline')}
+                      >
                         {siteConfig.landline}
                       </a>
                     </p>
                     <p className="text-muted">
                       Mobile:{' '}
-                      <a href="tel:+27720708467" className="text-primary hover:underline">
+                      <a
+                        href="tel:+27720708467"
+                        className="text-primary hover:underline"
+                        onClick={() => trackPhoneClick('contact_page', 'mobile')}
+                      >
                         {siteConfig.mobile}
                       </a>
                     </p>
@@ -90,6 +99,7 @@ export default function Contact() {
                     <a
                       href={`mailto:${siteConfig.email}`}
                       className="mt-1 inline-block text-primary hover:underline"
+                      onClick={() => trackEmailClick('contact_page')}
                     >
                       {siteConfig.email}
                     </a>

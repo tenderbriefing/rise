@@ -3,7 +3,7 @@ import Container from './Container'
 import Button from './Button'
 import GradientOrb from './GradientOrb'
 import AnimatedSection from './AnimatedSection'
-import { trackCtaClick, trackDownloadProfile } from '../utils/analytics'
+import { trackCTAClick, trackCorporateProfileDownload } from '../utils/analytics'
 
 const variants = {
   forest: 'bg-forest text-white',
@@ -25,25 +25,21 @@ export default function PremiumCTA({
 
   const handlePrimary = () => {
     if (primaryCta.download) {
-      trackDownloadProfile({ location })
+      trackCorporateProfileDownload(location)
     } else {
-      trackCtaClick({
-        label: primaryCta.label,
-        destination: primaryCta.to || primaryCta.href,
-        location,
-      })
+      trackCTAClick(primaryCta.label, location, primaryCta.to || primaryCta.href)
     }
   }
 
   const handleSecondary = () => {
     if (secondaryCta?.download) {
-      trackDownloadProfile({ location: `${location}_secondary` })
+      trackCorporateProfileDownload(`${location}_secondary`)
     } else if (secondaryCta) {
-      trackCtaClick({
-        label: secondaryCta.label,
-        destination: secondaryCta.to || secondaryCta.href,
-        location: `${location}_secondary`,
-      })
+      trackCTAClick(
+        secondaryCta.label,
+        `${location}_secondary`,
+        secondaryCta.to || secondaryCta.href,
+      )
     }
   }
 
@@ -114,7 +110,7 @@ export default function PremiumCTA({
                 size="lg"
                 download
                 className={isLight ? '' : '!border-white/30 !bg-white !text-forest hover:!bg-mint'}
-                onClick={() => trackDownloadProfile({ location })}
+                onClick={() => trackCorporateProfileDownload(location)}
               >
                 <Download className="h-5 w-5" aria-hidden="true" />
                 Download Corporate Profile

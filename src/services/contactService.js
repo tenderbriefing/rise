@@ -1,22 +1,17 @@
-/**
- * Contact form service — prepared for future backend integrations.
- *
- * Supported providers (implement when ready):
- * - Firebase Firestore (`submitToFirestore`)
- * - EmailJS (`submitViaEmailJS`)
- * - Firebase Cloud Functions (`submitViaCloudFunction`)
- * - SMTP / custom API (`submitViaApi`)
- */
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { getFirestoreDb, isFirebaseConfigured } from '../lib/firebase'
+import { notifyInternalTeam, sendAutoReply } from './leadNotificationService'
 
 export const ContactProviders = {
   MOCK: 'mock',
   FIRESTORE: 'firestore',
-  EMAILJS: 'emailjs',
-  CLOUD_FUNCTION: 'cloud_function',
-  API: 'api',
 }
 
-const ACTIVE_PROVIDER = ContactProviders.MOCK
+const ACTIVE_PROVIDER = isFirebaseConfigured
+  ? ContactProviders.FIRESTORE
+  : ContactProviders.MOCK
+
+const ENQUIRIES_COLLECTION = 'enquiries'
 
 /**
  * @typedef {Object} ContactFormPayload
@@ -29,20 +24,18 @@ const ACTIVE_PROVIDER = ContactProviders.MOCK
  */
 
 /**
- * Submit contact enquiry through configured provider.
- * @param {ContactFormPayload} payload
- * @returns {Promise<{ success: boolean, id?: string, message?: string }>}
+ * @typedef {Object} SubmitMeta
+ * @property {string} [page]
  */
-export async function submitContactForm(payload) {
+
+/**
+ * @param {ContactFormPayload} payload
+ * @param {SubmitMeta} [meta]
+ */
+export async function submitContactForm(payload, meta = {}) {
   switch (ACTIVE_PROVIDER) {
     case ContactProviders.FIRESTORE:
-      return submitToFirestore(payload)
-    case ContactProviders.EMAILJS:
-      return submitViaEmailJS(payload)
-    case ContactProviders.CLOUD_FUNCTION:
-      return submitViaCloudFunction(payload)
-    case ContactProviders.API:
-      return submitViaApi(payload)
+      return submitToFirestore(payload, meta)
     case ContactProviders.MOCK:
     default:
       return submitMock(payload)
@@ -52,7 +45,7 @@ export async function submitContactForm(payload) {
 async function submitMock(payload) {
   await new Promise((resolve) => setTimeout(resolve, 1200))
   if (import.meta.env.DEV) {
-    console.info('[contactService] mock submission', payload)
+    console.info('[contactService] mock submission (Firebase not configured)', payload)
   }
   return {
     success: true,
@@ -61,35 +54,40 @@ async function submitMock(payload) {
   }
 }
 
-/** @param {ContactFormPayload} payload */
-async function submitToFirestore(/* payload */) {
-  // Future: import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
-  // const db = getFirestore(getFirebaseApp())
-  // const docRef = await addDoc(collection(db, 'contact_enquiries'), {
-  //   ...payload,
-  //   createdAt: serverTimestamp(),
-  //   status: 'new',
-  // })
-  // return { success: true, id: docRef.id }
-  throw new Error('Firestore provider not configured. Set ACTIVE_PROVIDER to MOCK or implement submitToFirestore.')
-}
+/**
+ * @param {ContactFormPayload} payload
+ * @param {SubmitMeta} meta
+ */
+async function submitToFirestore(payload, meta) {
+  const db = getFirestoreDb()
+  if (!db) {
+    throw new Error('Firestore is not available. Check Firebase configuration.')
+  }
 
-/** @param {ContactFormPayload} payload */
-async function submitViaEmailJS(/* payload */) {
-  // Future: emailjs.send(serviceId, templateId, payload, publicKey)
-  throw new Error('EmailJS provider not configured.')
-}
+  const enquiry = {
+    fullName: payload.fullName.trim(),
+    company: payload.company.trim(),
+    email: payload.email.trim().toLowerCase(),
+    phone: payload.phone.trim(),
+    interest: payload.interest,
+    message: payload.message.trim(),
+    source: 'website-contact-form',
+    status: 'new',
+    createdAt: serverTimestamp(),
+    page: meta.page || (typeof window !== 'undefined' ? window.location.pathname : '/contact'),
+    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+  }
 
-/** @param {ContactFormPayload} payload */
-async function submitViaCloudFunction(/* payload */) {
-  // Future: httpsCallable(functions, 'submitContactEnquiry')(payload)
-  throw new Error('Cloud Function provider not configured.')
-}
+  const docRef = await addDoc(collection(db, ENQUIRIES_COLLECTION), enquiry)
 
-/** @param {ContactFormPayload} payload */
-async function submitViaApi(/* payload */) {
-  // Future: fetch('/api/contact', { method: 'POST', body: JSON.stringify(payload) })
-  throw new Error('API provider not configured.')
+  const record = { id: docRef.id, ...payload, ...enquiry }
+  await Promise.allSettled([notifyInternalTeam(record), sendAutoReply(record)])
+
+  return {
+    success: true,
+    id: docRef.id,
+    message: 'Enquiry received successfully.',
+  }
 }
 
 export function validateContactForm(payload) {
@@ -109,4 +107,8 @@ export function validateContactForm(payload) {
   if (!payload.message?.trim()) errors.message = 'Message is required'
 
   return errors
+}
+
+export function getActiveContactProvider() {
+  return ACTIVE_PROVIDER
 }

@@ -10,7 +10,7 @@ const defaults = {
   keywords:
     'QCTO accredited training provider, occupational training South Africa, learnerships Gauteng, B-BBEE skills development, SETA training provider, occupational health and safety course, project management qualification, agricultural training South Africa',
   ogType: 'website',
-  ogImage: `${siteConfig.domain}/og-rise-institute.jpg`,
+  ogImage: 'https://riseinstitute.co.za/og-rise-institute.jpg',
   twitterCard: 'summary_large_image',
   twitterSite: '@riseinstitute',
 }
