@@ -42,7 +42,12 @@ export async function trackEvent(eventName, params = {}) {
   })
 
   if (import.meta.env.DEV) {
-    console.debug('[analytics]', eventName, enriched, isFirebaseConfigured ? '' : '(no Firebase config)')
+    console.debug(
+      '[analytics]',
+      eventName,
+      enriched,
+      isFirebaseConfigured() ? '' : '(no Firebase config)',
+    )
   }
 }
 

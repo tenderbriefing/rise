@@ -19,6 +19,8 @@ export default function AdminLogin() {
     return <Navigate to={from} replace />
   }
 
+  const canSignIn = isConfigured && !loading
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
@@ -44,9 +46,18 @@ export default function AdminLogin() {
           </h1>
         </div>
 
-        {!isConfigured && (
+        {loading && (
+          <p className="mb-4 flex items-center justify-center gap-2 text-sm text-muted">
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+            Connecting to Firebase…
+          </p>
+        )}
+
+        {!loading && !isConfigured && (
           <p className="mb-4 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">
-            Configure Firebase in <code>.env.local</code> before signing in.
+            Firebase could not be initialized. For local dev, add credentials to{' '}
+            <code>.env.local</code>. On Firebase Hosting, ensure the site is linked to project{' '}
+            <code>rise-f62a4</code>.
           </p>
         )}
 
@@ -90,7 +101,7 @@ export default function AdminLogin() {
 
           <button
             type="submit"
-            disabled={submitting || !isConfigured}
+            disabled={submitting || !canSignIn}
             className="flex w-full items-center justify-center gap-2 rounded-sm bg-forest py-3 text-sm font-semibold text-white transition-colors hover:bg-forest disabled:opacity-60"
           >
             {submitting ? (

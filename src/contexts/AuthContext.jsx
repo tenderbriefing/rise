@@ -4,41 +4,71 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
 } from 'firebase/auth'
-import { getFirebaseAuth, isFirebaseConfigured } from '../lib/firebase'
+import { ensureFirebaseInitialized, getFirebaseAuth } from '../lib/firebase'
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(isFirebaseConfigured)
+  const [loading, setLoading] = useState(true)
+  const [configured, setConfigured] = useState(false)
 
   useEffect(() => {
-    if (!isFirebaseConfigured) return undefined
+    let unsubscribe
+    let cancelled = false
 
-    const auth = getFirebaseAuth()
-    if (!auth) {
-      const frame = requestAnimationFrame(() => setLoading(false))
-      return () => cancelAnimationFrame(frame)
-    }
+    ensureFirebaseInitialized().then((result) => {
+      if (cancelled) return
 
-    const unsubscribe = onAuthStateChanged(auth, (nextUser) => {
-      setUser(nextUser)
-      setLoading(false)
+      setConfigured(result.ok)
+
+      if (!result.ok) {
+        setLoading(false)
+        return
+      }
+
+      const authInstance = getFirebaseAuth()
+      if (!authInstance) {
+        console.error('[firebase] Auth instance missing after init')
+        setConfigured(false)
+        setLoading(false)
+        return
+      }
+
+      unsubscribe = onAuthStateChanged(authInstance, (nextUser) => {
+        setUser(nextUser)
+        setLoading(false)
+      })
     })
 
-    return unsubscribe
+    return () => {
+      cancelled = true
+      unsubscribe?.()
+    }
   }, [])
 
   const signIn = useCallback(async (email, password) => {
-    const auth = getFirebaseAuth()
-    if (!auth) throw new Error('Firebase Authentication is not configured')
-    const credential = await signInWithEmailAndPassword(auth, email.trim(), password)
+    const result = await ensureFirebaseInitialized()
+    if (!result.ok) {
+      throw new Error('Firebase Authentication is not configured')
+    }
+
+    const authInstance = getFirebaseAuth()
+    if (!authInstance) {
+      throw new Error('Firebase Authentication is not available')
+    }
+
+    const credential = await signInWithEmailAndPassword(
+      authInstance,
+      email.trim(),
+      password,
+    )
     return credential.user
   }, [])
 
   const signOut = useCallback(async () => {
-    const auth = getFirebaseAuth()
-    if (auth) await firebaseSignOut(auth)
+    const authInstance = getFirebaseAuth()
+    if (authInstance) await firebaseSignOut(authInstance)
     setUser(null)
   }, [])
 
@@ -47,11 +77,11 @@ export function AuthProvider({ children }) {
       user,
       loading,
       isAuthenticated: Boolean(user),
-      isConfigured: isFirebaseConfigured,
+      isConfigured: configured,
       signIn,
       signOut,
     }),
-    [user, loading, signIn, signOut],
+    [user, loading, configured, signIn, signOut],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

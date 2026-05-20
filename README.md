@@ -33,7 +33,8 @@ React · Vite · Tailwind CSS v4 · React Router · Framer Motion · React Helme
 cd /Users/billionaire/Projects/rise
 npm install
 cp .env.example .env.local
-# Add Firebase web app credentials to .env.local
+# Add Firebase web app credentials as VITE_* keys (not JSON). Or run:
+# firebase apps:sdkconfig web  # then convert output to VITE_FIREBASE_* format
 npm run dev
 ```
 

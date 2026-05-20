@@ -1,5 +1,5 @@
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { getFirestoreDb, isFirebaseConfigured } from '../lib/firebase'
+import { ensureFirebaseInitialized, getFirestoreDb } from '../lib/firebase'
 import { notifyInternalTeam, sendAutoReply } from './leadNotificationService'
 
 export const ContactProviders = {
@@ -7,11 +7,12 @@ export const ContactProviders = {
   FIRESTORE: 'firestore',
 }
 
-const ACTIVE_PROVIDER = isFirebaseConfigured
-  ? ContactProviders.FIRESTORE
-  : ContactProviders.MOCK
-
 const ENQUIRIES_COLLECTION = 'enquiries'
+
+async function resolveActiveProvider() {
+  const result = await ensureFirebaseInitialized()
+  return result.ok ? ContactProviders.FIRESTORE : ContactProviders.MOCK
+}
 
 /**
  * @typedef {Object} ContactFormPayload
@@ -33,6 +34,7 @@ const ENQUIRIES_COLLECTION = 'enquiries'
  * @param {SubmitMeta} [meta]
  */
 export async function submitContactForm(payload, meta = {}) {
+  const ACTIVE_PROVIDER = await resolveActiveProvider()
   switch (ACTIVE_PROVIDER) {
     case ContactProviders.FIRESTORE:
       return submitToFirestore(payload, meta)
@@ -59,6 +61,7 @@ async function submitMock(payload) {
  * @param {SubmitMeta} meta
  */
 async function submitToFirestore(payload, meta) {
+  await ensureFirebaseInitialized()
   const db = getFirestoreDb()
   if (!db) {
     throw new Error('Firestore is not available. Check Firebase configuration.')
@@ -128,6 +131,6 @@ export function validateContactForm(payload) {
   return errors
 }
 
-export function getActiveContactProvider() {
-  return ACTIVE_PROVIDER
+export async function getActiveContactProvider() {
+  return resolveActiveProvider()
 }

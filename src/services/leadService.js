@@ -9,7 +9,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore'
-import { getFirestoreDb } from '../lib/firebase'
+import { ensureFirebaseInitialized, getFirestoreDb } from '../lib/firebase'
 import { ENQUIRIES_COLLECTION, DEFAULT_LEAD_STATUS } from '../data/leadConstants'
 
 const MAX_LEADS = 500
@@ -27,6 +27,7 @@ function mapLeadDoc(snap) {
 }
 
 export async function fetchLeads() {
+  await ensureFirebaseInitialized()
   const db = getFirestoreDb()
   if (!db) throw new Error('Firestore is not configured')
 
@@ -40,6 +41,7 @@ export async function fetchLeads() {
 }
 
 export async function fetchLeadById(id) {
+  await ensureFirebaseInitialized()
   const db = getFirestoreDb()
   if (!db) throw new Error('Firestore is not configured')
 
@@ -64,6 +66,7 @@ export async function fetchLeadStats(leads) {
  * @param {{ email?: string }} actor
  */
 export async function updateLead(id, updates, actor = {}) {
+  await ensureFirebaseInitialized()
   const db = getFirestoreDb()
   if (!db) throw new Error('Firestore is not configured')
 
