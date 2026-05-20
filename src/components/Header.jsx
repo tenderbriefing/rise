@@ -16,20 +16,14 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const onHero = isHome && !scrolled && !mobileOpen
-  const isGlass = scrolled || mobileOpen
+  const isSolid = scrolled || mobileOpen
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16)
+    const onScroll = () => setScrolled(window.scrollY > 24)
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  useEffect(() => {
-    // Close mobile menu when navigating
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMobileOpen(false)
-  }, [location.pathname])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -73,30 +67,30 @@ export default function Header() {
       onClick={() => handleNavClick(link)}
       className={({ isActive }) => {
         if (mobile) {
-          return `relative block rounded-xl px-4 py-3 text-base font-medium transition-colors ${
-            isActive ? 'bg-mint text-primary' : 'text-charcoal hover:bg-light'
+          return `relative block border-l-2 px-4 py-3.5 text-base font-medium transition-colors ${
+            isActive
+              ? 'border-gold bg-ivory text-forest'
+              : 'border-transparent text-charcoal hover:border-border hover:bg-ivory'
           }`
         }
         if (onHero) {
-          return `relative text-sm font-medium transition-colors ${
-            isActive ? 'text-gold' : 'text-white/90 hover:text-white'
+          return `relative text-sm font-medium tracking-wide transition-colors ${
+            isActive ? 'text-gold' : 'text-white/85 hover:text-white'
           }`
         }
-        return `relative text-sm font-medium transition-colors ${
-          isActive ? 'text-primary' : 'text-charcoal hover:text-primary'
+        return `relative text-sm font-medium tracking-wide transition-colors ${
+          isActive ? 'text-forest' : 'text-charcoal hover:text-forest'
         }`
       }}
     >
       {({ isActive }) => (
         <>
           {link.label}
-          {isActive && (
+          {isActive && !mobile && (
             <motion.span
               layoutId="nav-indicator"
-              className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full ${
-                onHero && !mobile ? 'bg-gold' : 'bg-primary'
-              }`}
-              transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              className={`absolute -bottom-1.5 left-0 h-px w-full ${onHero ? 'bg-gold' : 'bg-forest'}`}
+              transition={{ type: 'spring', stiffness: 400, damping: 35 }}
             />
           )}
         </>
@@ -107,29 +101,28 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        isGlass
-          ? 'border-b border-white/20 bg-white/75 shadow-nav backdrop-blur-xl supports-[backdrop-filter]:bg-white/65'
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
+        isSolid
+          ? 'border-b border-border/80 bg-surface/95 shadow-nav backdrop-blur-xl'
           : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <BrandLogo onHero={onHero} onClick={closeMobile} />
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-10 lg:flex" aria-label="Main navigation">
           {navLinks.map((link) => (
             <NavItem key={link.path} link={link} />
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           <Button
             to="/contact"
             size="sm"
             variant={onHero ? 'gold' : 'primary'}
             analyticsLabel="partner_header"
             analyticsLocation="header_desktop"
-            className="shadow-sm"
           >
             Partner With Us
           </Button>
@@ -139,26 +132,26 @@ export default function Header() {
           <Button
             to="/contact"
             size="sm"
-            variant={onHero && !isGlass ? 'gold' : 'primary'}
+            variant={onHero && !isSolid ? 'gold' : 'primary'}
             analyticsLabel="partner_header_mobile"
             analyticsLocation="header_mobile_sticky"
-            className="!px-4 !py-2 text-xs"
+            className="!px-3 !py-2 text-xs"
           >
             Partner
           </Button>
           <button
             type="button"
-            className={`inline-flex items-center justify-center rounded-xl p-2.5 transition-colors ${
-              onHero && !isGlass
-                ? 'text-white hover:bg-white/10'
-                : 'text-charcoal hover:bg-mint'
+            className={`inline-flex items-center justify-center border p-2.5 transition-colors ${
+              onHero && !isSolid
+                ? 'border-white/25 text-white hover:border-white/40 hover:bg-white/5'
+                : 'border-border text-charcoal hover:bg-ivory'
             }`}
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
@@ -170,7 +163,8 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 top-[60px] z-[-1] bg-charcoal/20 backdrop-blur-sm lg:hidden"
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 top-[65px] z-[-1] bg-ink/40 backdrop-blur-sm lg:hidden"
               aria-hidden="true"
               onClick={closeMobile}
             />
@@ -180,16 +174,16 @@ export default function Header() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="overflow-hidden border-t border-border/50 bg-white/95 backdrop-blur-xl lg:hidden"
+              className="overflow-hidden border-t border-border bg-surface lg:hidden"
               aria-label="Mobile navigation"
             >
-              <ul className="flex flex-col gap-1 px-4 py-4">
+              <ul className="flex flex-col px-2 py-3">
                 {navLinks.map((link) => (
                   <li key={link.path}>
                     <NavItem link={link} mobile />
                   </li>
                 ))}
-                <li className="pt-3">
+                <li className="px-2 pt-4">
                   <Button
                     to="/contact"
                     className="w-full"

@@ -1,13 +1,5 @@
-import {
-  BriefcaseBusiness,
-  Leaf,
-  Presentation,
-  ShieldCheck,
-  UsersRound,
-} from 'lucide-react'
-
 /**
- * Homepage imagery — photos in src/assets/images/home/
+ * Homepage hero slideshow — photos in src/assets/images/home/
  * Credits: src/data/imageCredits.js
  */
 const homeImageModules = import.meta.glob('../assets/images/home/*.{jpg,jpeg,png,webp}', {
@@ -22,74 +14,73 @@ function resolveHomeImage(filename) {
   return entry ? entry[1] : null
 }
 
-export const homeImages = [
+export const HERO_SLIDE_INTERVAL_MS = 10_000
+
+export const heroSlides = [
   {
     id: 'classroom-training',
     title: 'Modern Classroom Training',
-    description:
-      'Facilitator-led learning environments that prepare learners for workplace success.',
     image: resolveHomeImage('classroom-training'),
     imageFile: 'classroom-training.jpg',
-    icon: Presentation,
     fallbackGradient: 'from-emerald-900 via-primary to-green-700',
-    alt: 'Professional classroom training session with adult learners and facilitator',
+    alt: 'Diverse South African professionals in a modern classroom training session with facilitator and presentation screen',
   },
   {
     id: 'boardroom-training',
     title: 'Corporate Boardroom Strategy',
-    description:
-      'Strategic engagement with employers and institutions on skills development outcomes.',
     image: resolveHomeImage('boardroom-training'),
     imageFile: 'boardroom-training.jpg',
-    icon: UsersRound,
     fallbackGradient: 'from-forest via-primary to-emerald-800',
-    alt: 'Corporate boardroom strategy session with professionals discussing skills development',
+    alt: 'Diverse group of South African business professionals in a strategic boardroom meeting',
   },
   {
     id: 'workplace-learning',
     title: 'Workplace Practical Learning',
-    description:
-      'Workplace-integrated exposure aligned to QCTO occupational qualification requirements.',
     image: resolveHomeImage('workplace-learning'),
     imageFile: 'workplace-learning.jpg',
-    icon: BriefcaseBusiness,
     fallbackGradient: 'from-charcoal via-primary to-emerald-700',
-    alt: 'Workplace practical learning session with trainees receiving hands-on occupational training',
+    alt: 'Diverse coworkers collaborating on workplace-integrated occupational learning in a modern office',
   },
   {
     id: 'agricultural-training',
     title: 'Agricultural Training',
-    description:
-      'Programmes supporting food security, productivity, and Green Economy workforce development.',
     image: resolveHomeImage('agricultural-training'),
     imageFile: 'agricultural-training.jpg',
-    icon: Leaf,
     fallbackGradient: 'from-green-900 via-primary to-accent',
-    alt: 'Agricultural training environment with learners engaging in practical farming skills',
+    alt: 'Young learner receiving hands-on agricultural training while applying fertilizer in a crop field',
   },
   {
     id: 'ohs-training',
     title: 'Occupational Health & Safety',
-    description:
-      'OHS compliance, risk assessment, and workplace safety systems for every industry.',
     image: resolveHomeImage('ohs-training'),
     imageFile: 'ohs-training.jpg',
-    icon: ShieldCheck,
     fallbackGradient: 'from-slate-800 via-primary to-emerald-800',
-    alt: 'Occupational health and safety training session with professionals in PPE',
+    alt: 'Professionals in PPE conducting an occupational health and safety briefing at a construction site',
+  },
+  {
+    id: 'youth-classroom-training',
+    title: 'Youth Classroom Learning',
+    image: resolveHomeImage('youth-classroom-training'),
+    imageFile: 'youth-classroom-training.jpg',
+    fallbackGradient: 'from-emerald-800 via-primary to-sa-green',
+    alt: 'Youth students in a classroom with a facilitator at the front delivering a lesson',
   },
 ]
 
 /** @param {string} id */
-export function getHomeImageById(id) {
-  return homeImages.find((item) => item.id === id) ?? null
+export function getHeroSlideById(id) {
+  return heroSlides.find((item) => item.id === id) ?? null
 }
 
-export const heroHomeImage = getHomeImageById('classroom-training')
-export const boardroomHomeImage = getHomeImageById('boardroom-training')
+/** @deprecated Use heroSlides — kept for legacy components */
+export const homeImages = heroSlides
 
+/** @deprecated */
+export const boardroomHomeImage = getHeroSlideById('boardroom-training')
+
+/** @deprecated */
 export const qualificationPreviewImages = [
-  getHomeImageById('agricultural-training'),
-  getHomeImageById('workplace-learning'),
-  getHomeImageById('ohs-training'),
+  getHeroSlideById('agricultural-training'),
+  getHeroSlideById('workplace-learning'),
+  getHeroSlideById('ohs-training'),
 ].filter(Boolean)

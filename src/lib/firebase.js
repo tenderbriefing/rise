@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app'
 import { getAnalytics, isSupported } from 'firebase/analytics'
+import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -22,6 +23,7 @@ let app = null
 let analytics = null
 let analyticsInitPromise = null
 let db = null
+let auth = null
 
 export function getFirebaseApp() {
   if (!isFirebaseConfigured) return null
@@ -39,6 +41,16 @@ export function getFirestoreDb() {
     db = getFirestore(firebaseApp)
   }
   return db
+}
+
+export function getFirebaseAuth() {
+  if (!isFirebaseConfigured) return null
+  if (!auth) {
+    const firebaseApp = getFirebaseApp()
+    if (!firebaseApp) return null
+    auth = getAuth(firebaseApp)
+  }
+  return auth
 }
 
 export async function getFirebaseAnalytics() {

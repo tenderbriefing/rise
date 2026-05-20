@@ -21,7 +21,7 @@ export default function ImageFeatureCard({
 
   return (
     <motion.article
-      className={`group relative overflow-hidden rounded-2xl border border-border bg-white shadow-soft ${className}`}
+      className={`group relative overflow-hidden rounded-sm border border-border bg-surface shadow-soft ${className}`}
       whileHover={{ y: -6 }}
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       aria-label={!showImage ? alt : undefined}

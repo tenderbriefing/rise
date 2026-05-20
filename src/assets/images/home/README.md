@@ -11,6 +11,7 @@ Add production photography here. The UI loads files automatically via `import.me
 | `workplace-learning.jpg` | Workplace practical / on-the-job training |
 | `agricultural-training.jpg` | Agricultural / farming skills |
 | `ohs-training.jpg` | Occupational health & safety / PPE |
+| `youth-classroom-training.jpg` | Youth students with facilitator-led classroom learning |
 
 Supported formats: `.jpg`, `.jpeg`, `.png`, `.webp`
 

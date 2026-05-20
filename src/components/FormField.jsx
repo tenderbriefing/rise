@@ -19,7 +19,7 @@ export default function FormField({
   const hasValue = Boolean(value?.toString().trim())
   const hasError = Boolean(error)
 
-  const baseInputClass = `peer w-full rounded-xl border bg-white px-4 pb-3 pt-6 text-charcoal transition-all duration-200 placeholder-transparent focus:outline-none focus:ring-2 ${
+  const baseInputClass = `peer w-full rounded-sm border bg-surface px-4 pb-3 pt-6 text-charcoal transition-all duration-200 placeholder-transparent focus:outline-none focus:ring-2 ${
     hasError
       ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
       : 'border-border hover:border-primary/40 focus:border-primary focus:ring-primary/20'

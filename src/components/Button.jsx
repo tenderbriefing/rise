@@ -1,22 +1,25 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { trackCTAClick, trackCorporateProfileDownload } from '../utils/analytics'
+import { easePremium } from '../utils/motion'
 
 const variants = {
   primary:
-    'bg-primary text-white hover:bg-forest border border-transparent shadow-sm hover:shadow-md focus-visible:ring-primary',
+    'bg-forest text-white border border-forest hover:bg-ink shadow-sm hover:shadow-card focus-visible:ring-gold',
   secondary:
-    'bg-white text-primary border border-primary hover:bg-mint focus-visible:ring-primary',
+    'bg-surface text-forest border border-charcoal/20 hover:border-forest hover:bg-ivory focus-visible:ring-gold',
   gold:
-    'bg-gold text-white hover:bg-gold/90 border border-transparent shadow-sm hover:shadow-md focus-visible:ring-gold',
+    'bg-gold text-ink border border-gold hover:bg-gold-dark hover:text-white focus-visible:ring-gold shadow-sm hover:shadow-card',
   ghost:
-    'bg-transparent text-white border border-white/40 hover:bg-white/10 focus-visible:ring-white',
+    'bg-transparent text-white border border-white/30 hover:border-white/50 hover:bg-white/5 focus-visible:ring-white',
+  outline:
+    'bg-transparent text-forest border-2 border-forest hover:bg-forest hover:text-white focus-visible:ring-forest',
 }
 
 const sizes = {
-  sm: 'px-4 py-2 text-sm',
+  sm: 'px-4 py-2.5 text-xs tracking-wide',
   md: 'px-6 py-3 text-sm',
-  lg: 'px-8 py-3.5 text-base',
+  lg: 'px-9 py-4 text-sm font-semibold tracking-wide',
 }
 
 export default function Button({
@@ -35,12 +38,12 @@ export default function Button({
   analyticsLocation = 'button',
   ...props
 }) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 ${variants[variant]} ${sizes[size]} ${className}`
+  const classes = `inline-flex items-center justify-center gap-2.5 rounded-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`
 
   const motionProps = {
-    whileHover: disabled ? {} : { scale: 1.02, y: -1 },
+    whileHover: disabled ? {} : { y: -2 },
     whileTap: disabled ? {} : { scale: 0.98 },
-    transition: { duration: 0.2 },
+    transition: { duration: 0.25, ease: easePremium },
   }
 
   const handleClick = (e) => {

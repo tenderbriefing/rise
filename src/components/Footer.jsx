@@ -11,7 +11,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-charcoal text-white">
+    <footer className="section-charcoal border-t border-white/10">
       <Container className="section-padding !pb-12">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">

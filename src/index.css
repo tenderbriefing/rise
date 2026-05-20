@@ -1,23 +1,41 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: #0b5d3b;
-  --color-forest: #063d2a;
-  --color-accent: #16a34a;
-  --color-mint: #eaf7f0;
-  --color-gold: #c89b3c;
-  --color-charcoal: #1f2933;
-  --color-muted: #6b7280;
-  --color-light: #f8fafc;
-  --color-border: #e5e7eb;
+  /* Executive palette */
+  --color-primary: #0c3d32;
+  --color-forest: #061f1a;
+  --color-ink: #0a0d10;
+  --color-accent: #2a5c4e;
+  --color-ivory: #f7f5f0;
+  --color-surface: #ffffff;
+  --color-surface-muted: #efede8;
+  --color-mint: #e8ebe9;
+  --color-gold: #c4a052;
+  --color-gold-dark: #9a7b3c;
+  --color-charcoal: #161b22;
+  --color-muted: #5c6370;
+  --color-warm-grey: #8a8780;
+  --color-light: #faf9f7;
+  --color-border: #e2e0db;
 
-  --font-heading: 'Poppins', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  /* Refined SA accents — use sparingly */
+  --color-sa-green: #0c5c45;
+  --color-sa-gold: #c4a052;
+  --color-sa-blue: #1e3a5f;
+  --color-sa-red: #8b3a3a;
 
-  --shadow-soft: 0 4px 24px -4px rgb(6 61 42 / 0.08);
-  --shadow-card: 0 8px 30px -12px rgb(6 61 42 / 0.12);
-  --shadow-card-hover: 0 16px 40px -16px rgb(6 61 42 / 0.18);
-  --shadow-nav: 0 4px 30px -8px rgb(6 61 42 / 0.12);
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+  --shadow-soft: 0 2px 16px -2px rgb(6 31 26 / 0.06);
+  --shadow-card: 0 12px 40px -16px rgb(6 31 26 / 0.14);
+  --shadow-card-hover: 0 20px 50px -20px rgb(6 31 26 / 0.2);
+  --shadow-nav: 0 1px 0 rgb(0 0 0 / 0.04), 0 8px 32px -8px rgb(6 31 26 / 0.1);
+  --shadow-elevated: 0 24px 64px -24px rgb(0 0 0 / 0.35);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
 }
 
 @layer base {
@@ -26,7 +44,8 @@
   }
 
   body {
-    @apply bg-white font-body text-charcoal antialiased;
+    @apply bg-ivory font-body text-charcoal antialiased;
+    font-feature-settings: 'kern' 1, 'liga' 1;
   }
 
   h1,
@@ -36,10 +55,11 @@
   h5,
   h6 {
     font-family: var(--font-heading);
+    letter-spacing: -0.02em;
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary;
+    @apply outline-2 outline-offset-2 outline-gold;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -59,30 +79,11 @@
 
 @layer utilities {
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-20 md:py-28 lg:py-32;
   }
 
-  .hero-pattern {
-    background-image:
-      radial-gradient(circle at 20% 80%, rgb(22 163 74 / 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgb(200 155 60 / 0.08) 0%, transparent 40%),
-      linear-gradient(135deg, #063d2a 0%, #0b5d3b 50%, #063d2a 100%);
-  }
-
-  .hero-animated {
-    background: linear-gradient(135deg, #063d2a 0%, #0b5d3b 45%, #063d2a 100%);
-  }
-
-  .hero-gradient-shift {
-    background: linear-gradient(
-      125deg,
-      #063d2a 0%,
-      #0b5d3b 35%,
-      #0d7048 55%,
-      #063d2a 100%
-    );
-    background-size: 200% 200%;
-    animation: gradient-shift 14s ease infinite;
+  .section-padding-compact {
+    @apply py-14 md:py-20;
   }
 
   .text-balance {
@@ -90,16 +91,133 @@
   }
 
   .skip-link {
-    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white;
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-sm focus:bg-forest focus:px-4 focus:py-2 focus:text-white;
   }
-}
 
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
+  /* Executive eyebrow */
+  .eyebrow-executive {
+    @apply mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-gold;
   }
-  50% {
-    background-position: 100% 50%;
+
+  .eyebrow-executive::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    margin-bottom: 1rem;
+    background: var(--color-gold);
+  }
+
+  .eyebrow-executive-light {
+    @apply mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-gold;
+  }
+
+  .eyebrow-executive-light::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    margin-bottom: 1rem;
+    background: var(--color-gold);
+  }
+
+  .eyebrow-sa {
+    @apply mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-gold;
+  }
+
+  .eyebrow-sa::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    margin-bottom: 1rem;
+    background: var(--color-gold);
+  }
+
+  .eyebrow-sa::after {
+    display: none;
+  }
+
+  .sa-accent-bar {
+    height: 2px;
+    width: 4rem;
+    background: var(--color-gold);
+  }
+
+  /* Hero & glass panels */
+  .hero-trust-glass {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.08) 0%,
+      rgb(255 255 255 / 0.03) 100%
+    );
+    backdrop-filter: blur(16px);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  .executive-panel {
+    @apply border border-border/80 bg-surface shadow-soft;
+  }
+
+  .executive-panel-dark {
+    background: linear-gradient(145deg, rgb(12 61 50 / 0.4) 0%, rgb(6 31 26 / 0.6) 100%);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Section themes */
+  .section-ivory {
+    @apply bg-ivory;
+  }
+
+  .section-surface {
+    @apply bg-surface;
+  }
+
+  .section-dark {
+    @apply bg-forest text-white;
+  }
+
+  .section-charcoal {
+    @apply bg-charcoal text-white;
+  }
+
+  .sa-section-accent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-gold), transparent 70%);
+    opacity: 1;
+  }
+
+  /* Editorial prose */
+  .prose-editorial {
+    @apply max-w-prose text-base leading-[1.75] text-muted md:text-lg;
+  }
+
+  /* Card system */
+  .card-executive {
+    @apply border border-border/90 bg-surface shadow-soft transition-all duration-300;
+  }
+
+  .card-executive:hover {
+    @apply border-gold/20 shadow-card;
+  }
+
+  /* Divider */
+  .divider-executive {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+
+  /* Hero patterns — minimal, no playful gradients */
+  .hero-pattern {
+    background: var(--color-forest);
+  }
+
+  .hero-animated {
+    background: var(--color-forest);
   }
 }

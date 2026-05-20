@@ -11,7 +11,7 @@ export function CorporatePositioningSection() {
   const image = boardroomHomeImage
 
   return (
-    <AnimatedSection className="section-padding bg-white">
+    <AnimatedSection className="section-padding section-surface">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <motion.div

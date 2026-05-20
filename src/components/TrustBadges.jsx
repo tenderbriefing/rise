@@ -4,10 +4,10 @@ import { staggerContainer, staggerItem } from '../utils/motion'
 export default function TrustBadges({ badges, variant = 'strip' }) {
   if (variant === 'strip') {
     return (
-      <div className="border-y border-border bg-light">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <div className="border-y border-border bg-surface">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <motion.ul
-            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4"
+            className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -17,10 +17,10 @@ export default function TrustBadges({ badges, variant = 'strip' }) {
               <motion.li
                 key={label}
                 variants={staggerItem}
-                className="flex items-center gap-2 text-sm font-medium text-charcoal"
+                className="flex items-center gap-3 text-sm font-medium tracking-wide text-charcoal"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-mint text-primary">
-                  <Icon className="h-4 w-4" aria-hidden="true" />
+                <span className="flex h-10 w-10 items-center justify-center border border-border bg-ivory text-forest">
+                  <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                 </span>
                 {label}
               </motion.li>
@@ -43,12 +43,14 @@ export default function TrustBadges({ badges, variant = 'strip' }) {
         <motion.li
           key={label}
           variants={staggerItem}
-          className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-white p-4 text-center shadow-soft"
+          className="flex flex-col items-center gap-3 border border-white/10 bg-white/5 p-5 text-center backdrop-blur-sm"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mint text-primary">
-            <Icon className="h-5 w-5" aria-hidden="true" />
+          <span className="flex h-11 w-11 items-center justify-center border border-gold/30 text-gold">
+            <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
           </span>
-          <span className="text-xs font-semibold text-charcoal sm:text-sm">{label}</span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-white/90 sm:text-sm">
+            {label}
+          </span>
         </motion.li>
       ))}
     </motion.ul>

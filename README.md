@@ -12,7 +12,8 @@ Official institutional website for **Rise Institute** — QCTO-accredited occupa
 
 Launch-ready React SPA with:
 
-- Five pages: Home, About, Qualifications, Corporate & Funding, Contact
+- Five public pages: Home, About, Qualifications, Corporate & Funding, Contact
+- **Admin lead dashboard** (`/admin`) with Firebase Auth
 - **Firestore lead capture** (`enquiries` collection)
 - **Firebase Analytics** / GA4 conversion events
 - SEO, sitemap, Search Console verification support
@@ -22,7 +23,7 @@ Launch-ready React SPA with:
 
 ## Tech stack
 
-React · Vite · Tailwind CSS v4 · React Router · Framer Motion · React Helmet Async · Firebase (Hosting, Firestore, Analytics) · Lucide React
+React · Vite · Tailwind CSS v4 · React Router · Framer Motion · React Helmet Async · Firebase (Hosting, Firestore, Auth, Analytics) · Lucide React
 
 ---
 
@@ -58,24 +59,61 @@ VITE_FIREBASE_MEASUREMENT_ID=
 
 ---
 
-## Firestore enquiry collection
+## Lead management system (V1)
 
-Contact form writes to **`enquiries`** with:
+Internal CRM-style admin at `/admin` for managing website enquiries.
 
-- `fullName`, `company`, `email`, `phone`, `interest`, `message`
-- `source`: `website-contact-form`
-- `status`: `new`
-- `createdAt`: server timestamp
-- `page`, `userAgent`
+| Route | Purpose |
+|-------|---------|
+| `/admin/login` | Email/password sign-in (Firebase Auth) |
+| `/admin` | Dashboard — stats and recent leads |
+| `/admin/leads` | Searchable, filterable lead table + CSV export |
+| `/admin/leads/:id` | Lead detail — status, notes, timeline |
 
-Service: `src/services/contactService.js`  
-Future notifications: `src/services/leadNotificationService.js` (placeholders for Cloud Functions)
+**Services:** `src/services/leadService.js`, `src/services/contactService.js`, `src/services/emailService.js`  
+**Templates:** `src/templates/autoReplyTemplate.js`, `src/templates/internalLeadTemplate.js`  
+**Functions scaffold:** `functions/` (email send on enquiry create — configure SMTP via secrets, do not commit credentials)
+
+### Firebase Authentication (admin)
+
+1. Firebase Console → **Authentication** → **Sign-in method** → enable **Email/Password**
+2. **Users** → **Add user** for each admin (no public registration)
+3. Ensure `.env.local` includes `VITE_FIREBASE_AUTH_DOMAIN` (e.g. `rise-f62a4.firebaseapp.com`)
+
+Sign in at `https://riseinstitute.co.za/admin/login` (or `/admin/login` locally).
+
+### Firestore `enquiries` schema
+
+| Field | Description |
+|-------|-------------|
+| `fullName`, `company`, `email`, `phone`, `interest`, `message` | Contact form |
+| `source` | `website-contact-form` |
+| `status` | `new` → `contacted` → `qualified` → `proposal-sent` → `follow-up` → `closed-won` / `closed-lost` |
+| `priority` | `low`, `normal`, `high`, `urgent` |
+| `assignedTo`, `notes`, `tags` | Admin-managed |
+| `createdAt`, `updatedAt`, `lastContactedAt` | Timestamps |
+| `route`, `page`, `userAgent`, `analyticsId` | Attribution |
+| `activityLog` | Status/notes timeline |
+
+### CSV export
+
+From `/admin/leads`, export filtered or all leads as `rise-institute-leads-YYYY-MM-DD.csv`.
+
+### Email notifications (architecture)
+
+- **Internal alert:** `info@riseinstitute.co.za` — subject: *New Website Enquiry — Rise Institute*
+- **Auto-reply:** enquirer receives *Thank You for Contacting Rise Institute*
+- HTML built in `src/templates/`; delivery via Firebase Functions (`functions/src/index.js`) when SMTP is configured
 
 ---
 
 ## Firestore rules deployment
 
-Rules file: `firestore.rules` — public **create only** on `/enquiries`, no public read/update/delete.
+Rules file: `firestore.rules`:
+
+- Public **create only** on `/enquiries` (validated fields, `status: new` only)
+- **Authenticated admins** can read and update leads
+- No public read/update/delete; no client access to `mail` queue
 
 ```bash
 firebase deploy --only firestore:rules
@@ -135,6 +173,8 @@ Implemented in `src/utils/analytics.js` (Firebase Analytics → GA4 when linked)
 | `form_start` | First interaction with contact form |
 | `form_submit` | Submit attempt |
 | `generate_lead` | Successful Firestore submission |
+| `export` | Admin CSV export |
+| `admin_update` | Admin lead status/notes update |
 | `file_download` | Corporate profile PDF |
 | `click` / `cta_click` | CTA buttons |
 | `contact` | Phone (`tel:`) or email (`mailto:`) clicks |
@@ -152,24 +192,25 @@ Link GA4 property in Firebase Console → Project settings → Integrations.
 | `src/assets/brand/` | Logo SVG source files |
 | `src/assets/images/` | Section photography (see READMEs in subfolders) |
 | `src/data/images.js` | General image registry |
-| `src/data/homeImages.js` | Homepage visual story (5 strategic slots) |
+| `src/data/homeImages.js` | Hero slideshow slide registry |
 | `src/data/imageCredits.js` | Homepage photography attribution |
 
-### Homepage imagery system
+### Homepage hero slideshow
 
-Place real photos in `src/assets/images/home/`:
+Six rotating hero backgrounds live in `src/assets/images/home/` (10 seconds each):
 
-- `classroom-training.jpg` — hero & classroom learning
-- `boardroom-training.jpg` — corporate positioning section
-- `workplace-learning.jpg` — workplace-integrated learning
-- `agricultural-training.jpg` — agriculture qualifications preview
-- `ohs-training.jpg` — occupational health & safety preview
+- `classroom-training.jpg` — modern classroom / facilitator-led learning
+- `boardroom-training.jpg` — diverse corporate strategy session
+- `workplace-learning.jpg` — workplace-integrated collaboration
+- `agricultural-training.jpg` — agricultural & green economy training
+- `ohs-training.jpg` — occupational health & safety
+- `youth-classroom-training.jpg` — youth students with facilitator-led classroom learning
 
-Files are picked up automatically via Vite `import.meta.glob`. **No code changes** are needed when images are added.
+Loaded via `import.meta.glob` in `src/data/homeImages.js` and rendered by `HeroSlideshow` (10s crossfade, Ken Burns zoom, pause/play, progress bar). Images appear **only in the hero** — the rest of the homepage is text-led and executive in tone.
 
-If an image fails to load, the UI falls back to **premium gradients** with Lucide icons (no broken imports).
+If a slide image fails, the slot falls back to a premium gradient (no broken imports).
 
-Components: `ImageFeatureCard`, `ImageFeatureGrid`, `HomeVisualStory`, updated `HomeHero`.
+Subtle South African flag-inspired accents (`sa-green`, `sa-gold`, `sa-blue`, `sa-red`) are used in dividers, eyebrows, and hero controls — not as loud patriotic branding.
 
 ---
 
@@ -179,11 +220,12 @@ Homepage photography is sourced from [Pexels](https://www.pexels.com) under the 
 
 | Category | Photographer | Platform | Source |
 |----------|--------------|----------|--------|
-| Modern Classroom Training | fauxels | Pexels | [View photo](https://www.pexels.com/photo/man-standing-beside-people-sitting-beside-table-with-laptops-3184395/) |
-| Corporate Boardroom Strategy | Pavel Danilyuk | Pexels | [View photo](https://www.pexels.com/photo/a-group-of-men-in-black-suit-sitting-near-the-table-while-having-conversation-5520287/) |
-| Workplace Practical Learning | SHVETS production | Pexels | [View photo](https://www.pexels.com/photo/woman-explaining-detail-of-project-to-colleague-7176287/) |
-| Agricultural Training | Şeyhmus Kino | Pexels | [View photo](https://www.pexels.com/photo/rural-african-farmers-with-agricultural-supplies-30403190/) |
+| Modern Classroom Training | Christina Morillo | Pexels | [View photo](https://www.pexels.com/photo/people-sitting-on-chairs-in-front-of-projector-1181406/) |
+| Corporate Boardroom Strategy | Rebrand Cities | Pexels | [View photo](https://www.pexels.com/photo/group-of-people-on-a-meeting-1367272/) |
+| Workplace Practical Learning | MART PRODUCTION | Pexels | [View photo](https://www.pexels.com/photo/a-people-having-a-business-meeting-7550385/) |
+| Agricultural Training | Nirjon Nakib | Pexels | [View photo](https://www.pexels.com/photo/young-man-with-a-bucket-spreading-fertilizer-on-a-crop-field-18185333/) |
 | Occupational Health & Safety | Mikael Blomkvist | Pexels | [View photo](https://www.pexels.com/photo/a-man-and-a-woman-with-ppe-s-talking-at-a-construction-site-8961065/) |
+| Youth Classroom Learning | RDNE Stock project | Pexels | [View photo](https://www.pexels.com/photo/teacher-discussing-his-lesson-to-his-students-7092352/) |
 
 **License note:** Free to use under the Pexels License (attribution appreciated, not required).
 
@@ -218,16 +260,22 @@ npm run build
 
 ```
 src/
-  components/     UI including ContactForm, BrandLogo, PremiumCTA
-  data/           Content, images registry, CTA presets
+  components/     UI including ContactForm, admin CRM components
+  components/admin/  LeadTable, LeadFilters, ExportCSVButton, etc.
+  contexts/       AuthContext (Firebase Auth)
+  data/           Content, leadConstants, images registry
   hooks/          usePageAnalytics
-  lib/            Firebase app, Firestore, Analytics
-  pages/          Route pages
-  services/       contactService, leadNotificationService
-  assets/         brand + images (placeholders)
+  layouts/        AdminLayout
+  lib/            Firebase app, Firestore, Auth, Analytics
+  pages/          Public route pages
+  pages/admin/    AdminLogin, AdminDashboard, LeadsList, LeadDetails
+  services/       contactService, leadService, emailService
+  templates/      HTML email templates (auto-reply, internal alert)
+  assets/         brand + images
+functions/        Cloud Functions scaffold (email on enquiry create)
 public/           favicon, sitemap, robots.txt
-firestore.rules   Security rules
-firebase.json   Hosting + Firestore config
+firestore.rules   Security rules (public create, admin read/update)
+firebase.json     Hosting + Firestore config
 ```
 
 ---

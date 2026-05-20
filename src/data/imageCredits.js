@@ -1,47 +1,43 @@
 /**
  * Attribution for homepage photography (Unsplash / Pexels only).
- * Used for README exports and future footer credits if needed.
  */
 export const imageCredits = [
   {
     id: 'classroom-training',
-    imageTitle: 'Man Standing Beside People Sitting Beside Table With Laptops',
+    imageTitle: 'Group of People on a Conference Room',
     category: 'Modern Classroom Training',
-    photographer: 'fauxels',
+    photographer: 'Christina Morillo',
     platform: 'Pexels',
     sourceUrl:
-      'https://www.pexels.com/photo/man-standing-beside-people-sitting-beside-table-with-laptops-3184395/',
+      'https://www.pexels.com/photo/people-sitting-on-chairs-in-front-of-projector-1181406/',
     licenseNote: 'Free to use under the Pexels License',
   },
   {
     id: 'boardroom-training',
-    imageTitle:
-      'A Group of Men in Black Suit Sitting Near the Table while Having Conversation',
+    imageTitle: 'Group Of People on a Meeting',
     category: 'Corporate Boardroom Strategy',
-    photographer: 'Pavel Danilyuk',
+    photographer: 'Rebrand Cities',
     platform: 'Pexels',
-    sourceUrl:
-      'https://www.pexels.com/photo/a-group-of-men-in-black-suit-sitting-near-the-table-while-having-conversation-5520287/',
+    sourceUrl: 'https://www.pexels.com/photo/group-of-people-on-a-meeting-1367272/',
     licenseNote: 'Free to use under the Pexels License',
   },
   {
     id: 'workplace-learning',
-    imageTitle: 'Woman explaining detail of project to colleague',
+    imageTitle: 'A People Having a Business Meeting',
     category: 'Workplace Practical Learning',
-    photographer: 'SHVETS production',
+    photographer: 'MART PRODUCTION',
     platform: 'Pexels',
-    sourceUrl:
-      'https://www.pexels.com/photo/woman-explaining-detail-of-project-to-colleague-7176287/',
+    sourceUrl: 'https://www.pexels.com/photo/a-people-having-a-business-meeting-7550385/',
     licenseNote: 'Free to use under the Pexels License',
   },
   {
     id: 'agricultural-training',
-    imageTitle: 'Rural African Farmers with Agricultural Supplies',
+    imageTitle: 'Young Man with a Bucket Spreading Fertilizer on a Crop Field',
     category: 'Agricultural Training',
-    photographer: 'Şeyhmus Kino',
+    photographer: 'Nirjon Nakib',
     platform: 'Pexels',
     sourceUrl:
-      'https://www.pexels.com/photo/rural-african-farmers-with-agricultural-supplies-30403190/',
+      'https://www.pexels.com/photo/young-man-with-a-bucket-spreading-fertilizer-on-a-crop-field-18185333/',
     licenseNote: 'Free to use under the Pexels License',
   },
   {
@@ -52,6 +48,16 @@ export const imageCredits = [
     platform: 'Pexels',
     sourceUrl:
       'https://www.pexels.com/photo/a-man-and-a-woman-with-ppe-s-talking-at-a-construction-site-8961065/',
+    licenseNote: 'Free to use under the Pexels License',
+  },
+  {
+    id: 'youth-classroom-training',
+    imageTitle: 'Teacher Discussing His Lesson to His Students',
+    category: 'Youth Classroom Learning',
+    photographer: 'RDNE Stock project',
+    platform: 'Pexels',
+    sourceUrl:
+      'https://www.pexels.com/photo/teacher-discussing-his-lesson-to-his-students-7092352/',
     licenseNote: 'Free to use under the Pexels License',
   },
 ]

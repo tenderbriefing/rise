@@ -64,6 +64,9 @@ async function submitToFirestore(payload, meta) {
     throw new Error('Firestore is not available. Check Firebase configuration.')
   }
 
+  const route =
+    meta.page || meta.route || (typeof window !== 'undefined' ? window.location.pathname : '/contact')
+
   const enquiry = {
     fullName: payload.fullName.trim(),
     company: payload.company.trim(),
@@ -73,9 +76,25 @@ async function submitToFirestore(payload, meta) {
     message: payload.message.trim(),
     source: 'website-contact-form',
     status: 'new',
+    priority: 'normal',
+    assignedTo: null,
+    notes: '',
+    tags: [],
     createdAt: serverTimestamp(),
-    page: meta.page || (typeof window !== 'undefined' ? window.location.pathname : '/contact'),
+    updatedAt: serverTimestamp(),
+    lastContactedAt: null,
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+    route,
+    page: route,
+    analyticsId: meta.analyticsId || null,
+    activityLog: [
+      {
+        type: 'created',
+        message: 'Enquiry submitted via website contact form',
+        createdAt: new Date().toISOString(),
+        createdBy: 'system',
+      },
+    ],
   }
 
   const docRef = await addDoc(collection(db, ENQUIRIES_COLLECTION), enquiry)

@@ -8,7 +8,7 @@ import { staggerContainer } from '../utils/motion'
 
 export default function ImageFeatureGrid() {
   return (
-    <AnimatedSection className="section-padding bg-mint/50">
+    <AnimatedSection className="section-padding section-ivory/50">
       <Container>
         <SectionHeader
           eyebrow="Learning Environments"

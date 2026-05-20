@@ -11,6 +11,8 @@ export const AnalyticsEvents = {
   FILE_DOWNLOAD: 'file_download',
   CTA_CLICK: 'cta_click',
   NAV_CLICK: 'nav_click',
+  EXPORT: 'export',
+  ADMIN_UPDATE: 'admin_update',
 }
 
 async function withAnalytics(callback) {
@@ -150,4 +152,21 @@ export function trackCtaClick({ label, destination, location }) {
 /** @deprecated Use trackLeadFormSubmit */
 export function trackFormSubmit({ interest }) {
   return trackLeadFormSubmit({ interest })
+}
+
+export function trackCsvExport({ count, scope = 'filtered' }) {
+  return trackEvent(AnalyticsEvents.EXPORT, {
+    export_type: 'leads_csv',
+    lead_count: count,
+    export_scope: scope,
+  })
+}
+
+export function trackAdminLeadUpdate({ leadId, field, status, priority }) {
+  return trackEvent(AnalyticsEvents.ADMIN_UPDATE, {
+    lead_id: leadId,
+    updated_field: field,
+    lead_status: status,
+    lead_priority: priority,
+  })
 }

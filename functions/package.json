@@ -1,0 +1,17 @@
+{
+  "name": "rise-institute-functions",
+  "description": "Firebase Cloud Functions for Rise Institute lead notifications",
+  "private": true,
+  "main": "src/index.js",
+  "type": "module",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.3.0"
+  }
+}

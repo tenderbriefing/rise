@@ -1,13 +1,14 @@
-/** Standardized motion presets — subtle, institutional, professional */
+/** Executive motion presets — intentional, premium, restrained */
 
-export const easePremium = [0.22, 1, 0.36, 1]
+export const easePremium = [0.16, 1, 0.3, 1]
+export const easeOutExpo = [0.19, 1, 0.22, 1]
 
 export const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 32 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: easePremium },
+    transition: { duration: 0.7, ease: easePremium },
   },
 }
 
@@ -55,11 +56,10 @@ export const staggerItem = {
 }
 
 export const cardHover = {
-  rest: { y: 0, scale: 1 },
+  rest: { y: 0 },
   hover: {
-    y: -6,
-    scale: 1.01,
-    transition: { duration: 0.28, ease: 'easeOut' },
+    y: -4,
+    transition: { duration: 0.35, ease: easePremium },
   },
 }
 

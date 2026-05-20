@@ -1,15 +1,14 @@
 import { Download } from 'lucide-react'
 import Container from './Container'
 import Button from './Button'
-import GradientOrb from './GradientOrb'
 import AnimatedSection from './AnimatedSection'
 import { trackCTAClick, trackCorporateProfileDownload } from '../utils/analytics'
 
 const variants = {
-  forest: 'bg-forest text-white',
-  gradient: 'hero-pattern text-white',
-  mint: 'bg-mint text-charcoal',
-  light: 'bg-light text-charcoal',
+  forest: 'section-dark',
+  gradient: 'section-dark',
+  mint: 'section-ivory',
+  light: 'section-surface',
 }
 
 export default function PremiumCTA({
@@ -45,29 +44,34 @@ export default function PremiumCTA({
 
   return (
     <AnimatedSection className={`section-padding relative overflow-hidden ${variants[variant]}`}>
-      {!isLight && (
-        <>
-          <GradientOrb className="-left-20 top-0" size="lg" color="accent" />
-          <GradientOrb className="-right-10 bottom-0" size="md" color="gold" delay={0.5} />
-        </>
-      )}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-40"
+        aria-hidden="true"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 60% at 100% 0%, rgb(196 160 82 / 0.12), transparent 50%)',
+        }}
+      />
       <Container className="relative">
         <div
-          className={`rounded-2xl border p-8 sm:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12 ${
-            isLight
-              ? 'border-border bg-white shadow-card'
-              : 'border-white/15 bg-white/5 backdrop-blur-md'
+          className={`rounded-sm border p-8 sm:p-12 lg:flex lg:items-center lg:justify-between lg:gap-12 ${
+            isLight ? 'card-executive border-border' : 'executive-panel-dark border-white/10'
           }`}
         >
           <div className="max-w-2xl">
+            <p className={isLight ? 'eyebrow-executive' : 'eyebrow-executive-light'}>Next Step</p>
             <h2
-              className={`font-heading text-2xl font-bold tracking-tight sm:text-3xl ${
+              className={`font-heading text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl ${
                 isLight ? 'text-charcoal' : 'text-white'
               }`}
             >
               {title}
             </h2>
-            <p className={`mt-4 text-lg leading-relaxed ${isLight ? 'text-muted' : 'text-white/85'}`}>
+            <p
+              className={`mt-4 text-lg leading-relaxed ${
+                isLight ? 'text-muted' : 'text-white/80'
+              }`}
+            >
               {description}
             </p>
           </div>
@@ -94,9 +98,7 @@ export default function PremiumCTA({
                 size="lg"
                 download={secondaryCta.download}
                 onClick={handleSecondary}
-                className={
-                  isLight ? '' : '!border-white/40 !text-white hover:!bg-white/10'
-                }
+                className={isLight ? '' : '!border-white/40 !text-white hover:!bg-white/10'}
               >
                 {secondaryCta.download && <Download className="h-5 w-5" aria-hidden="true" />}
                 {secondaryCta.label}
@@ -109,7 +111,7 @@ export default function PremiumCTA({
                 variant={isLight ? 'secondary' : 'ghost'}
                 size="lg"
                 download
-                className={isLight ? '' : '!border-white/30 !bg-white !text-forest hover:!bg-mint'}
+                className={isLight ? '' : '!border-white/30 !text-white hover:!bg-white/10'}
                 onClick={() => trackCorporateProfileDownload(location)}
               >
                 <Download className="h-5 w-5" aria-hidden="true" />

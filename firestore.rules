@@ -2,11 +2,28 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /enquiries/{enquiryId} {
-      allow read, update, delete: if false;
+    function isAdmin() {
+      return request.auth != null;
+    }
 
-      allow create: if
-        request.resource.data.keys().hasOnly([
+    function validStatus(status) {
+      return status in [
+        'new',
+        'contacted',
+        'qualified',
+        'proposal-sent',
+        'follow-up',
+        'closed-won',
+        'closed-lost'
+      ];
+    }
+
+    function validPriority(priority) {
+      return priority in ['low', 'normal', 'high', 'urgent'];
+    }
+
+    function validPublicCreate() {
+      return request.resource.data.keys().hasOnly([
           'fullName',
           'company',
           'email',
@@ -15,9 +32,18 @@ service cloud.firestore {
           'message',
           'source',
           'status',
+          'priority',
+          'assignedTo',
+          'notes',
+          'tags',
           'createdAt',
+          'updatedAt',
+          'lastContactedAt',
+          'userAgent',
+          'route',
           'page',
-          'userAgent'
+          'analyticsId',
+          'activityLog'
         ])
         && request.resource.data.fullName is string
         && request.resource.data.fullName.size() > 1
@@ -39,15 +65,68 @@ service cloud.firestore {
         && request.resource.data.message.size() < 3000
         && request.resource.data.source == 'website-contact-form'
         && request.resource.data.status == 'new'
+        && request.resource.data.priority == 'normal'
+        && request.resource.data.assignedTo == null
+        && request.resource.data.notes == ''
+        && request.resource.data.tags.size() == 0
         && request.resource.data.createdAt == request.time
-        && (!('page' in request.resource.data) || (
-          request.resource.data.page is string
-          && request.resource.data.page.size() < 200
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.lastContactedAt == null
+        && request.resource.data.userAgent is string
+        && request.resource.data.userAgent.size() < 500
+        && request.resource.data.route is string
+        && request.resource.data.route.size() < 200
+        && request.resource.data.page is string
+        && request.resource.data.page.size() < 200
+        && (!('analyticsId' in request.resource.data) || (
+          request.resource.data.analyticsId == null
+          || (request.resource.data.analyticsId is string
+            && request.resource.data.analyticsId.size() < 120)
         ))
-        && (!('userAgent' in request.resource.data) || (
-          request.resource.data.userAgent is string
-          && request.resource.data.userAgent.size() < 500
-        ));
+        && request.resource.data.activityLog.size() == 1
+        && request.resource.data.activityLog[0].type == 'created'
+        && request.resource.data.activityLog[0].message is string
+        && request.resource.data.activityLog[0].message.size() < 500;
+    }
+
+    function validAdminUpdate() {
+      return request.resource.data.fullName is string
+        && request.resource.data.fullName.size() > 1
+        && request.resource.data.fullName.size() < 120
+        && request.resource.data.company is string
+        && request.resource.data.company.size() > 1
+        && request.resource.data.company.size() < 160
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 5
+        && request.resource.data.email.size() < 160
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() > 5
+        && request.resource.data.phone.size() < 40
+        && request.resource.data.interest is string
+        && request.resource.data.message is string
+        && request.resource.data.message.size() < 3000
+        && request.resource.data.source == resource.data.source
+        && validStatus(request.resource.data.status)
+        && validPriority(request.resource.data.priority)
+        && request.resource.data.notes is string
+        && request.resource.data.notes.size() < 5000
+        && (!('tags' in request.resource.data) || request.resource.data.tags.size() <= 20)
+        && (request.resource.data.assignedTo == null
+          || (request.resource.data.assignedTo is string
+            && request.resource.data.assignedTo.size() < 120))
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.activityLog.size() <= 50;
+    }
+
+    match /enquiries/{enquiryId} {
+      allow read: if isAdmin();
+      allow create: if validPublicCreate();
+      allow update: if isAdmin() && validAdminUpdate();
+      allow delete: if false;
+    }
+
+    match /mail/{mailId} {
+      allow read, write: if false;
     }
 
     match /{document=**} {

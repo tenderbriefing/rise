@@ -21,7 +21,7 @@ export default function StatsStrip({ stats = defaultStats, variant = 'hero' }) {
                 key={stat.label}
                 className="flex flex-col items-center gap-3 px-4 py-8 text-center sm:px-6"
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-mint text-primary">
+                <span className="flex h-12 w-12 items-center justify-center rounded-sm bg-ivory text-forest border border-border">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 <p className="text-sm font-semibold text-charcoal">{stat.label}</p>
@@ -73,7 +73,7 @@ export default function StatsStrip({ stats = defaultStats, variant = 'hero' }) {
               key={stat.label}
               className="flex flex-col items-center gap-3 px-4 py-8 text-center sm:px-6"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-mint text-primary">
+              <span className="flex h-12 w-12 items-center justify-center rounded-sm bg-ivory text-forest border border-border">
                 <Icon className="h-6 w-6" aria-hidden="true" />
               </span>
               <p className="text-sm font-semibold text-charcoal">{stat.label}</p>

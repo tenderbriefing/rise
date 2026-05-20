@@ -6,7 +6,7 @@ export default function PageHero({ title, description, light = false, children }
   return (
     <section
       className={`relative overflow-hidden section-padding ${
-        light ? 'hero-pattern text-white' : 'bg-mint'
+        light ? 'section-dark' : 'section-ivory'
       }`}
     >
       {!light && (
@@ -15,16 +15,17 @@ export default function PageHero({ title, description, light = false, children }
           aria-hidden="true"
           style={{
             backgroundImage:
-              'radial-gradient(circle at 70% 30%, rgb(11 93 59 / 0.12) 0%, transparent 50%)',
+              'radial-gradient(ellipse 70% 50% at 80% 20%, rgb(196 160 82 / 0.08) 0%, transparent 55%)',
           }}
         />
       )}
       {light && (
         <div
-          className="pointer-events-none absolute inset-0 opacity-30"
+          className="pointer-events-none absolute inset-0"
           aria-hidden="true"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            background:
+              'linear-gradient(180deg, transparent 0%, rgb(6 31 26 / 0.35) 100%)',
           }}
         />
       )}
@@ -36,7 +37,7 @@ export default function PageHero({ title, description, light = false, children }
           className="max-w-3xl"
         >
           {light && (
-            <motion.div variants={staggerItem} className="mb-4 h-1 w-16 rounded-full bg-gold" />
+            <motion.div variants={staggerItem} className="mb-4 h-0.5 w-14 bg-gold" />
           )}
           <motion.h1
             variants={staggerItem}

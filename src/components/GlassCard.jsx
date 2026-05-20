@@ -13,7 +13,7 @@ export default function GlassCard({
     lg: 'p-8 sm:p-10',
   }[padding]
 
-  const classNames = `rounded-2xl border border-white/15 bg-white/10 shadow-card backdrop-blur-md ${paddingClass} ${className}`
+  const classNames = `rounded-sm border border-border bg-surface shadow-soft ${paddingClass} ${className}`
 
   if (!hover) {
     return <div className={classNames}>{children}</div>

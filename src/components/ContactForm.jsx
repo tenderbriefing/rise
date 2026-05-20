@@ -112,7 +112,7 @@ export default function ContactForm({ onSuccess }) {
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="fixed right-4 top-24 z-50 flex max-w-sm items-start gap-3 rounded-2xl border border-red-200 bg-white px-5 py-4 shadow-card"
+            className="fixed right-4 top-24 z-50 flex max-w-sm items-start gap-3 rounded-sm border border-red-200/80 bg-surface px-5 py-4 shadow-elevated"
           >
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" aria-hidden="true" />
             <p className="text-sm font-medium text-charcoal">{errorToast}</p>
@@ -124,11 +124,14 @@ export default function ContactForm({ onSuccess }) {
         onSubmit={handleSubmit}
         onFocus={handleFormStart}
         noValidate
-        className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8"
+        className="card-executive rounded-sm border-l-4 border-l-forest p-6 sm:p-10"
         aria-label="Contact enquiry form"
       >
-        <h2 className="font-heading text-xl font-semibold text-charcoal">Send an Enquiry</h2>
-        <p className="mt-2 text-sm text-muted">
+        <p className="eyebrow-executive">Enquiry</p>
+        <h2 className="font-heading text-2xl font-bold tracking-tight text-charcoal sm:text-3xl">
+          Send an Enquiry
+        </h2>
+        <p className="mt-3 max-w-xl text-muted">
           Complete the form below and our team will respond to your organisation’s training or
           partnership requirements.
         </p>
@@ -140,11 +143,11 @@ export default function ContactForm({ onSuccess }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="mt-6 flex items-start gap-3 rounded-xl border border-primary/20 bg-mint px-4 py-4"
+              className="mt-6 flex items-start gap-3 rounded-sm border border-gold/30 bg-ivory px-4 py-4"
               role="status"
               aria-live="polite"
             >
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-gold" aria-hidden="true" />
               <p className="text-sm text-charcoal">
                 Your enquiry has been submitted successfully. Our team will respond shortly.
               </p>
@@ -158,7 +161,7 @@ export default function ContactForm({ onSuccess }) {
           </p>
         )}
 
-        <fieldset disabled={loading} className="mt-8 grid gap-6 sm:grid-cols-2">
+        <fieldset disabled={loading} className="mt-10 grid gap-6 sm:grid-cols-2">
           <FormField
             id="fullName"
             name="fullName"
@@ -230,7 +233,7 @@ export default function ContactForm({ onSuccess }) {
 
         <Button
           type="submit"
-          className="mt-8 w-full sm:w-auto"
+          className="mt-10 w-full sm:w-auto"
           disabled={loading}
           analyticsLabel="contact_form_submit"
           analyticsLocation="contact_page"
