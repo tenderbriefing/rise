@@ -1,5 +1,6 @@
 import { logEvent } from 'firebase/analytics'
 import { getFirebaseAnalytics, isFirebaseConfigured } from '../lib/firebase'
+import { recordAnalyticsEvent } from '../services/analyticsEventService'
 
 export const AnalyticsEvents = {
   PAGE_VIEW: 'page_view',
@@ -41,6 +42,13 @@ export async function trackEvent(eventName, params = {}) {
     logEvent(analytics, eventName, enriched)
   })
 
+  // Also record to Firestore for admin analytics (non-blocking).
+  recordAnalyticsEvent({
+    eventName,
+    eventType: eventName,
+    ctaLabel: params?.cta_label || params?.link_text || null,
+  })
+
   if (import.meta.env.DEV) {
     console.debug(
       '[analytics]',
@@ -49,6 +57,14 @@ export async function trackEvent(eventName, params = {}) {
       isFirebaseConfigured() ? '' : '(no Firebase config)',
     )
   }
+}
+
+export function trackCTA(label, location, destination) {
+  return trackEvent(AnalyticsEvents.CTA_CLICK, {
+    cta_label: label,
+    cta_location: location,
+    destination,
+  })
 }
 
 export function trackPageView(pathname, title) {
@@ -96,20 +112,6 @@ export function trackLeadFormError(errorMessage) {
     form_name: 'contact_enquiry',
     error_message: String(errorMessage).slice(0, 100),
   })
-}
-
-/** GA4 recommended: corporate profile PDF download */
-export function trackCorporateProfileDownload(location) {
-  return trackEvent(AnalyticsEvents.FILE_DOWNLOAD, {
-    file_name: 'rise-institute-corporate-profile.pdf',
-    link_url: '/rise-institute-corporate-profile.pdf',
-    download_location: location,
-  })
-}
-
-/** @deprecated Use trackCorporateProfileDownload */
-export function trackDownloadProfile({ location }) {
-  return trackCorporateProfileDownload(location)
 }
 
 export function trackCTAClick(label, location, destination) {

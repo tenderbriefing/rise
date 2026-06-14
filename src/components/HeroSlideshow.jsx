@@ -109,17 +109,12 @@ export default function HeroSlideshow() {
         })}
       </div>
 
-      {/* Cinematic overlays */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/80 via-forest/70 to-ink/95"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/95 via-forest/85 to-transparent lg:via-forest/60 lg:to-forest/20"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,transparent_0%,rgb(6_31_26/0.5)_55%,rgb(10_13_16/0.85)_100%)]"
+        className="pointer-events-none absolute inset-y-0 left-0 w-full max-w-xl bg-gradient-to-r from-ink/75 via-ink/30 to-transparent lg:max-w-2xl"
         aria-hidden="true"
       />
 
@@ -134,7 +129,7 @@ export default function HeroSlideshow() {
 
           <motion.p
             variants={staggerItem}
-            className="text-xs font-semibold uppercase tracking-[0.25em] text-gold"
+            className="text-xs font-semibold uppercase tracking-[0.25em] text-sa-gold"
           >
             QCTO Accredited · South Africa
           </motion.p>
@@ -143,16 +138,15 @@ export default function HeroSlideshow() {
             variants={staggerItem}
             className="mt-6 font-heading text-[2.5rem] font-bold leading-[1.02] tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl lg:leading-[1.02]"
           >
-            Developing High-Impact Skills for a Transforming Economy
+            Developing Africa&apos;s Workforce for the Future
           </motion.h1>
 
           <motion.p
             variants={staggerItem}
-            className="mt-8 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl sm:leading-relaxed"
+            className="mt-8 max-w-2xl text-lg leading-relaxed text-white/85 sm:text-xl sm:leading-relaxed"
           >
-            Rise Institute is a fully QCTO-accredited training institution delivering occupational
-            qualifications designed to drive employment, strengthen agricultural sustainability,
-            and support corporate compliance across South Africa.
+            QCTO-accredited occupational qualifications in Artificial Intelligence, Data Science,
+            Cloud Computing, Agriculture, Occupational Health &amp; Safety, and Project Management.
           </motion.p>
 
           <div
@@ -160,22 +154,22 @@ export default function HeroSlideshow() {
             className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
           >
             <Button
-              to="/qualifications"
-              variant="gold"
+              to="/contact"
+              variant="primary"
               size="lg"
-              analyticsLabel="explore_programmes_hero"
+              analyticsLabel="apply_now_hero"
               analyticsLocation="home_hero"
             >
-              Explore Our Programmes
+              Apply Now
             </Button>
             <Button
-              to="/contact"
-              variant="ghost"
+              to="/programmes"
+              variant="goldOutline"
               size="lg"
-              analyticsLabel="partner_hero"
+              analyticsLabel="download_prospectus_hero"
               analyticsLocation="home_hero"
             >
-              Partner With Us
+              Download Prospectus
             </Button>
           </div>
 
@@ -183,9 +177,9 @@ export default function HeroSlideshow() {
             {trustBadges.map((badge) => (
               <span
                 key={badge.label}
-                className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-white/90 backdrop-blur-sm"
+                className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-white/90 backdrop-blur-sm transition-colors hover:border-sa-gold/25"
               >
-                <badge.icon className="h-3.5 w-3.5 text-gold" aria-hidden="true" />
+                <badge.icon className="h-3.5 w-3.5 text-sa-gold" aria-hidden="true" />
                 {badge.label}
               </span>
             ))}
@@ -197,8 +191,8 @@ export default function HeroSlideshow() {
           >
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {authorityItems.map(({ label, icon: Icon }) => (
-                <li key={label} className="flex items-center gap-3 border-l border-gold/40 pl-4">
-                  <Icon className="h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
+                <li key={label} className="flex items-center gap-3 border-l border-sa-gold/40 pl-4">
+                  <Icon className="h-4 w-4 shrink-0 text-sa-gold" aria-hidden="true" />
                   <span className="text-sm font-medium leading-snug text-white/90">{label}</span>
                 </li>
               ))}

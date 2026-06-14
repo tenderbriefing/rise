@@ -2,20 +2,47 @@ import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
 import { siteConfig } from '../data/navigation'
 import { getBreadcrumbs, getCanonical } from '../data/seoRoutes'
+import { seoKeywords } from '../data/qualifications'
 
 const defaults = {
   title: 'Rise Institute | QCTO Accredited Occupational Training Provider in Gauteng',
   description:
-    'Rise Institute is a QCTO-accredited occupational training institution in Midrand, Gauteng, delivering workplace-integrated qualifications in agriculture, project management, and occupational health and safety.',
-  keywords:
-    'QCTO accredited training provider, occupational training South Africa, learnerships Gauteng, B-BBEE skills development, SETA training provider, occupational health and safety course, project management qualification, agricultural training South Africa',
+    'Rise Institute is a QCTO-accredited occupational training institution in Midrand, Gauteng, delivering nine workplace-integrated qualifications across 4IR, agriculture, project management, and occupational health and safety.',
+  keywords: seoKeywords,
   ogType: 'website',
   ogImage: 'https://riseinstitute.co.za/og-rise-institute.jpg',
   twitterCard: 'summary_large_image',
   twitterSite: '@riseinstitute',
 }
 
-function buildStructuredData({ canonicalUrl, description, breadcrumbs }) {
+function buildCourseNodes(courses, canonicalUrl) {
+  if (!courses?.length) return []
+
+  return courses.map((course) => ({
+    '@type': 'Course',
+    '@id': `${siteConfig.domain}/programmes/${course.slug}#course`,
+    name: course.title,
+    description: course.description,
+    provider: { '@id': `${siteConfig.domain}/#educational` },
+    url: `${siteConfig.domain}/programmes/${course.slug}`,
+    courseCode: course.saqaId,
+    educationalLevel: course.nqf,
+    inLanguage: 'en-ZA',
+    offers: {
+      '@type': 'Offer',
+      category: course.category,
+      url: `${siteConfig.domain}/programmes/${course.slug}`,
+    },
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: course.deliveryModes?.join(', ') || 'Blended',
+      courseWorkload: course.duration,
+    },
+    mainEntityOfPage: canonicalUrl,
+  }))
+}
+
+function buildStructuredData({ canonicalUrl, description, breadcrumbs, courses }) {
   const address = {
     '@type': 'PostalAddress',
     streetAddress: siteConfig.address,
@@ -47,7 +74,7 @@ function buildStructuredData({ canonicalUrl, description, breadcrumbs }) {
         '@id': `${siteConfig.domain}/#organization`,
         name: siteConfig.name,
         url: siteConfig.domain,
-        logo: `${siteConfig.domain}/favicon.svg`,
+        logo: `${siteConfig.domain}/rise-icon-512.png`,
         email: siteConfig.email,
         telephone: siteConfig.landline,
         description,
@@ -60,6 +87,12 @@ function buildStructuredData({ canonicalUrl, description, breadcrumbs }) {
           'Learnerships',
           'QCTO Qualifications',
           'B-BBEE Skills Development',
+          'Artificial Intelligence Training',
+          'Data Science Training',
+          'Cloud Computing Training',
+          'Internet of Things Training',
+          'Agricultural Training',
+          'Occupational Health and Safety',
         ],
       },
       {
@@ -100,6 +133,7 @@ function buildStructuredData({ canonicalUrl, description, breadcrumbs }) {
           item: `${siteConfig.domain}${item.path === '/' ? '' : item.path}`,
         })),
       },
+      ...buildCourseNodes(courses, canonicalUrl),
     ],
   }
 }
@@ -119,6 +153,7 @@ export default function SEO({
   publishedTime,
   modifiedTime,
   noindex = false,
+  courses = [],
 }) {
   const location = useLocation()
   const currentPath = pathname || location.pathname
@@ -131,6 +166,7 @@ export default function SEO({
     canonicalUrl,
     description,
     breadcrumbs,
+    courses,
   })
 
   return (

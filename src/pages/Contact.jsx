@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Download, Mail, MapPin, Phone, CheckCircle2, Building2 } from 'lucide-react'
+import { Mail, MapPin, Phone, CheckCircle2, Building2 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/PageHero'
-import Container from '../components/Container'
 import SectionHeader from '../components/SectionHeader'
-import Button from '../components/Button'
 import ContactForm from '../components/ContactForm'
 import PremiumCTA from '../components/PremiumCTA'
+import SectionShell from '../components/SectionShell'
+import TrustBadges from '../components/TrustBadges'
 import AnimatedSection from '../components/AnimatedSection'
 import { siteConfig } from '../data/navigation'
 import { getCanonical } from '../data/seoRoutes'
 import { ctaPresets } from '../data/ctaPresets'
+import { footerTrustBadges } from '../data/trustBadges'
 import { trackEmailClick, trackPhoneClick } from '../utils/analytics'
 
 function ContactDetail({ icon: Icon, label, children }) {
@@ -68,13 +69,18 @@ export default function Contact() {
         )}
       </AnimatePresence>
 
-      <AnimatedSection className="section-padding section-ivory">
-        <Container>
+      <AnimatedSection className="section-padding-compact section-white-band">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <TrustBadges badges={footerTrustBadges} variant="strip" />
+        </div>
+      </AnimatedSection>
+
+      <SectionShell tone="pattern" padding="default">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <aside className="lg:col-span-4">
               <div className="executive-panel sticky top-28 rounded-sm border-l-4 border-l-gold p-8 lg:p-10">
                 <div className="mb-6 flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-sm bg-forest text-gold">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-sm bg-navy text-sa-gold">
                     <Building2 className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div>
@@ -92,7 +98,7 @@ export default function Contact() {
                         Landline:{' '}
                         <a
                           href="tel:+27100133423"
-                          className="font-medium text-forest hover:text-gold"
+                          className="font-medium text-navy hover:text-gold"
                           onClick={() => trackPhoneClick('contact_page', 'landline')}
                         >
                           {siteConfig.landline}
@@ -102,7 +108,7 @@ export default function Contact() {
                         Mobile:{' '}
                         <a
                           href="tel:+27720708467"
-                          className="font-medium text-forest hover:text-gold"
+                          className="font-medium text-navy hover:text-gold"
                           onClick={() => trackPhoneClick('contact_page', 'mobile')}
                         >
                           {siteConfig.mobile}
@@ -113,7 +119,7 @@ export default function Contact() {
                   <ContactDetail icon={Mail} label="Email">
                     <a
                       href={`mailto:${siteConfig.email}`}
-                      className="font-medium text-forest hover:text-gold"
+                      className="font-medium text-navy hover:text-gold"
                       onClick={() => trackEmailClick('contact_page')}
                     >
                       {siteConfig.email}
@@ -121,19 +127,6 @@ export default function Contact() {
                   </ContactDetail>
                 </ul>
 
-                <div className="mt-8 border-t border-border pt-8">
-                  <Button
-                    href="/rise-institute-corporate-profile.pdf"
-                    variant="outline"
-                    className="w-full"
-                    download
-                    analyticsLabel="download_profile"
-                    analyticsLocation="contact_sidebar"
-                  >
-                    <Download className="h-5 w-5" aria-hidden="true" />
-                    Download Corporate Profile
-                  </Button>
-                </div>
               </div>
             </aside>
 
@@ -141,38 +134,35 @@ export default function Contact() {
               <ContactForm onSuccess={handleFormSuccess} />
             </div>
           </div>
-        </Container>
-      </AnimatedSection>
+      </SectionShell>
 
-      <AnimatedSection className="section-padding section-dark">
-        <Container size="content">
-          <SectionHeader
-            eyebrow="Governance"
-            title="Compliance & Governance"
-            description="Rise Institute maintains institutional compliance frameworks suitable for corporate procurement, SETA engagement, and public sector partnership."
-            light
-          />
-          <dl className="mt-12 grid gap-5 sm:grid-cols-2">
-            {[
-              { term: 'Legal Entity', value: 'Rise Institute' },
-              { term: 'Accreditation Authority', value: 'Quality Council for Trades and Occupations' },
-              { term: 'CSD Status', value: 'Registered and Verified' },
-              {
-                term: 'SARS Compliance',
-                value: 'Tax Compliant, TCS PIN available upon request',
-              },
-            ].map(({ term, value }) => (
-              <div
-                key={term}
-                className="executive-panel-dark rounded-sm border border-white/10 p-6 sm:p-7"
-              >
-                <dt className="text-xs font-semibold uppercase tracking-wider text-gold">{term}</dt>
-                <dd className="mt-2 text-sm leading-relaxed text-white/85">{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </Container>
-      </AnimatedSection>
+      <SectionShell tone="navy" padding="default">
+        <SectionHeader
+          eyebrow="Governance"
+          title="Compliance & Governance"
+          description="Rise Institute maintains institutional compliance frameworks suitable for corporate procurement, SETA engagement, and public sector partnership."
+          light
+        />
+        <dl className="mt-12 grid gap-5 sm:grid-cols-2">
+          {[
+            { term: 'Legal Entity', value: 'Rise Institute' },
+            { term: 'Accreditation Authority', value: 'Quality Council for Trades and Occupations' },
+            { term: 'CSD Status', value: 'Registered and Verified' },
+            {
+              term: 'SARS Compliance',
+              value: 'Tax Compliant, TCS PIN available upon request',
+            },
+          ].map(({ term, value }) => (
+            <div
+              key={term}
+              className="executive-panel-dark rounded-sm border border-white/10 p-6 sm:p-7"
+            >
+              <dt className="text-xs font-semibold uppercase tracking-wider text-gold">{term}</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-white/85">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </SectionShell>
 
       <PremiumCTA {...cta} location="contact_footer" variant="forest" />
     </>

@@ -6,24 +6,23 @@ export default function ProtectedRoute({ children }) {
   const { user, loading, isConfigured } = useAuth()
   const location = useLocation()
 
-  if (!isConfigured) {
+  if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-100 p-8">
-        <div className="max-w-md rounded-sm border border-border bg-surface p-8 text-center shadow-soft">
-          <p className="font-heading text-lg font-semibold text-charcoal">Firebase not configured</p>
-          <p className="mt-2 text-sm text-muted">
-            Add Firebase credentials to <code className="text-primary">.env.local</code> to use the admin
-            dashboard.
-          </p>
-        </div>
+      <div className="flex min-h-screen items-center justify-center bg-ivory">
+        <Loader2 className="h-8 w-8 animate-spin text-forest" aria-label="Loading" />
       </div>
     )
   }
 
-  if (loading) {
+  if (!isConfigured) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-100">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Loading" />
+      <div className="flex min-h-screen items-center justify-center bg-ivory p-8">
+        <div className="max-w-md rounded-sm border border-border bg-surface p-8 text-center shadow-soft">
+          <p className="font-heading text-lg font-semibold text-charcoal">Firebase not configured</p>
+          <p className="mt-2 text-sm text-muted">
+            For local development, add Firebase credentials to <code className="text-forest">.env.local</code>.
+          </p>
+        </div>
       </div>
     )
   }

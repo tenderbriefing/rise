@@ -25,15 +25,23 @@ export default function SectionHeader({
       {eyebrow && <p className={eyebrowClass}>{eyebrow}</p>}
       <h2
         className={`font-heading text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-tight ${
-          light ? 'text-white' : 'text-charcoal'
+          light ? 'text-white' : 'text-navy'
         }`}
       >
         {title}
       </h2>
+      <div
+        className={`mt-4 flex items-center gap-2 ${align === 'center' ? 'justify-center' : ''}`}
+        aria-hidden="true"
+      >
+        <span className="h-px w-8 bg-navy" />
+        <span className="h-1.5 w-1.5 rotate-45 bg-sa-gold" />
+        <span className="h-px w-16 bg-gradient-to-r from-sa-gold to-transparent" />
+      </div>
       {description && (
         <p
           className={`mt-5 max-w-2xl text-lg leading-relaxed ${
-            light ? 'text-white/75' : 'text-muted'
+            light ? 'text-white/80' : 'text-muted'
           } ${align === 'center' ? 'mx-auto' : ''}`}
         >
           {description}

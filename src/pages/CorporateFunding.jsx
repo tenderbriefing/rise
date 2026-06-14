@@ -1,11 +1,12 @@
 import { CheckCircle2 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/PageHero'
-import Container from '../components/Container'
 import SectionHeader from '../components/SectionHeader'
 import PremiumCTA from '../components/PremiumCTA'
-import AnimatedSection from '../components/AnimatedSection'
+import SectionShell from '../components/SectionShell'
+import InstitutionalHighlights from '../components/InstitutionalHighlights'
 import { getCanonical } from '../data/seoRoutes'
+import { brandStatement } from '../data/navigation'
 import { ctaPresets } from '../data/ctaPresets'
 import {
   corporateBenefits,
@@ -14,12 +15,14 @@ import {
   section12HClaims,
   setaSupport,
 } from '../data/corporateSolutions'
+import { corporateValueCards } from '../data/institutionalContent'
+import { recordAnalyticsEvent } from '../services/analyticsEventService'
 
 function BenefitItem({ children, gold = false }) {
   return (
     <li className="flex gap-3 border-b border-border/60 pb-4 text-sm leading-relaxed text-charcoal last:border-0 last:pb-0">
       <CheckCircle2
-        className={`mt-0.5 h-4 w-4 shrink-0 ${gold ? 'text-gold' : 'text-forest'}`}
+        className={`mt-0.5 h-4 w-4 shrink-0 ${gold ? 'text-gold' : 'text-primary'}`}
         aria-hidden="true"
       />
       {children}
@@ -37,22 +40,20 @@ export default function CorporateFunding() {
 
       <PageHero
         title="Corporate & Funding Solutions"
-        description="Rise Institute helps organisations convert training investments into measurable commercial, compliance, and transformation outcomes."
+        description={`${brandStatement} We help organisations convert training investments into measurable commercial, compliance, and transformation outcomes.`}
         light
       />
 
-      <AnimatedSection className="section-padding section-surface">
-        <Container size="content">
-          <SectionHeader
-            eyebrow="Strategic Value"
-            title="Transform Skills Development Into Strategic Business Value"
-            description="Our learnership and occupational training solutions support B-BBEE optimisation, tax efficiency, workforce development, and public sector alignment."
-          />
-        </Container>
-      </AnimatedSection>
+      <SectionShell tone="creative" padding="default" containerSize="content">
+        <SectionHeader
+          eyebrow="Strategic Value"
+          title="Transform Skills Development Into Strategic Business Value"
+          description="Our learnership and occupational training solutions support B-BBEE optimisation, tax efficiency, workforce development, and public sector alignment."
+        />
+        <InstitutionalHighlights items={corporateValueCards} variant="light" columns={3} />
+      </SectionShell>
 
-      <AnimatedSection className="section-padding section-ivory">
-        <Container>
+      <SectionShell tone="pattern" padding="default">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
               <SectionHeader
@@ -70,7 +71,16 @@ export default function CorporateFunding() {
                 ))}
               </ul>
             </div>
-            <article className="lg:col-span-6 executive-panel rounded-sm border-l-4 border-l-gold p-8 lg:p-10">
+            <article
+              className="lg:col-span-6 executive-panel rounded-sm border-l-4 border-l-gold p-8 lg:p-10"
+              onMouseEnter={() =>
+                recordAnalyticsEvent({
+                  eventName: 'corporate_interest',
+                  eventType: 'corporate_interest',
+                  corporateInterest: { interestType: 'tax_incentives', section: 'Section 12H' },
+                })
+              }
+            >
               <SectionHeader
                 eyebrow="Tax Incentives"
                 title="Section 12H Tax Incentives"
@@ -93,11 +103,9 @@ export default function CorporateFunding() {
               </p>
             </article>
           </div>
-        </Container>
-      </AnimatedSection>
+      </SectionShell>
 
-      <AnimatedSection className="section-padding section-dark">
-        <Container>
+      <SectionShell tone="navy" padding="default">
           <SectionHeader
             eyebrow="SETA Compliance"
             title="SETA Grant Alignment & Compliance Support"
@@ -109,17 +117,22 @@ export default function CorporateFunding() {
               <li
                 key={item}
                 className="hero-trust-glass flex items-start gap-3 rounded-sm p-5 text-sm leading-relaxed text-white/90"
+                onMouseEnter={() =>
+                  recordAnalyticsEvent({
+                    eventName: 'corporate_interest',
+                    eventType: 'corporate_interest',
+                    corporateInterest: { interestType: 'seta_support', section: 'SETA Support' },
+                  })
+                }
               >
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
                 {item}
               </li>
             ))}
           </ul>
-        </Container>
-      </AnimatedSection>
+      </SectionShell>
 
-      <AnimatedSection className="section-padding section-surface">
-        <Container>
+      <SectionShell tone="white" padding="default">
           <SectionHeader
             eyebrow="Solutions"
             title="Corporate Skills Development Solutions"
@@ -130,6 +143,13 @@ export default function CorporateFunding() {
               <li
                 key={item}
                 className="card-executive group p-6 text-center transition-colors hover:border-gold/25"
+                onMouseEnter={() =>
+                  recordAnalyticsEvent({
+                    eventName: 'corporate_interest',
+                    eventType: 'corporate_interest',
+                    corporateInterest: { interestType: 'corporate_solutions', section: 'Solutions' },
+                  })
+                }
               >
                 <span className="text-xs font-semibold uppercase tracking-wider text-gold">
                   {String(i + 1).padStart(2, '0')}
@@ -138,11 +158,9 @@ export default function CorporateFunding() {
               </li>
             ))}
           </ul>
-        </Container>
-      </AnimatedSection>
+      </SectionShell>
 
-      <AnimatedSection className="section-padding section-ivory">
-        <Container size="content">
+      <SectionShell tone="pattern" padding="default" containerSize="content">
           <SectionHeader
             eyebrow="Public Sector"
             title="For Government & Public Sector Stakeholders"
@@ -153,16 +171,22 @@ export default function CorporateFunding() {
               <li
                 key={item}
                 className="flex gap-4 rounded-sm border border-border bg-surface p-5 shadow-soft"
+                onMouseEnter={() =>
+                  recordAnalyticsEvent({
+                    eventName: 'corporate_interest',
+                    eventType: 'corporate_interest',
+                    corporateInterest: { interestType: 'public_sector', section: 'Public Sector' },
+                  })
+                }
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-forest text-gold">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-navy text-sa-gold">
                   <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span className="text-sm leading-relaxed text-charcoal">{item}</span>
               </li>
             ))}
           </ul>
-        </Container>
-      </AnimatedSection>
+      </SectionShell>
 
       <PremiumCTA {...ctaPresets.corporate} location="corporate_footer" variant="forest" />
     </>

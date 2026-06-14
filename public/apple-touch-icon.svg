@@ -1,8 +1,70 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-label="Rise Institute">
-  <rect width="180" height="180" rx="36" fill="#0B5D3B"/>
-  <rect x="40" y="36" width="48" height="4" rx="2" fill="#C89B3C"/>
-  <path d="M90 52 L90 128" stroke="#C89B3C" stroke-width="6" stroke-linecap="round"/>
-  <path d="M52 108 L90 62 L128 108" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <circle cx="90" cy="118" r="10" fill="#16A34A"/>
-  <text x="90" y="156" text-anchor="middle" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="14" font-weight="600">Rise</text>
+  <defs>
+    <linearGradient id="at-shield-body" x1="90" y1="52" x2="90" y2="138" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#002395"/>
+      <stop offset="1" stop-color="#001a6e"/>
+    </linearGradient>
+    <linearGradient id="at-shield-chief" x1="90" y1="22" x2="90" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#002395"/>
+      <stop offset="1" stop-color="#001a6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" rx="40" fill="#002395"/>
+  <g transform="translate(36 24) scale(1.35)">
+    <path
+      d="M40 2C40 2 76 11 76 14V48C76 68 40 92 40 92C40 92 4 68 4 48V14C4 11 40 2 40 2Z"
+      fill="url(#at-shield-body)"
+      stroke="#FFB612"
+      stroke-width="2"
+    />
+    <path
+      d="M40 2C40 2 76 11 76 14V30H4V14C4 11 40 2 40 2Z"
+      fill="url(#at-shield-chief)"
+    />
+    <rect x="4" y="28" width="72" height="3" fill="#FFB612"/>
+    <path
+      d="M14 52C10 58 8 64 10 70M16 50C12 56 11 62 13 68M18 48C14 54 13 60 15 66"
+      stroke="#FFB612"
+      stroke-width="1.2"
+      stroke-linecap="round"
+      fill="none"
+      opacity="0.85"
+    />
+    <path
+      d="M66 52C70 58 72 64 70 70M64 50C68 56 69 62 67 68M62 48C66 54 67 60 65 66"
+      stroke="#FFB612"
+      stroke-width="1.2"
+      stroke-linecap="round"
+      fill="none"
+      opacity="0.85"
+    />
+    <path d="M40 62L26 56V72L40 78L54 72V56L40 62Z" fill="#FFFFFF"/>
+    <path d="M40 62V78" stroke="#C9920A" stroke-width="1.2"/>
+    <path d="M26 56L40 62L54 56" stroke="#E8E4DC" stroke-width="0.8" fill="none"/>
+    <path
+      d="M40 54C40 54 36 48 36 44C36 40 38 38 40 36C42 38 44 40 44 44C44 48 40 54 40 54Z"
+      fill="#FFB612"
+    />
+    <path
+      d="M40 50C40 50 38 46 38 44C38 42 39 41 40 40C41 41 42 42 42 44C42 46 40 50 40 50Z"
+      fill="#FFFFFF"
+      opacity="0.9"
+    />
+    <path
+      d="M18 82C22 80 26 79 40 79C54 79 58 80 62 82C58 84 54 85 40 85C26 85 22 84 18 82Z"
+      fill="#002395"
+      stroke="#FFB612"
+      stroke-width="0.8"
+    />
+    <text
+      x="40"
+      y="83.5"
+      text-anchor="middle"
+      fill="#FFB612"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="5.5"
+      font-weight="700"
+      letter-spacing="0.8"
+    >QCTO</text>
+  </g>
 </svg>

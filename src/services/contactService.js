@@ -1,6 +1,8 @@
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { ensureFirebaseInitialized, getFirestoreDb } from '../lib/firebase'
 import { notifyInternalTeam, sendAutoReply } from './leadNotificationService'
+import { buildAttribution } from '../utils/trafficAttribution'
+import { recordAnalyticsEvent } from './analyticsEventService'
 
 export const ContactProviders = {
   MOCK: 'mock',
@@ -11,7 +13,12 @@ const ENQUIRIES_COLLECTION = 'enquiries'
 
 async function resolveActiveProvider() {
   const result = await ensureFirebaseInitialized()
-  return result.ok ? ContactProviders.FIRESTORE : ContactProviders.MOCK
+  if (result.ok) return ContactProviders.FIRESTORE
+
+  // Never silently fall back to mock in production — it hides real lead capture failures.
+  if (import.meta.env.PROD) return ContactProviders.FIRESTORE
+
+  return ContactProviders.MOCK
 }
 
 /**
@@ -61,14 +68,20 @@ async function submitMock(payload) {
  * @param {SubmitMeta} meta
  */
 async function submitToFirestore(payload, meta) {
-  await ensureFirebaseInitialized()
+  const init = await ensureFirebaseInitialized()
   const db = getFirestoreDb()
   if (!db) {
-    throw new Error('Firestore is not available. Check Firebase configuration.')
+    // In production we must not pretend success.
+    const message = init.ok
+      ? 'Firestore is not available. Check Firebase initialization.'
+      : 'Firebase could not be initialized. Lead submission is unavailable.'
+    throw new Error(message)
   }
 
   const route =
     meta.page || meta.route || (typeof window !== 'undefined' ? window.location.pathname : '/contact')
+
+  const attribution = buildAttribution()
 
   const enquiry = {
     fullName: payload.fullName.trim(),
@@ -90,6 +103,16 @@ async function submitToFirestore(payload, meta) {
     route,
     page: route,
     analyticsId: meta.analyticsId || null,
+    sessionId: attribution.sessionId,
+    landingPage: attribution.landingPage,
+    currentPage: attribution.currentPage,
+    referrer: attribution.referrer,
+    utmSource: attribution.source,
+    utmMedium: attribution.medium,
+    utmCampaign: attribution.campaign,
+    channel: attribution.channel,
+    deviceType: attribution.deviceType,
+    browser: attribution.browser,
     activityLog: [
       {
         type: 'created',
@@ -104,6 +127,15 @@ async function submitToFirestore(payload, meta) {
 
   const record = { id: docRef.id, ...payload, ...enquiry }
   await Promise.allSettled([notifyInternalTeam(record), sendAutoReply(record)])
+
+  // Dual tracking: Firestore analytics events for admin intelligence (never blocks lead capture).
+  await recordAnalyticsEvent({
+    eventName: 'generate_lead',
+    eventType: 'generate_lead',
+    leadId: docRef.id,
+    qualificationInterest: null,
+    corporateInterest: null,
+  })
 
   return {
     success: true,
@@ -127,6 +159,24 @@ export function validateContactForm(payload) {
   if (!payload.phone?.trim()) errors.phone = 'Contact number is required'
   if (!payload.interest) errors.interest = 'Please select an area of interest'
   if (!payload.message?.trim()) errors.message = 'Message is required'
+
+  return errors
+}
+
+export function validateProgrammeEnquiry(payload) {
+  const errors = {}
+
+  if (!payload.fullName?.trim()) errors.fullName = 'Full name is required'
+
+  if (!payload.email?.trim()) {
+    errors.email = 'Email address is required'
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+    errors.email = 'Enter a valid email address'
+  }
+
+  if (!payload.phone?.trim()) errors.phone = 'Phone number is required'
+  if (!payload.province) errors.province = 'Please select your province'
+  if (!payload.qualification) errors.qualification = 'Please select a qualification'
 
   return errors
 }

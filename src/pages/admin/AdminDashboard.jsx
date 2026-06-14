@@ -5,10 +5,15 @@ import LeadStatsCards from '../../components/admin/LeadStatsCards'
 import GlassCard from '../../components/GlassCard'
 import { fetchLeadStats, fetchLeads } from '../../services/leadService'
 import LeadStatusBadge from '../../components/admin/LeadStatusBadge'
+import { getEventsByDateRange } from '../../services/analyticsEventService'
+import ConversionFunnelChart from '../../components/admin/analytics/ConversionFunnelChart'
+import LeadSourceChart from '../../components/admin/analytics/LeadSourceChart'
+import { calculateFunnel, calculateLeadSources } from '../../utils/analyticsAggregations'
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ total: 0, new: 0, qualified: 0, closed: 0 })
   const [recent, setRecent] = useState([])
+  const [analyticsEvents, setAnalyticsEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -16,10 +21,13 @@ export default function AdminDashboard() {
     let cancelled = false
     async function load() {
       try {
-        const leads = await fetchLeads()
+        const end = new Date()
+        const start = new Date(Date.now() - 1000 * 60 * 60 * 24 * 14)
+        const [leads, events] = await Promise.all([fetchLeads(), getEventsByDateRange(start, end, 2000)])
         if (cancelled) return
         setStats(await fetchLeadStats(leads))
         setRecent(leads.slice(0, 5))
+        setAnalyticsEvents(events)
       } catch (err) {
         if (!cancelled) setError(err.message)
       } finally {
@@ -87,10 +95,22 @@ export default function AdminDashboard() {
         )}
       </GlassCard>
 
-      <GlassCard className="border-dashed p-8 text-center">
-        <p className="text-sm font-medium text-muted">Analytics chart placeholder</p>
-        <p className="mt-1 text-xs text-muted">Connect GA4 reporting in a future release.</p>
-      </GlassCard>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="font-heading text-lg font-semibold text-charcoal">Analytics preview</h2>
+          <Link
+            to="/admin/analytics"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-forest hover:underline"
+          >
+            Open full analytics
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <LeadSourceChart data={calculateLeadSources(analyticsEvents, [])} />
+          <ConversionFunnelChart data={calculateFunnel(analyticsEvents)} />
+        </div>
+      </div>
     </div>
   )
 }

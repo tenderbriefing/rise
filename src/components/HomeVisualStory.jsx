@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion'
-import Container from './Container'
+import SectionShell from './SectionShell'
 import Button from './Button'
 import SectionHeader from './SectionHeader'
 import ImageFeatureCard from './ImageFeatureCard'
-import AnimatedSection from './AnimatedSection'
 import { boardroomHomeImage, qualificationPreviewImages } from '../data/homeImages'
 import { slideInRight, slideIn } from '../utils/motion'
 
@@ -11,8 +10,7 @@ export function CorporatePositioningSection() {
   const image = boardroomHomeImage
 
   return (
-    <AnimatedSection className="section-padding section-surface">
-      <Container>
+    <SectionShell tone="creative" padding="default">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <motion.div
             variants={slideIn}
@@ -55,17 +53,15 @@ export function CorporatePositioningSection() {
               aspectClass="aspect-[5/4] min-h-[320px]"
               className="shadow-card"
             />
-          </motion.div>
-        </div>
-      </Container>
-    </AnimatedSection>
+        </motion.div>
+      </div>
+    </SectionShell>
   )
 }
 
 export function QualificationsPreviewSection() {
   return (
-    <AnimatedSection className="section-padding bg-light">
-      <Container>
+    <SectionShell tone="pattern" padding="default">
         <SectionHeader
           eyebrow="Our Programmes"
           title="Occupational Qualifications Across Key Economic Sectors"
@@ -87,7 +83,7 @@ export function QualificationsPreviewSection() {
         </div>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button
-            to="/qualifications"
+            to="/programmes"
             variant="primary"
             size="lg"
             analyticsLabel="explore_qualifications_preview"
@@ -105,8 +101,7 @@ export function QualificationsPreviewSection() {
             Corporate &amp; Funding Solutions
           </Button>
         </div>
-      </Container>
-    </AnimatedSection>
+      </SectionShell>
   )
 }
 

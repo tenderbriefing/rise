@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, LogOut, Users } from 'lucide-react'
+import { BarChart3, LayoutDashboard, LogOut, Users } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import BrandLogo from '../components/BrandLogo'
 
@@ -24,7 +24,7 @@ export default function AdminLayout() {
       <header className="border-b border-border bg-surface shadow-nav">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div className="flex items-center gap-6">
-            <BrandLogo className="h-8" />
+            <BrandLogo variant="mark-only" showText={false} />
             <div className="hidden border-l border-border pl-6 sm:block">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gold">
                 Executive Portal
@@ -57,6 +57,10 @@ export default function AdminLayout() {
             <NavLink to="/admin" end className={navLinkClass}>
               <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
               Dashboard
+            </NavLink>
+            <NavLink to="/admin/analytics" className={navLinkClass}>
+              <BarChart3 className="h-4 w-4" aria-hidden="true" />
+              Analytics
             </NavLink>
             <NavLink to="/admin/leads" className={navLinkClass}>
               <Users className="h-4 w-4" aria-hidden="true" />

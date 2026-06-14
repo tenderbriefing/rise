@@ -184,6 +184,53 @@ Link GA4 property in Firebase Console → Project settings → Integrations.
 
 ---
 
+## Admin analytics dashboard (Firestore + Recharts)
+
+Admin analytics lives at:
+
+- `/admin/analytics`
+
+Rise Institute uses **dual tracking**:
+
+- **Firebase Analytics / GA4** for standard web analytics.
+- **Firestore `analyticsEvents`** for an internal intelligence layer viewable in the admin portal.
+
+### `analyticsEvents` data model
+
+Events are created by public users (write-only) and readable by authenticated admins.
+
+Each document includes:
+
+- `eventName`, `eventType` (e.g. `page_view`, `cta_click`, `form_start`, `form_submit`, `generate_lead`)
+- `page`, `path`
+- `source`, `medium`, `campaign`, `referrer`
+- `ctaLabel`
+- `qualificationInterest` (title, SAQA ID, NQF, faculty)
+- `corporateInterest` (interestType, section)
+- `leadId` (when applicable)
+- `sessionId` (anonymous; persisted in localStorage as `rise_session_id`)
+- `deviceType`, `browser`
+- `createdAt`
+
+### Lead attribution fields (`enquiries`)
+
+When an enquiry is created, attribution is attached for legitimate follow-up:
+
+- `sessionId`
+- `landingPage`, `currentPage`, `referrer`
+- `utmSource`, `utmMedium`, `utmCampaign`, `channel`
+- `deviceType`, `browser`
+
+### Privacy / POPIA note
+
+Analytics events are **anonymous by default** and linked to `sessionId`. If a user submits an enquiry, the lead record may include attribution fields (UTM/referrer/device) for legitimate business follow-up. Do not collect unnecessary sensitive personal information.
+
+### Roadmap
+
+Client-side aggregation is used initially for speed. A future enhancement can add scheduled Cloud Functions to roll up daily metrics into a summary collection to reduce query costs at scale.
+
+---
+
 ## Brand assets & imagery
 
 | Path | Purpose |

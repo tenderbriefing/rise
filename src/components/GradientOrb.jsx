@@ -15,8 +15,9 @@ export default function GradientOrb({
   }
 
   const colors = {
-    accent: 'from-accent/30 to-primary/10',
-    gold: 'from-gold/25 to-transparent',
+    accent: 'from-navy/20 to-navy-dark/10',
+    gold: 'from-sa-gold/20 to-transparent',
+    navy: 'from-navy/15 to-transparent',
     mint: 'from-mint/40 to-transparent',
   }
 

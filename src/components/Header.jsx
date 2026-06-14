@@ -69,17 +69,17 @@ export default function Header() {
         if (mobile) {
           return `relative block border-l-2 px-4 py-3.5 text-base font-medium transition-colors ${
             isActive
-              ? 'border-gold bg-ivory text-forest'
-              : 'border-transparent text-charcoal hover:border-border hover:bg-ivory'
+              ? 'border-sa-gold bg-ivory text-primary'
+              : 'border-transparent text-charcoal hover:border-sa-gold/40 hover:bg-ivory hover:text-primary'
           }`
         }
         if (onHero) {
-          return `relative text-sm font-medium tracking-wide transition-colors ${
-            isActive ? 'text-gold' : 'text-white/85 hover:text-white'
+          return `relative text-xs font-medium tracking-wide transition-colors xl:text-sm ${
+            isActive ? 'text-sa-gold' : 'text-white/85 hover:text-white'
           }`
         }
-        return `relative text-sm font-medium tracking-wide transition-colors ${
-          isActive ? 'text-forest' : 'text-charcoal hover:text-forest'
+        return `relative text-xs font-medium tracking-wide transition-colors xl:text-sm ${
+          isActive ? 'text-primary' : 'text-charcoal hover:text-primary'
         }`
       }}
     >
@@ -89,7 +89,7 @@ export default function Header() {
           {isActive && !mobile && (
             <motion.span
               layoutId="nav-indicator"
-              className={`absolute -bottom-1.5 left-0 h-px w-full ${onHero ? 'bg-gold' : 'bg-forest'}`}
+              className={`absolute -bottom-1.5 left-0 h-px w-full ${onHero ? 'bg-sa-gold' : 'bg-sa-gold'}`}
               transition={{ type: 'spring', stiffness: 400, damping: 35 }}
             />
           )}
@@ -103,14 +103,14 @@ export default function Header() {
       ref={headerRef}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
         isSolid
-          ? 'border-b border-border/80 bg-surface/95 shadow-nav backdrop-blur-xl'
+          ? 'border-b-2 border-burgundy/10 bg-surface shadow-nav backdrop-blur-xl after:absolute after:inset-x-0 after:top-0 after:h-[3px] after:bg-gradient-to-r after:from-burgundy after:via-sa-gold after:to-burgundy'
           : 'bg-transparent'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <BrandLogo onHero={onHero} onClick={closeMobile} />
+        <BrandLogo onClick={closeMobile} />
 
-        <nav className="hidden items-center gap-10 lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-4 xl:gap-5 lg:flex" aria-label="Main navigation">
           {navLinks.map((link) => (
             <NavItem key={link.path} link={link} />
           ))}
@@ -120,11 +120,11 @@ export default function Header() {
           <Button
             to="/contact"
             size="sm"
-            variant={onHero ? 'gold' : 'primary'}
-            analyticsLabel="partner_header"
+            variant={onHero && !isSolid ? 'goldOutline' : 'primary'}
+            analyticsLabel="apply_now_header"
             analyticsLocation="header_desktop"
           >
-            Partner With Us
+            Apply Now
           </Button>
         </div>
 
@@ -132,12 +132,12 @@ export default function Header() {
           <Button
             to="/contact"
             size="sm"
-            variant={onHero && !isSolid ? 'gold' : 'primary'}
-            analyticsLabel="partner_header_mobile"
+            variant={onHero && !isSolid ? 'goldOutline' : 'primary'}
+            analyticsLabel="apply_now_header_mobile"
             analyticsLocation="header_mobile_sticky"
             className="!px-3 !py-2 text-xs"
           >
-            Partner
+            Apply
           </Button>
           <button
             type="button"
@@ -188,10 +188,10 @@ export default function Header() {
                     to="/contact"
                     className="w-full"
                     onClick={closeMobile}
-                    analyticsLabel="partner_mobile_menu"
+                    analyticsLabel="apply_now_mobile_menu"
                     analyticsLocation="header_mobile_menu"
                   >
-                    Partner With Us
+                    Apply Now
                   </Button>
                 </li>
               </ul>

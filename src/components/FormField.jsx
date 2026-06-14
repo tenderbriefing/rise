@@ -22,13 +22,13 @@ export default function FormField({
   const baseInputClass = `peer w-full rounded-sm border bg-surface px-4 pb-3 pt-6 text-charcoal transition-all duration-200 placeholder-transparent focus:outline-none focus:ring-2 ${
     hasError
       ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
-      : 'border-border hover:border-primary/40 focus:border-primary focus:ring-primary/20'
+      : 'border-border hover:border-navy/40 focus:border-navy focus:ring-navy/20'
   }`
 
   const labelClass = `pointer-events-none absolute left-4 transition-all duration-200 ${
     hasValue
-      ? 'top-2 text-xs font-medium text-primary'
-      : 'top-4 text-sm text-muted peer-focus:top-2 peer-focus:text-xs peer-focus:font-medium peer-focus:text-primary'
+      ? 'top-2 text-xs font-medium text-navy'
+      : 'top-4 text-sm text-muted peer-focus:top-2 peer-focus:text-xs peer-focus:font-medium peer-focus:text-navy'
   }`
 
   return (
@@ -50,7 +50,7 @@ export default function FormField({
           </select>
           <label htmlFor={id} className={labelClass}>
             {label}
-            {required && <span className="text-primary"> *</span>}
+            {required && <span className="text-sa-red"> *</span>}
           </label>
         </>
       ) : as === 'textarea' ? (
@@ -70,7 +70,7 @@ export default function FormField({
           />
           <label htmlFor={id} className={labelClass}>
             {label}
-            {required && <span className="text-primary"> *</span>}
+            {required && <span className="text-sa-red"> *</span>}
           </label>
         </>
       ) : (
@@ -91,7 +91,7 @@ export default function FormField({
           />
           <label htmlFor={id} className={labelClass}>
             {label}
-            {required && <span className="text-primary"> *</span>}
+            {required && <span className="text-sa-red"> *</span>}
           </label>
         </>
       )}

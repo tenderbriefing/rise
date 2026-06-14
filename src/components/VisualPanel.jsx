@@ -1,11 +1,11 @@
 import { getImage } from '../data/images'
 
 const gradients = {
-  agriculture: 'from-forest via-primary to-ink',
-  corporate: 'from-ink via-forest to-charcoal',
-  safety: 'from-charcoal via-forest to-ink',
-  classroom: 'from-forest to-ink',
-  workplace: 'from-ink via-forest to-primary',
+  agriculture: 'from-primary-dark via-primary to-primary-dark',
+  corporate: 'from-primary via-primary-dark to-primary',
+  safety: 'from-primary-dark via-primary to-primary-dark',
+  classroom: 'from-primary to-primary-dark',
+  workplace: 'from-primary-dark via-primary to-primary',
 }
 
 const defaultLabels = {
@@ -38,10 +38,10 @@ export default function VisualPanel({
           decoding="async"
         />
         <div
-          className="absolute inset-0 bg-gradient-to-t from-ink/90 via-forest/30 to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary/25 to-transparent"
           aria-hidden="true"
         />
-        <p className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-ink/40 p-6 text-sm font-medium tracking-wide text-white backdrop-blur-sm">
+        <p className="absolute bottom-0 left-0 right-0 border-t border-sa-gold/20 bg-primary/50 p-6 text-sm font-medium tracking-wide text-white backdrop-blur-sm">
           {resolvedLabel}
         </p>
       </div>

@@ -102,7 +102,9 @@ export async function ensureFirebaseInitialized() {
       db = getFirestore(app)
       initResult = { ok: true, source, config: firebaseConfig }
 
-      console.info(`[firebase] Ready (${source}) — project: ${firebaseConfig.projectId}`)
+      if (import.meta.env.DEV) {
+        console.info(`[firebase] Ready (${source}) — project: ${firebaseConfig.projectId}`)
+      }
       return initResult
     })().catch((error) => {
       initPromise = null

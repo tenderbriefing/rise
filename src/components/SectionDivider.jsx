@@ -12,9 +12,9 @@ export default function SectionDivider({ variant = 'default' }) {
         transition={{ duration: 0.4 }}
       >
         <span className="h-px w-12 bg-gradient-to-r from-transparent to-gold/50" />
-        <span className="h-1 w-1 rounded-full bg-sa-green" />
+        <span className="h-1 w-1 rounded-full bg-sa-gold" />
         <span className="h-px w-8 bg-sa-gold/70" />
-        <span className="h-1 w-1 rounded-full bg-sa-blue/80" />
+        <span className="h-1 w-1 rounded-full bg-sa-blue/60" />
         <span className="h-px w-12 bg-gradient-to-l from-transparent to-gold/30" />
       </motion.div>
     )

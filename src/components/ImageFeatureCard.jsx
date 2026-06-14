@@ -11,7 +11,7 @@ export default function ImageFeatureCard({
   image,
   alt,
   icon: Icon,
-  fallbackGradient = 'from-emerald-900 to-green-700',
+  fallbackGradient = 'from-navy-dark via-navy to-navy-dark',
   priority = false,
   className = '',
   aspectClass = 'aspect-[4/3]',
@@ -51,12 +51,12 @@ export default function ImageFeatureCard({
         )}
 
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/90 via-forest/40 to-transparent"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/15 to-transparent"
           aria-hidden="true"
         />
 
         <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-          <span className="mb-3 block h-0.5 w-10 rounded-full bg-gold" aria-hidden="true" />
+          <span className="mb-3 block h-0.5 w-10 rounded-full bg-gradient-to-r from-navy to-sa-gold" aria-hidden="true" />
           <h3 className="font-heading text-lg font-semibold text-white sm:text-xl">{title}</h3>
           <p className="mt-2 text-sm leading-relaxed text-white/85">{description}</p>
         </div>

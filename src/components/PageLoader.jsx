@@ -19,7 +19,7 @@ export default function PageLoader() {
     <AnimatePresence>
       {loading && (
         <motion.div
-          className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-1 origin-left bg-gradient-to-r from-gold via-accent to-primary"
+          className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-1 origin-left bg-gradient-to-r from-sa-gold via-gold to-navy"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           exit={{ scaleX: 1, opacity: 0 }}

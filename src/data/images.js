@@ -10,7 +10,7 @@
  * - src/assets/images/qualifications/agriculture.jpg
  * - src/assets/images/corporate/workplace.jpg
  * - src/assets/images/contact/office.jpg
- * - src/assets/brand/rise-logo.svg (also in public)
+ * - src/assets/brand/rise-logo.png (full lockup; also in public for OG/favicon)
  */
 
 // Uncomment and import when real assets are added:
@@ -60,7 +60,7 @@ export const imageRegistry = {
     folder: 'contact',
   },
   brandLogo: {
-    src: '/favicon.svg',
+    src: '/rise-icon-512.png',
     alt: 'Rise Institute logo',
     variant: null,
     folder: 'brand',

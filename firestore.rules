@@ -43,7 +43,17 @@ service cloud.firestore {
           'route',
           'page',
           'analyticsId',
-          'activityLog'
+          'activityLog',
+          'sessionId',
+          'landingPage',
+          'currentPage',
+          'referrer',
+          'utmSource',
+          'utmMedium',
+          'utmCampaign',
+          'channel',
+          'deviceType',
+          'browser'
         ])
         && request.resource.data.fullName is string
         && request.resource.data.fullName.size() > 1
@@ -69,8 +79,13 @@ service cloud.firestore {
         && request.resource.data.assignedTo == null
         && request.resource.data.notes == ''
         && request.resource.data.tags.size() == 0
-        && request.resource.data.createdAt == request.time
-        && request.resource.data.updatedAt == request.time
+        // Accept server timestamps or client-provided timestamps close to now.
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp
+        && request.resource.data.createdAt <= request.time
+        && request.resource.data.updatedAt <= request.time
+        && request.resource.data.createdAt >= request.time - duration.value(10, 'm')
+        && request.resource.data.updatedAt >= request.time - duration.value(10, 'm')
         && request.resource.data.lastContactedAt == null
         && request.resource.data.userAgent is string
         && request.resource.data.userAgent.size() < 500
@@ -78,6 +93,36 @@ service cloud.firestore {
         && request.resource.data.route.size() < 200
         && request.resource.data.page is string
         && request.resource.data.page.size() < 200
+        && (!('sessionId' in request.resource.data) || request.resource.data.sessionId == null || (
+          request.resource.data.sessionId is string && request.resource.data.sessionId.size() < 80
+        ))
+        && (!('landingPage' in request.resource.data) || request.resource.data.landingPage == null || (
+          request.resource.data.landingPage is string && request.resource.data.landingPage.size() < 300
+        ))
+        && (!('currentPage' in request.resource.data) || request.resource.data.currentPage == null || (
+          request.resource.data.currentPage is string && request.resource.data.currentPage.size() < 200
+        ))
+        && (!('referrer' in request.resource.data) || request.resource.data.referrer == null || (
+          request.resource.data.referrer is string && request.resource.data.referrer.size() < 300
+        ))
+        && (!('utmSource' in request.resource.data) || request.resource.data.utmSource == null || (
+          request.resource.data.utmSource is string && request.resource.data.utmSource.size() < 120
+        ))
+        && (!('utmMedium' in request.resource.data) || request.resource.data.utmMedium == null || (
+          request.resource.data.utmMedium is string && request.resource.data.utmMedium.size() < 120
+        ))
+        && (!('utmCampaign' in request.resource.data) || request.resource.data.utmCampaign == null || (
+          request.resource.data.utmCampaign is string && request.resource.data.utmCampaign.size() < 120
+        ))
+        && (!('channel' in request.resource.data) || request.resource.data.channel == null || (
+          request.resource.data.channel is string && request.resource.data.channel.size() < 40
+        ))
+        && (!('deviceType' in request.resource.data) || request.resource.data.deviceType == null || (
+          request.resource.data.deviceType is string && request.resource.data.deviceType.size() < 30
+        ))
+        && (!('browser' in request.resource.data) || request.resource.data.browser == null || (
+          request.resource.data.browser is string && request.resource.data.browser.size() < 40
+        ))
         && (!('analyticsId' in request.resource.data) || (
           request.resource.data.analyticsId == null
           || (request.resource.data.analyticsId is string
@@ -123,6 +168,75 @@ service cloud.firestore {
       allow create: if validPublicCreate();
       allow update: if isAdmin() && validAdminUpdate();
       allow delete: if false;
+    }
+
+    function validAnalyticsCreate() {
+      return request.resource.data.keys().hasOnly([
+          'eventName',
+          'eventType',
+          'page',
+          'path',
+          'source',
+          'medium',
+          'campaign',
+          'referrer',
+          'ctaLabel',
+          'qualificationInterest',
+          'corporateInterest',
+          'leadId',
+          'sessionId',
+          'deviceType',
+          'browser',
+          'createdAt'
+        ])
+        && request.resource.data.eventName is string
+        && request.resource.data.eventName.size() > 0
+        && request.resource.data.eventName.size() < 80
+        && request.resource.data.eventType is string
+        && request.resource.data.eventType.size() > 0
+        && request.resource.data.eventType.size() < 60
+        && request.resource.data.path is string
+        && request.resource.data.path.size() > 0
+        && request.resource.data.path.size() < 200
+        && request.resource.data.page is string
+        && request.resource.data.page.size() > 0
+        && request.resource.data.page.size() < 200
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.createdAt <= request.time
+        && request.resource.data.createdAt >= request.time - duration.value(10, 'm')
+        && (!('ctaLabel' in request.resource.data) || request.resource.data.ctaLabel == null || (
+          request.resource.data.ctaLabel is string && request.resource.data.ctaLabel.size() < 160
+        ))
+        && (!('leadId' in request.resource.data) || request.resource.data.leadId == null || (
+          request.resource.data.leadId is string && request.resource.data.leadId.size() < 120
+        ))
+        && (!('sessionId' in request.resource.data) || request.resource.data.sessionId == null || (
+          request.resource.data.sessionId is string && request.resource.data.sessionId.size() < 80
+        ))
+        && (!('source' in request.resource.data) || request.resource.data.source == null || (
+          request.resource.data.source is string && request.resource.data.source.size() < 120
+        ))
+        && (!('medium' in request.resource.data) || request.resource.data.medium == null || (
+          request.resource.data.medium is string && request.resource.data.medium.size() < 120
+        ))
+        && (!('campaign' in request.resource.data) || request.resource.data.campaign == null || (
+          request.resource.data.campaign is string && request.resource.data.campaign.size() < 120
+        ))
+        && (!('referrer' in request.resource.data) || request.resource.data.referrer == null || (
+          request.resource.data.referrer is string && request.resource.data.referrer.size() < 300
+        ))
+        && (!('deviceType' in request.resource.data) || request.resource.data.deviceType == null || (
+          request.resource.data.deviceType is string && request.resource.data.deviceType.size() < 30
+        ))
+        && (!('browser' in request.resource.data) || request.resource.data.browser == null || (
+          request.resource.data.browser is string && request.resource.data.browser.size() < 40
+        ));
+    }
+
+    match /analyticsEvents/{eventId} {
+      allow create: if validAnalyticsCreate();
+      allow read: if isAdmin();
+      allow update, delete: if false;
     }
 
     match /mail/{mailId} {

@@ -10,10 +10,10 @@ export default function PillarCard({ title, description, icon: Icon }) {
       variants={cardHover}
     >
       <div
-        className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-500 group-hover:scale-x-100"
+        className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-navy to-sa-gold transition-transform duration-500 group-hover:scale-x-100"
         aria-hidden="true"
       />
-      <div className="mb-6 flex h-12 w-12 items-center justify-center border border-border bg-ivory text-forest transition-colors duration-300 group-hover:border-gold/40 group-hover:bg-forest group-hover:text-gold">
+      <div className="mb-6 flex h-12 w-12 items-center justify-center border border-border bg-ivory text-navy transition-colors duration-300 group-hover:border-navy/30 group-hover:bg-navy group-hover:text-sa-gold">
         <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
       </div>
       <h3 className="font-heading text-xl font-bold tracking-tight text-charcoal lg:text-2xl">{title}</h3>

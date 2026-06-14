@@ -10,7 +10,7 @@ export default function FloatingBadge({ children, icon: Icon, className = '', de
       whileHover={{ scale: 1.03, backgroundColor: 'rgba(255,255,255,0.15)' }}
       transition={{ duration: 0.2 }}
     >
-      {Icon && <Icon className="h-4 w-4 text-gold" aria-hidden="true" />}
+      {Icon && <Icon className="h-4 w-4 text-sa-gold" aria-hidden="true" />}
       {children}
     </motion.span>
   )

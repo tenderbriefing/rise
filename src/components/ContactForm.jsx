@@ -11,8 +11,13 @@ import {
   trackLeadFormSubmit,
   trackLeadFormSuccess,
 } from '../utils/analytics'
+import { recordAnalyticsEvent } from '../services/analyticsEventService'
 
 const interestOptions = [
+  'Programme Enrolment / Learnership',
+  '4IR Academy Programmes',
+  'Agriculture Academy Programmes',
+  'Occupational Health & Safety',
   'Sponsor a Learnership Programme',
   'B-BBEE Skills Development Support',
   'SETA & Public Sector Partnerships',
@@ -43,6 +48,10 @@ export default function ContactForm({ onSuccess }) {
     if (formStartedRef.current) return
     formStartedRef.current = true
     trackLeadFormStart()
+    recordAnalyticsEvent({
+      eventName: 'form_start',
+      eventType: 'form_start',
+    })
   }
 
   const handleChange = (e) => {
@@ -67,6 +76,12 @@ export default function ContactForm({ onSuccess }) {
     setLoading(true)
     setErrorToast(null)
     trackLeadFormSubmit({ interest: form.interest })
+    recordAnalyticsEvent({
+      eventName: 'form_submit',
+      eventType: 'form_submit',
+      qualificationInterest: null,
+      corporateInterest: null,
+    })
 
     try {
       const result = await submitContactForm(form, { page: location.pathname })
@@ -124,7 +139,7 @@ export default function ContactForm({ onSuccess }) {
         onSubmit={handleSubmit}
         onFocus={handleFormStart}
         noValidate
-        className="card-executive rounded-sm border-l-4 border-l-forest p-6 sm:p-10"
+        className="card-executive rounded-sm border-l-4 border-l-sa-gold p-6 sm:p-10"
         aria-label="Contact enquiry form"
       >
         <p className="eyebrow-executive">Enquiry</p>
