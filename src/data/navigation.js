@@ -17,7 +17,7 @@ export const siteConfig = {
   name: 'Rise Institute',
   domain: 'https://riseinstitute.co.za',
   email: 'info@riseinstitute.co.za',
-  /** Public enquiry mailbox while online form delivery is deferred. */
+  /** Public enquiry mailbox (FormSubmit destination). */
   enquiryEmail: 'Calvin@riseinstitute.co.za',
   landline: '+27 12 004 8728',
   landlineTel: '+27120048728',
@@ -30,13 +30,6 @@ export const siteConfig = {
   country: 'ZA',
   tagline: 'QCTO-accredited occupational training institution',
 }
-
-/**
- * Online enquiry submission remains disabled until production SMTP/email
- * notification is configured and E2E-verified. Do not enable without Founder approval.
- */
-export const ENQUIRY_SUBMISSION_ENABLED = false
-
 
 export const brandStatement =
   'Rise Institute is a QCTO-accredited training provider partnering with employers, SETA-funded organisations, and public institutions to deliver occupational qualifications, digital skills pathways, and industry-aligned learnership programmes across South Africa.'

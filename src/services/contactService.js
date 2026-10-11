@@ -1,5 +1,4 @@
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { ENQUIRY_SUBMISSION_ENABLED } from '../data/navigation'
 import { ensureFirebaseInitialized, getFirestoreDb } from '../lib/firebase'
 import { notifyInternalTeam, sendAutoReply } from './leadNotificationService'
 import { buildAttribution } from '../utils/trafficAttribution'
@@ -41,13 +40,11 @@ async function resolveActiveProvider() {
  * @param {ContactFormPayload} payload
  * @param {SubmitMeta} [meta]
  */
+/**
+ * Legacy Firestore lead capture — not used by the public FormSubmit contact form.
+ * Retained for admin tooling compatibility; do not wire back to public UI without review.
+ */
 export async function submitContactForm(payload, meta = {}) {
-  if (!ENQUIRY_SUBMISSION_ENABLED) {
-    throw new Error(
-      'Online enquiry submission is temporarily unavailable. Please email Calvin@riseinstitute.co.za.',
-    )
-  }
-
   const ACTIVE_PROVIDER = await resolveActiveProvider()
   switch (ACTIVE_PROVIDER) {
     case ContactProviders.FIRESTORE:

@@ -16,6 +16,7 @@ import OccupationalHealthSafety from './pages/OccupationalHealthSafety'
 import ProgrammeDetail from './pages/ProgrammeDetail'
 import CorporateFunding from './pages/CorporateFunding'
 import Contact from './pages/Contact'
+import ContactThankYou from './pages/ContactThankYou'
 import SeoLandingPage from './pages/SeoLandingPage'
 import NotFound from './pages/NotFound'
 import { getSeoLandingPages } from './data/seoLandingPages'
@@ -54,6 +55,7 @@ function PublicSite() {
           <Route path="/occupational-health-safety" element={<OccupationalHealthSafety />} />
           <Route path="/corporate-funding" element={<CorporateFunding />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/contact/thank-you" element={<ContactThankYou />} />
           {getSeoLandingPages().map((page) => (
             <Route key={page.path} path={page.path} element={<SeoLandingPage />} />
           ))}
