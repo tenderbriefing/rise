@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Mail, MapPin, Phone, CheckCircle2, Building2 } from 'lucide-react'
+import { Mail, MapPin, Phone, Building2 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/PageHero'
 import SectionHeader from '../components/SectionHeader'
@@ -30,13 +28,7 @@ function ContactDetail({ icon: Icon, label, children }) {
 }
 
 export default function Contact() {
-  const [toast, setToast] = useState(false)
   const cta = ctaPresets.contact
-
-  const handleFormSuccess = () => {
-    setToast(true)
-    setTimeout(() => setToast(false), 6000)
-  }
 
   return (
     <>
@@ -50,24 +42,6 @@ export default function Contact() {
         description="Whether you are a corporate organisation seeking a strategic training partner, a government stakeholder evaluating implementation capacity, or an employer interested in workplace hosting opportunities, our team is ready to assist."
         light
       />
-
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            role="status"
-            aria-live="polite"
-            initial={{ opacity: 0, y: -20, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 0.96 }}
-            className="fixed right-4 top-24 z-50 flex max-w-sm items-center gap-3 rounded-sm border border-gold/30 bg-surface px-5 py-4 shadow-elevated"
-          >
-            <CheckCircle2 className="h-6 w-6 shrink-0 text-gold" aria-hidden="true" />
-            <p className="text-sm font-medium text-charcoal">
-              Thank you. Your enquiry has been received. Our team will respond shortly.
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <AnimatedSection className="section-padding-compact section-white-band">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -107,7 +81,16 @@ export default function Contact() {
                       {siteConfig.landline}
                     </a>
                   </ContactDetail>
-                  <ContactDetail icon={Mail} label="Email">
+                  <ContactDetail icon={Mail} label="Enquiries">
+                    <a
+                      href={`mailto:${siteConfig.enquiryEmail}`}
+                      className="font-medium text-navy hover:text-gold"
+                      onClick={() => trackEmailClick('contact_page_enquiry')}
+                    >
+                      {siteConfig.enquiryEmail}
+                    </a>
+                  </ContactDetail>
+                  <ContactDetail icon={Mail} label="General">
                     <a
                       href={`mailto:${siteConfig.email}`}
                       className="font-medium text-navy hover:text-gold"
@@ -122,7 +105,7 @@ export default function Contact() {
             </aside>
 
             <div className="lg:col-span-8">
-              <ContactForm onSuccess={handleFormSuccess} />
+              <ContactForm />
             </div>
           </div>
       </SectionShell>
