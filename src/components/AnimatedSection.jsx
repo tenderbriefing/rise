@@ -6,11 +6,13 @@ export default function AnimatedSection({
   className = '',
   delay = 0,
   as = 'section',
+  id,
 }) {
   const MotionTag = motion[as] ?? motion.section
 
   return (
     <MotionTag
+      id={id}
       className={className}
       initial="hidden"
       whileInView="visible"

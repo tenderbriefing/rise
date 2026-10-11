@@ -1,5 +1,5 @@
 import { Link, Navigate, useLocation } from 'react-router-dom'
-import { CheckCircle2, ExternalLink } from 'lucide-react'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import SEO from '../components/SEO'
 import PageHero from '../components/PageHero'
 import SectionHeader from '../components/SectionHeader'
@@ -103,22 +103,24 @@ export default function SeoLandingPage() {
           <aside className="lg:col-span-4">
             <div className="sidebar-panel-navy sticky top-28 space-y-6">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-sa-gold">
+                <p className="text-xs font-semibold uppercase tracking-wider text-accent">
                   Programme Summary
                 </p>
-                <p className="mt-3 font-heading text-lg font-bold leading-snug">{page.qualificationTitle}</p>
+                <p className="mt-3 font-heading text-lg font-bold leading-snug text-ink">
+                  {page.qualificationTitle}
+                </p>
               </div>
-              <dl className="space-y-4 border-t border-white/15 pt-5 text-sm">
+              <dl className="space-y-4 border-t border-border pt-5 text-sm">
                 <div>
-                  <dt className="text-white/60">QCTO Code</dt>
-                  <dd className="mt-1 font-semibold text-sa-gold">{page.saqaId}</dd>
+                  <dt className="text-muted">QCTO Code</dt>
+                  <dd className="mt-1 font-semibold text-accent">{page.saqaId}</dd>
                 </div>
                 <div>
-                  <dt className="text-white/60">NQF Level</dt>
-                  <dd className="mt-1 font-semibold">{page.nqf}</dd>
+                  <dt className="text-muted">NQF Level</dt>
+                  <dd className="mt-1 font-semibold text-ink">{page.nqf}</dd>
                 </div>
               </dl>
-              <ul className="space-y-2 border-t border-white/15 pt-5 text-sm text-white/85">
+              <ul className="space-y-2 border-t border-border pt-5 text-sm text-muted">
                 <li>QCTO-accredited delivery</li>
                 <li>Workplace-integrated learning</li>
                 <li>Corporate &amp; individual pathways</li>
@@ -175,7 +177,7 @@ export default function SeoLandingPage() {
           />
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {internalLinks.map((link) => (
-              <li key={link.path}>
+              <li key={`${link.path}:${link.label}`}>
                 <Link
                   to={link.path}
                   className="group flex items-center justify-between gap-3 rounded-sm border border-border bg-surface px-5 py-4 transition-colors hover:border-navy/30 hover:bg-ivory"
@@ -183,7 +185,7 @@ export default function SeoLandingPage() {
                   <span className="text-sm font-medium text-charcoal group-hover:text-navy">
                     {link.label}
                   </span>
-                  <ExternalLink
+                  <ArrowRight
                     className="h-4 w-4 shrink-0 text-muted group-hover:text-navy"
                     aria-hidden="true"
                   />

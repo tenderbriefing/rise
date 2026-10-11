@@ -1,133 +1,76 @@
-import { Link } from 'react-router-dom'
-import { Mail, MapPin, Phone } from 'lucide-react'
-import Container from './Container'
-import TrustBadges from './TrustBadges'
-import BrandLogo from './BrandLogo'
-import { footerQuickLinks, siteConfig } from '../data/navigation'
-import { footerTrustBadges } from '../data/trustBadges'
-import { getSeoLandingPages } from '../data/seoLandingPages'
-import { trackEmailClick, trackPhoneClick } from '../utils/analytics'
-
-export default function Footer() {
-  const year = new Date().getFullYear()
-  const popularSearches = getSeoLandingPages()
-
-  return (
-    <footer className="sa-footer-accent section-charcoal relative border-t border-white/10 bg-burgundy-dark">
-      <Container className="section-padding !pb-12">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-3">
-            <BrandLogo variant="full" className="pointer-events-none" />
-            <p className="mt-4 text-sm font-semibold uppercase tracking-wider text-sa-gold">
-              QCTO Accredited Training Provider
-            </p>
-            <p className="mt-2 text-sm text-ivory/80">Midrand, Gauteng, South Africa</p>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ivory/75">
-              {siteConfig.tagline} delivering workplace-integrated occupational qualifications
-              across South Africa.
-            </p>
-          </div>
-
-          <div className="lg:col-span-2">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-sa-gold">
-              Quick Links
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {footerQuickLinks.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-ivory/85 transition-colors hover:text-sa-gold"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-3">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-sa-gold">
-              Popular Searches
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {popularSearches.map((page) => (
-                <li key={page.path}>
-                  <Link
-                    to={page.path}
-                    className="text-sm text-ivory/85 transition-colors hover:text-sa-gold"
-                  >
-                    {page.cardTitle}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-4">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-sa-gold">Contact</h2>
-            <ul className="mt-4 space-y-3 text-sm text-ivory/85">
-              <li className="flex gap-3">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-sa-gold" aria-hidden="true" />
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="transition-colors hover:text-sa-gold"
-                  onClick={() => trackEmailClick('footer')}
-                >
-                  {siteConfig.email}
-                </a>
-              </li>
-              <li className="flex gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-sa-gold" aria-hidden="true" />
-                <span>
-                  Landline:{' '}
-                  <a
-                    href="tel:+27100133423"
-                    className="transition-colors hover:text-sa-gold"
-                    onClick={() => trackPhoneClick('footer', 'landline')}
-                  >
-                    {siteConfig.landline}
-                  </a>
-                  <br />
-                  Mobile:{' '}
-                  <a
-                    href="tel:+27720708467"
-                    className="transition-colors hover:text-sa-gold"
-                    onClick={() => trackPhoneClick('footer', 'mobile')}
-                  >
-                    {siteConfig.mobile}
-                  </a>
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-sa-gold" aria-hidden="true" />
-                <address className="not-italic">{siteConfig.address}</address>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-12 border-t border-white/10 pt-10">
-          <TrustBadges badges={footerTrustBadges} variant="grid" />
-        </div>
-
-        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-ivory/60 lg:flex-row lg:items-start lg:justify-between">
-          <div className="flex flex-wrap gap-x-4 gap-y-2">
-            <a href="#" className="transition-colors hover:text-sa-gold">
-              Privacy Policy
-            </a>
-            <span aria-hidden="true">·</span>
-            <a href="#" className="transition-colors hover:text-sa-gold">
-              Terms &amp; Conditions
-            </a>
-          </div>
-          <p className="max-w-md">
-            POPIA: Rise Institute processes personal information in accordance with the Protection of
-            Personal Information Act.
-          </p>
-          <p className="shrink-0">© {year} Rise Institute. All rights reserved.</p>
-        </div>
-      </Container>
-    </footer>
-  )
-}
+import { Link } from 'react-router-dom'
+import Container from './Container'
+import BrandLogo from './BrandLogo'
+import { navLinks, siteConfig } from '../data/navigation'
+import { trackEmailClick, trackPhoneClick } from '../utils/analytics'
+
+export default function Footer() {
+  const year = new Date().getFullYear()
+
+  return (
+    <footer className="sa-footer-accent relative border-t border-border bg-ivory">
+      <Container className="py-10 sm:py-12">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-4">
+            <BrandLogo variant="wordmark" />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
+              {siteConfig.tagline}. Byls Bridge Office Park, Centurion, South Africa.
+            </p>
+          </div>
+
+          <nav aria-label="Footer" className="lg:col-span-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-navy">Explore</p>
+            <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-2">
+              {navLinks.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="text-sm text-muted transition-colors hover:text-navy"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="lg:col-span-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-navy">Contact</p>
+            <ul className="mt-4 space-y-2 text-sm text-muted">
+              <li>
+                <a
+                  href={`tel:${siteConfig.landlineTel}`}
+                  className="transition-colors hover:text-navy"
+                  onClick={() => trackPhoneClick('footer', 'landline')}
+                >
+                  {siteConfig.landline}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="transition-colors hover:text-navy"
+                  onClick={() => trackEmailClick('footer')}
+                >
+                  {siteConfig.email}
+                </a>
+              </li>
+              <li className="leading-relaxed">
+                {siteConfig.addressLines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-muted">© {year} Rise Institute</p>
+          <p className="text-xs text-muted">QCTO accredited · Centurion, Gauteng</p>
+        </div>
+      </Container>
+    </footer>
+  )
+}

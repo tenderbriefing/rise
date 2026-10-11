@@ -1,14 +1,13 @@
 import AnimatedSection from './AnimatedSection'
 import Container from './Container'
-import { SectionDecor } from './PageDecor'
 
 const toneClasses = {
-  ivory: 'section-surface',
+  ivory: 'section-ivory',
   surface: 'section-surface',
   white: 'section-surface',
-  mint: 'section-white-band',
+  mint: 'bg-mint',
   pattern: 'section-pattern',
-  gradient: 'section-creative-white',
+  gradient: 'section-surface',
   creative: 'section-creative-white',
   navy: 'section-dark',
 }
@@ -26,23 +25,24 @@ export default function SectionShell({
   className = '',
   containerSize,
   containerClassName = '',
+  id,
   ...sectionProps
 }) {
   const resolved = toneClasses[tone] ?? toneClasses.pattern
-  const isNavy = resolved === 'section-dark'
-  const isLight =
+  const showGlow =
     resolved === 'section-pattern' ||
-    resolved === 'section-creative-white' ||
     resolved === 'section-surface' ||
-    resolved === 'section-white-band'
+    resolved === 'section-ivory'
 
   return (
     <AnimatedSection
+      id={id}
       className={`relative overflow-hidden ${resolved} ${paddingClasses[padding] ?? paddingClasses.default} ${className}`}
       {...sectionProps}
     >
-      <SectionDecor variant={isNavy ? 'navy' : 'light'} />
-      {isLight && <div className="section-inner-glow pointer-events-none absolute inset-0" aria-hidden="true" />}
+      {showGlow && (
+        <div className="section-inner-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+      )}
       <Container size={containerSize} className={`relative z-10 ${containerClassName}`}>
         {children}
       </Container>

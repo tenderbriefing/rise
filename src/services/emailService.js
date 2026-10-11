@@ -7,7 +7,7 @@
 import { buildAutoReplyEmail, AUTO_REPLY_SUBJECT } from '../templates/autoReplyTemplate'
 import {
   buildInternalLeadEmail,
-  INTERNAL_LEAD_SUBJECT,
+  buildInternalLeadSubject,
   INTERNAL_LEAD_TO,
 } from '../templates/internalLeadTemplate'
 
@@ -21,7 +21,7 @@ export function buildInternalNotificationPayload(enquiry) {
   return {
     type: 'internal_lead_alert',
     to: INTERNAL_LEAD_TO,
-    subject: INTERNAL_LEAD_SUBJECT,
+    subject: buildInternalLeadSubject(enquiry),
     html: buildInternalLeadEmail(enquiry),
     enquiryId: enquiry.id || null,
     createdAt: new Date().toISOString(),

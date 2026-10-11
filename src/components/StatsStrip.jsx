@@ -10,77 +10,43 @@ const defaultStats = [
 ]
 
 export default function StatsStrip({ stats = defaultStats, variant = 'hero' }) {
-  if (variant === 'page') {
-    return (
-      <section className="border-y border-border bg-ivory">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-border border-t-2 border-t-sa-gold/30 lg:grid-cols-4">
-          {stats.map((stat) => {
-            const Icon = stat.icon
-            return (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center gap-3 px-4 py-8 text-center sm:px-6"
-              >
-                <span className="flex h-12 w-12 items-center justify-center rounded-sm border border-border bg-ivory text-primary transition-colors hover:border-primary/20">
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </span>
-                <p className="text-sm font-semibold text-charcoal">{stat.label}</p>
-              </div>
-            )
-          })}
-        </div>
-      </section>
-    )
+  if (variant === 'hero') {
+    return null
   }
 
-  if (variant === 'hero') {
-    return (
+  return (
+    <section className="border-y border-border bg-white">
       <motion.div
-        className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4"
+        className="mx-auto grid max-w-7xl grid-cols-2 lg:grid-cols-4"
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-40px' }}
       >
-        {stats.map((stat) => {
+        {stats.map((stat, index) => {
           const Icon = stat.icon
           return (
             <motion.div
               key={stat.label}
               variants={staggerItem}
-              className="group rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-md transition-colors hover:border-sa-gold/30 hover:bg-white/15"
+              className={`flex flex-col items-center gap-3 px-4 py-10 text-center sm:px-6 ${
+                index > 0 ? 'border-l border-border' : ''
+              } ${index === 2 ? 'border-t border-border lg:border-t-0' : ''} ${
+                index === 3 ? 'border-t border-border lg:border-t-0' : ''
+              }`}
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-sa-gold/20 text-sa-gold transition-transform group-hover:scale-105">
+              <motion.span
+                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent"
+                whileHover={{ scale: 1.08, rotate: -3 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              >
                 <Icon className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <p className="mt-4 font-heading text-sm font-semibold leading-snug text-white sm:text-base">
-                {stat.label}
-              </p>
+              </motion.span>
+              <p className="text-sm font-semibold text-ink">{stat.label}</p>
             </motion.div>
           )
         })}
       </motion.div>
-    )
-  }
-
-  return (
-      <section className="border-y border-border bg-ivory">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-border border-t-2 border-t-sa-gold/30 lg:grid-cols-4">
-          {stats.map((stat) => {
-            const Icon = stat.icon
-            return (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center gap-3 px-4 py-8 text-center sm:px-6"
-              >
-                <span className="flex h-12 w-12 items-center justify-center rounded-sm border border-border bg-surface text-primary transition-colors hover:border-primary/20">
-                <Icon className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <p className="text-sm font-semibold text-charcoal">{stat.label}</p>
-            </div>
-          )
-        })}
-      </div>
     </section>
   )
 }

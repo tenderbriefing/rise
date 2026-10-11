@@ -27,5 +27,5 @@ export const whyChooseUs = [
   'Corporate and public sector implementation capability',
   'B-BBEE and Section 12H alignment',
   'Industry-focused programmes aligned to economic priorities',
-  'Strategically located in Midrand, Gauteng',
+  'Strategically located in Centurion, Gauteng',
 ]

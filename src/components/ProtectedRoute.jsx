@@ -3,13 +3,13 @@ import { Loader2 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading, isConfigured } = useAuth()
+  const { user, loading, isConfigured, isAdmin } = useAuth()
   const location = useLocation()
 
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-ivory">
-        <Loader2 className="h-8 w-8 animate-spin text-forest" aria-label="Loading" />
+        <Loader2 className="h-8 w-8 animate-spin text-navy" aria-label="Loading" />
       </div>
     )
   }
@@ -20,14 +20,15 @@ export default function ProtectedRoute({ children }) {
         <div className="max-w-md rounded-sm border border-border bg-surface p-8 text-center shadow-soft">
           <p className="font-heading text-lg font-semibold text-charcoal">Firebase not configured</p>
           <p className="mt-2 text-sm text-muted">
-            For local development, add Firebase credentials to <code className="text-forest">.env.local</code>.
+            For local development, add Firebase credentials to{' '}
+            <code className="text-navy">.env.local</code>.
           </p>
         </div>
       </div>
     )
   }
 
-  if (!user) {
+  if (!user || !isAdmin) {
     return <Navigate to="/admin/login" state={{ from: location }} replace />
   }
 

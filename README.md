@@ -1,6 +1,6 @@
 # Rise Institute Website
 
-Official institutional website for **Rise Institute** — QCTO-accredited occupational training in Midrand, Gauteng.
+Official institutional website for **Rise Institute** — QCTO-accredited occupational training in Centurion, Gauteng.
 
 **GitHub:** [https://github.com/tenderbriefing/rise](https://github.com/tenderbriefing/rise)  
 **Production:** [https://riseinstitute.co.za](https://riseinstitute.co.za)  

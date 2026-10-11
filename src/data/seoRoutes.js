@@ -37,7 +37,7 @@ export const routeMeta = {
   },
   '/contact': {
     breadcrumb: 'Contact Us',
-    title: 'Contact Rise Institute | QCTO Training Provider in Midrand',
+    title: 'Contact Rise Institute | QCTO Training Provider in Centurion',
   },
 }
 

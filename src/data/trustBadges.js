@@ -14,7 +14,7 @@ export const homeTrustStrip = [
   { label: 'NQF Levels 3–5', icon: BadgeCheck },
   { label: 'Corporate Skills Development', icon: Building2 },
   { label: 'SETA Alignment', icon: FileCheck },
-  { label: 'Midrand, Gauteng', icon: MapPin },
+  { label: 'Centurion, Gauteng', icon: MapPin },
 ]
 
 export const footerTrustBadges = [

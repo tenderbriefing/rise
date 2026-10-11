@@ -41,7 +41,7 @@ export default function Contact() {
   return (
     <>
       <SEO
-        title="Contact Rise Institute | QCTO Training Provider in Midrand"
+        title="Contact Rise Institute | QCTO Training Provider in Centurion"
         canonical={getCanonical('/contact')}
       />
 
@@ -80,7 +80,7 @@ export default function Contact() {
             <aside className="lg:col-span-4">
               <div className="executive-panel sticky top-28 rounded-sm border-l-4 border-l-gold p-8 lg:p-10">
                 <div className="mb-6 flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-sm bg-navy text-sa-gold">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-accent/10 text-accent">
                     <Building2 className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div>
@@ -90,31 +90,22 @@ export default function Contact() {
                 </div>
                 <ul className="space-y-0">
                   <ContactDetail icon={MapPin} label="Physical Address">
-                    {siteConfig.address}
+                    <address className="not-italic">
+                      {siteConfig.addressLines.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
+                    </address>
                   </ContactDetail>
                   <ContactDetail icon={Phone} label="Telephone">
-                    <>
-                      <p>
-                        Landline:{' '}
-                        <a
-                          href="tel:+27100133423"
-                          className="font-medium text-navy hover:text-gold"
-                          onClick={() => trackPhoneClick('contact_page', 'landline')}
-                        >
-                          {siteConfig.landline}
-                        </a>
-                      </p>
-                      <p className="mt-1">
-                        Mobile:{' '}
-                        <a
-                          href="tel:+27720708467"
-                          className="font-medium text-navy hover:text-gold"
-                          onClick={() => trackPhoneClick('contact_page', 'mobile')}
-                        >
-                          {siteConfig.mobile}
-                        </a>
-                      </p>
-                    </>
+                    <a
+                      href={`tel:${siteConfig.landlineTel}`}
+                      className="font-medium text-navy hover:text-gold"
+                      onClick={() => trackPhoneClick('contact_page', 'landline')}
+                    >
+                      {siteConfig.landline}
+                    </a>
                   </ContactDetail>
                   <ContactDetail icon={Mail} label="Email">
                     <a
@@ -136,12 +127,11 @@ export default function Contact() {
           </div>
       </SectionShell>
 
-      <SectionShell tone="navy" padding="default">
+      <SectionShell tone="mint" padding="default">
         <SectionHeader
           eyebrow="Governance"
           title="Compliance & Governance"
           description="Rise Institute maintains institutional compliance frameworks suitable for corporate procurement, SETA engagement, and public sector partnership."
-          light
         />
         <dl className="mt-12 grid gap-5 sm:grid-cols-2">
           {[
@@ -155,10 +145,10 @@ export default function Contact() {
           ].map(({ term, value }) => (
             <div
               key={term}
-              className="executive-panel-dark rounded-sm border border-white/10 p-6 sm:p-7"
+              className="rounded-2xl border border-border bg-white p-6 shadow-soft sm:p-7"
             >
-              <dt className="text-xs font-semibold uppercase tracking-wider text-gold">{term}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-white/85">{value}</dd>
+              <dt className="text-xs font-semibold uppercase tracking-wider text-accent">{term}</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-charcoal">{value}</dd>
             </div>
           ))}
         </dl>

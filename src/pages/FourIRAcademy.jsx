@@ -33,7 +33,6 @@ export default function FourIRAcademy() {
           eyebrow="Fourth Industrial Revolution"
           title="Digital Skills for a Competitive Economy"
           description="Industry-aligned occupational qualifications that equip learners for high-demand roles in artificial intelligence, data, cloud infrastructure, and connected systems."
-          light
         />
         <InstitutionalHighlights
           items={fourIrPillars.map((p) => ({
@@ -41,7 +40,6 @@ export default function FourIRAcademy() {
             description: p.description,
             icon: p.icon,
           }))}
-          variant="dark"
           columns={4}
         />
       </SectionShell>

@@ -97,8 +97,6 @@ export function trackLeadFormSuccess({ interest, enquiryId } = {}) {
       form_name: 'contact_enquiry',
       interest_area: interest,
       enquiry_id: enquiryId,
-      currency: 'ZAR',
-      value: 1,
     }),
     trackEvent(AnalyticsEvents.CONTACT, {
       method: 'contact_form',

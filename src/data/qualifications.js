@@ -42,7 +42,7 @@ export const faculties = [
     id: '4ir',
     title: '4IR Academy',
     intro:
-      'Preparing South Africa\'s workforce for the Fourth Industrial Revolution through QCTO-accredited qualifications in artificial intelligence, data science, cloud computing, and the Internet of Things.',
+      "Preparing South Africa's workforce for the Fourth Industrial Revolution through QCTO-accredited qualifications in artificial intelligence, data science, cloud computing, and the Internet of Things.",
     icon: Cpu,
     path: '/4ir-academy',
   },
@@ -50,7 +50,7 @@ export const faculties = [
     id: 'agriculture',
     title: 'Agriculture Academy',
     intro:
-      'Our agricultural qualifications support food security, rural enterprise development, agricultural productivity, and South Africa\'s growing Green Economy.',
+      "Our agricultural qualifications support food security, rural enterprise development, agricultural productivity, and South Africa's growing Green Economy.",
     icon: Leaf,
     path: '/agriculture-academy',
   },
@@ -79,10 +79,14 @@ const qualificationRecords = [
     shortTitle: 'AI Software Developer',
     nqf: 'NQF Level 5',
     nqfLevel: 5,
-    credits: 'As per QCTO requirements',
+    credits: 209,
+    creditsLabel: '209 Credits',
     saqaId: '118792',
     category: 'Fourth Industrial Revolution (4IR)',
-    duration: 'As per QCTO requirements',
+    duration: '12–24 months',
+    durationMonths: '12–24',
+
+    entryRequirements: 'NQF Level 4 qualification (or equivalent) with Mathematical Literacy preferred',
     deliveryModes: ['Classroom', 'Online', 'Hybrid'],
     facultyId: '4ir',
     focus: [
@@ -90,6 +94,13 @@ const qualificationRecords = [
       'Machine learning workflow support',
       'Software integration for intelligent systems',
       'Automation and AI systems support',
+    ],
+    learningOutcomes: [
+      'Interpret AI solution designs and build application functionality using AI algorithms and logic',
+      'Support machine learning and deep learning workflows within IT project deliverables',
+      'Test, deploy, and improve AI-enabled software components',
+      'Integrate AI APIs so other applications can consume intelligent services',
+      'Apply design-thinking and ethical practice when implementing AI solutions',
     ],
     careerPaths: [
       'AI Software Developer',
@@ -99,7 +110,7 @@ const qualificationRecords = [
       'AI Systems Support Officer',
     ],
     description:
-      'This QCTO-accredited qualification develops occupational competence in designing, building, and supporting AI-powered software solutions for modern enterprises and digital service environments.',
+      'QCTO-accredited NQF 5 qualification (SAQA 118792, 209 credits) for building, testing, and supporting AI-powered software solutions in enterprise and digital-service environments.',
   },
   {
     slug: 'iot-developer',
@@ -107,10 +118,14 @@ const qualificationRecords = [
     shortTitle: 'IoT Developer',
     nqf: 'NQF Level 4',
     nqfLevel: 4,
-    credits: 'As per QCTO requirements',
+    credits: 141,
+    creditsLabel: '141 Credits',
     saqaId: '119262',
     category: 'Fourth Industrial Revolution (4IR)',
-    duration: 'As per QCTO requirements',
+    duration: '12–18 months',
+    durationMonths: '12–18',
+
+    entryRequirements: 'NQF Level 3 / Grade 11 equivalent with Mathematical Literacy preferred',
     deliveryModes: ['Classroom', 'Online', 'Hybrid'],
     facultyId: '4ir',
     focus: [
@@ -118,6 +133,13 @@ const qualificationRecords = [
       'Embedded systems fundamentals',
       'Smart infrastructure monitoring',
       'Industrial IoT support',
+    ],
+    learningOutcomes: [
+      'Configure IoT devices, sensors, and connectivity for smart and industrial environments',
+      'Support embedded systems and network fundamentals for connected solutions',
+      'Integrate and monitor IoT data flows for operational decision-making',
+      'Maintain and troubleshoot IoT deployments across infrastructure and analytics layers',
+      'Apply workplace-ready practices aligned to 4IR digital skills demands',
     ],
     careerPaths: [
       'IoT Developer',
@@ -127,7 +149,7 @@ const qualificationRecords = [
       'Smart Infrastructure Support Specialist',
     ],
     description:
-      'Learners gain practical competence in developing, configuring, and maintaining connected IoT systems for smart devices, industrial environments, and infrastructure networks.',
+      'QCTO-accredited NQF 4 qualification (SAQA 119262, 141 credits) focused on developing, configuring, and maintaining connected IoT systems.',
   },
   {
     slug: 'cloud-administrator',
@@ -135,10 +157,14 @@ const qualificationRecords = [
     shortTitle: 'Cloud Administrator',
     nqf: 'NQF Level 4',
     nqfLevel: 4,
-    credits: 'As per QCTO requirements',
+    credits: 149,
+    creditsLabel: '149 Credits',
     saqaId: '118699',
     category: 'Information Technology & Digital Skills',
-    duration: 'As per QCTO requirements',
+    duration: '12–18 months',
+    durationMonths: '12–18',
+
+    entryRequirements: 'NQF Level 3 / Grade 11 equivalent with Mathematical Literacy preferred',
     deliveryModes: ['Classroom', 'Online', 'Hybrid'],
     facultyId: '4ir',
     focus: [
@@ -146,6 +172,13 @@ const qualificationRecords = [
       'Infrastructure provisioning and monitoring',
       'Systems support and troubleshooting',
       'Cloud operations and security basics',
+    ],
+    learningOutcomes: [
+      'Administer cloud platforms, storage, and on-demand server resources',
+      'Monitor availability, capacity, and performance of cloud services',
+      'Implement foundational cloud security and integrity controls',
+      'Support cloud network administration for reliable operations',
+      'Apply cloud governance, ethics, and 4IR workplace practices',
     ],
     careerPaths: [
       'Cloud Administrator',
@@ -155,7 +188,7 @@ const qualificationRecords = [
       'Cloud Operations Analyst',
     ],
     description:
-      'This qualification prepares learners to administer cloud environments, support infrastructure operations, and maintain reliable digital systems for organisations adopting cloud-first strategies.',
+      'QCTO-accredited NQF 4 qualification (SAQA 118699, 149 credits) preparing learners to administer cloud environments and support digital infrastructure.',
   },
   {
     slug: 'data-science-practitioner',
@@ -163,10 +196,14 @@ const qualificationRecords = [
     shortTitle: 'Data Science Practitioner',
     nqf: 'NQF Level 5',
     nqfLevel: 5,
-    credits: 'As per QCTO requirements',
+    credits: 185,
+    creditsLabel: '185 Credits',
     saqaId: '118708',
     category: 'Fourth Industrial Revolution (4IR)',
-    duration: 'As per QCTO requirements',
+    duration: '12–18 months',
+    durationMonths: '12–18',
+
+    entryRequirements: 'NQF Level 4 qualification with Mathematical Literacy',
     deliveryModes: ['Classroom', 'Online', 'Hybrid'],
     facultyId: '4ir',
     focus: [
@@ -174,6 +211,13 @@ const qualificationRecords = [
       'Analytical modelling support',
       'Data visualisation and reporting',
       'Research and business intelligence workflows',
+    ],
+    learningOutcomes: [
+      'Collect, prepare, and quality-check datasets for analysis',
+      'Support analytical modelling and insight generation for business problems',
+      'Visualise and communicate findings for evidence-based decisions',
+      'Complete applied data projects using appropriate toolkits',
+      'Operate ethically and effectively in data-driven workplace teams',
     ],
     careerPaths: [
       'Data Analyst',
@@ -183,7 +227,7 @@ const qualificationRecords = [
       'Research Data Officer',
     ],
     description:
-      'Develop occupational competence in analysing, interpreting, and communicating data insights that support evidence-based decision-making across public and private sector organisations.',
+      'QCTO-accredited NQF 5 qualification (SAQA 118708, 185 credits) for analysing, interpreting, and communicating data insights across sectors.',
   },
   {
     slug: 'crop-produce-analyst',
@@ -191,10 +235,14 @@ const qualificationRecords = [
     shortTitle: 'Crop Produce Analyst',
     nqf: 'NQF Level 5',
     nqfLevel: 5,
-    credits: '265 Credits',
+    credits: 265,
+    creditsLabel: '265 Credits',
     saqaId: '99256',
     category: 'Sustainable Agriculture',
-    duration: 'As per QCTO requirements',
+    duration: '24–36 months',
+    durationMonths: '24–36',
+
+    entryRequirements: 'NQF Level 4 qualification with Mathematical Literacy',
     deliveryModes: ['Classroom', 'Workplace-Integrated'],
     facultyId: 'agriculture',
     focus: [
@@ -203,6 +251,13 @@ const qualificationRecords = [
       'Supply chain analysis',
       'Commodity inspection processes',
     ],
+    learningOutcomes: [
+      'Grade and analyse crop produce against quality and compliance standards',
+      'Apply agricultural inspection processes across supply-chain stages',
+      'Support commodity quality assurance and reporting systems',
+      'Interpret production and quality trends for agri-business decisions',
+      'Operate safely and professionally in packhouse and farm environments',
+    ],
     careerPaths: [
       'Crop Produce Analyst',
       'Quality Assurance Officer',
@@ -210,7 +265,7 @@ const qualificationRecords = [
       'Supply Chain Analyst',
     ],
     description:
-      'A QCTO-accredited qualification focused on crop quality, grading standards, and agricultural supply chain compliance for South Africa\'s agri-food sector.',
+      'QCTO-accredited NQF 5 qualification (SAQA 99256, 265 credits) focused on crop quality, grading, and agri-food supply-chain compliance.',
   },
   {
     slug: 'poultry-farmer',
@@ -218,10 +273,14 @@ const qualificationRecords = [
     shortTitle: 'Poultry Farmer',
     nqf: 'NQF Level 5',
     nqfLevel: 5,
-    credits: '226 Credits',
+    credits: 226,
+    creditsLabel: '226 Credits',
     saqaId: '99027',
     category: 'Sustainable Agriculture',
-    duration: 'As per QCTO requirements',
+    duration: '18–36 months',
+    durationMonths: '18–36',
+
+    entryRequirements: 'NQF Level 4 with Mathematical Literacy',
     deliveryModes: ['Classroom', 'Workplace-Integrated'],
     facultyId: 'agriculture',
     focus: [
@@ -230,6 +289,13 @@ const qualificationRecords = [
       'Biosecurity implementation',
       'Poultry farm operations and agricultural business management',
     ],
+    learningOutcomes: [
+      'Manage commercial poultry production systems and facility utilisation',
+      'Implement flock health, husbandry, and biosecurity measures',
+      'Lead farm teams and report on production performance',
+      'Apply poultry enterprise and business management practices',
+      'Monitor production trends and respond to operational risks',
+    ],
     careerPaths: [
       'Poultry Farmer',
       'Poultry Production Supervisor',
@@ -237,7 +303,7 @@ const qualificationRecords = [
       'Agri-Enterprise Owner',
     ],
     description:
-      'Develop practical and managerial competence in commercial poultry farming, biosecurity, and sustainable agricultural enterprise operations.',
+      'QCTO-accredited NQF 5 qualification (SAQA 99027, 226 credits) for commercial poultry farming, biosecurity, and agri-enterprise operations.',
   },
   {
     slug: 'livestock-farmer',
@@ -245,10 +311,14 @@ const qualificationRecords = [
     shortTitle: 'Livestock Farmer',
     nqf: 'NQF Level 3',
     nqfLevel: 3,
-    credits: '112 Credits',
+    credits: 112,
+    creditsLabel: '112 Credits',
     saqaId: '99253',
     category: 'Sustainable Agriculture',
-    duration: 'As per QCTO requirements',
+    duration: '12–18 months',
+    durationMonths: '12–18',
+
+    entryRequirements: 'NQF Level 1 with Mathematical Literacy & Communication (Grade 10 equivalent)',
     deliveryModes: ['Classroom', 'Workplace-Integrated'],
     facultyId: 'agriculture',
     focus: [
@@ -257,6 +327,13 @@ const qualificationRecords = [
       'Farm operations management',
       'Team leadership in agricultural environments',
     ],
+    learningOutcomes: [
+      'Supervise livestock health and production activities on extensive farms',
+      'Coordinate breeding cycles and day-to-day farm operations',
+      'Lead work teams in livestock farming environments',
+      'Plan and direct livestock farming activities within scope',
+      'Support sustainable red-meat production practices',
+    ],
     careerPaths: [
       'Livestock Farmer',
       'Livestock Farm Supervisor',
@@ -264,7 +341,7 @@ const qualificationRecords = [
       'Farm Team Leader',
     ],
     description:
-      'Entry-to-mid level occupational qualification for livestock supervision, animal health coordination, and farm operational leadership.',
+      'QCTO-accredited NQF 3 qualification (SAQA 99253, 112 credits) for livestock supervision, animal health coordination, and farm leadership.',
   },
   {
     slug: 'project-manager',
@@ -272,10 +349,14 @@ const qualificationRecords = [
     shortTitle: 'Project Manager',
     nqf: 'NQF Level 5',
     nqfLevel: 5,
-    credits: '240 Credits',
+    credits: 240,
+    creditsLabel: '240 Credits',
     saqaId: '101869',
     category: 'Business Management & Compliance',
-    duration: 'As per QCTO requirements',
+    duration: '18–24 months',
+    durationMonths: '18–24',
+
+    entryRequirements: 'NQF Level 4 qualification (or equivalent)',
     deliveryModes: ['Classroom', 'Online', 'Hybrid'],
     facultyId: 'business',
     focus: [
@@ -284,6 +365,13 @@ const qualificationRecords = [
       'Risk and stakeholder management',
       'Project governance, agile and operational methodologies',
     ],
+    learningOutcomes: [
+      'Initiate projects aligned to defined objectives and scope',
+      'Plan schedules, costs, quality systems, and resource approaches',
+      'Execute and control delivery against the project management plan',
+      'Manage stakeholders, risk, procurement, and communications',
+      'Close out projects with controlled handover and reporting',
+    ],
     careerPaths: [
       'Project Manager',
       'Project Coordinator',
@@ -291,7 +379,7 @@ const qualificationRecords = [
       'Operations Project Lead',
     ],
     description:
-      'Develop occupational competence in planning, executing, and governing projects across corporate, public sector, and infrastructure environments.',
+      'QCTO-accredited NQF 5 qualification (SAQA 101869, 240 credits) for planning, executing, and governing projects across sectors.',
   },
   {
     slug: 'occupational-health-safety-practitioner',
@@ -299,10 +387,14 @@ const qualificationRecords = [
     shortTitle: 'OHS Practitioner',
     nqf: 'NQF Level 5',
     nqfLevel: 5,
-    credits: '120 Credits',
+    credits: 120,
+    creditsLabel: '120 Credits',
     saqaId: '121527',
     category: 'Occupational Health & Safety',
-    duration: 'As per QCTO requirements',
+    duration: '12 months',
+    durationMonths: '12',
+
+    entryRequirements: 'NQF Level 4 qualification (or equivalent)',
     deliveryModes: ['Classroom', 'Workplace-Integrated'],
     facultyId: 'ohs',
     focus: [
@@ -311,6 +403,13 @@ const qualificationRecords = [
       'Workplace safety systems',
       'Health and safety auditing',
     ],
+    learningOutcomes: [
+      'Identify workplace hazards and implement mitigation controls',
+      'Conduct risk assessments aligned to the OHS Act',
+      'Maintain workplace health and safety management systems',
+      'Support compliance auditing and continuous improvement',
+      'Protect people, assets, and operational continuity across industries',
+    ],
     careerPaths: [
       'Occupational Health and Safety Practitioner',
       'Safety Officer',
@@ -318,9 +417,10 @@ const qualificationRecords = [
       'Compliance Auditor',
     ],
     description:
-      'QCTO-accredited qualification for practitioners responsible for workplace safety systems, hazard control, and OHS Act compliance across all industry sectors.',
+      'QCTO-accredited NQF 5 qualification (SAQA 121527, 120 credits) for workplace safety systems, hazard control, and OHS Act compliance.',
   },
 ]
+
 
 export const allQualifications = qualificationRecords.map((qual) => {
   const faculty = faculties.find((f) => f.id === qual.facultyId)

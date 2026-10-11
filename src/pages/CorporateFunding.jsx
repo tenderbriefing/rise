@@ -105,18 +105,17 @@ export default function CorporateFunding() {
           </div>
       </SectionShell>
 
-      <SectionShell tone="navy" padding="default">
+      <SectionShell tone="mint" padding="default">
           <SectionHeader
             eyebrow="SETA Compliance"
             title="SETA Grant Alignment & Compliance Support"
             description="Rise Institute provides structured administrative support to help organisations align training investments with grant and reporting requirements."
-            light
           />
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {setaSupport.map((item) => (
               <li
                 key={item}
-                className="hero-trust-glass flex items-start gap-3 rounded-sm p-5 text-sm leading-relaxed text-white/90"
+                className="flex items-start gap-3 rounded-2xl border border-border bg-white p-5 text-sm leading-relaxed text-charcoal shadow-soft"
                 onMouseEnter={() =>
                   recordAnalyticsEvent({
                     eventName: 'corporate_interest',
@@ -125,7 +124,7 @@ export default function CorporateFunding() {
                   })
                 }
               >
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                 {item}
               </li>
             ))}
@@ -179,7 +178,7 @@ export default function CorporateFunding() {
                   })
                 }
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-navy text-sa-gold">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
                   <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span className="text-sm leading-relaxed text-charcoal">{item}</span>

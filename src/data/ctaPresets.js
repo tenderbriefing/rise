@@ -1,10 +1,10 @@
 export const ctaPresets = {
   home: {
-    title: 'Partner With Rise Institute',
+    title: 'Ready to take the next step?',
     description:
-      'Implement QCTO-accredited occupational training that strengthens your workforce, compliance posture, and transformation outcomes.',
-    primaryCta: { label: 'Partner With Rise Institute', to: '/contact', eventLabel: 'partner_home' },
-    secondaryCta: { label: 'Explore Our Programmes', to: '/programmes', eventLabel: 'programmes_home' },
+      'Enquire about a course, or speak to us about learnerships and corporate skills development.',
+    primaryCta: { label: 'Contact Us', to: '/contact', eventLabel: 'contact_home' },
+    secondaryCta: { label: 'Browse Courses', to: '/programmes', eventLabel: 'programmes_home' },
     variant: 'forest',
   },
   about: {
@@ -35,7 +35,7 @@ export const ctaPresets = {
     title: 'Ready to Transform Skills Development?',
     description:
       'Our team supports corporate, public sector, and employer partners across Gauteng and South Africa.',
-    primaryCta: { label: 'Explore Programmes', to: '/programmes', eventLabel: 'programmes_contact' },
+    primaryCta: { label: 'Partner With Us', to: '/contact', eventLabel: 'partner_contact' },
     secondaryCta: { label: 'Corporate & Funding', to: '/corporate-funding', eventLabel: 'funding_contact' },
     variant: 'gradient',
   },

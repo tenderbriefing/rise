@@ -60,8 +60,8 @@ export const seoLandingPages = [
       {
         title: 'Why Study AI Through Rise Training Institute?',
         paragraphs: [
-          'Rise Training Institute combines QCTO accreditation with a dedicated 4IR Academy focused exclusively on artificial intelligence, data science, cloud, and IoT qualifications. Our Midrand campus and national delivery network connect learners to facilitators with industry experience in enterprise software and automation projects — not just academic instruction.',
-          'AI learners benefit from integrated practical labs, workplace hosting partnerships with technology employers, and admissions support covering learnership contracts, SETA grant applications, and individual payment plans. We prioritise occupational competence verified through QCTO assessment rather than certificate collection.',
+          'Rise Training Institute combines QCTO accreditation with a dedicated 4IR Academy focused exclusively on artificial intelligence, data science, cloud, and IoT qualifications. Our Centurion campus and national delivery network connect learners to facilitators with industry experience in enterprise software and automation projects — not just academic instruction.',
+          'AI learners benefit from integrated practical labs, workplace hosting partnerships with technology employers, and admissions support covering learnership contracts, SETA grant applications, and enrolment guidance. We prioritise occupational competence verified through QCTO assessment rather than certificate collection.',
           'Whether you are an employer building an internal AI team or an individual targeting South Africa\'s fastest-growing technology roles, Rise Institute provides a credible, nationally recognised pathway with corporate rollout capability and individual career support from enquiry through certification.',
           'Our alumni network and employer referral partnerships connect certified AI developers with recruitment opportunities across Gauteng technology corridors and remote-capable national employers.',
         ],
@@ -78,7 +78,7 @@ export const seoLandingPages = [
         title: 'Learnership, Funding, and Enrolment Pathways',
         paragraphs: [
           'South African employers can fund AI software developer learnerships through skills development levies, SETA discretionary grants, and B-BBEE skills development spend. Rise Institute supports HR and training managers with programme design, learner contracting, logbook administration, and moderation preparation — reducing implementation burden while ensuring QCTO compliance throughout the 118792 qualification cycle.',
-          'Individual learners in Gauteng, Western Cape, KwaZulu-Natal, Eastern Cape, and other provinces may enrol directly subject to entry requirements and intake availability. Our admissions team advises on payment options, study schedules compatible with employment, and workplace module placement for candidates without current employer sponsorship.',
+          'Individual learners in Gauteng, Western Cape, KwaZulu-Natal, Eastern Cape, and other provinces may enrol directly subject to entry requirements and intake availability. Our admissions team advises on study schedules compatible with employment, and workplace module placement for candidates without current employer sponsorship.',
           'Early enquiry is recommended as AI programme cohorts fill quickly and workplace hosting capacity is allocated on a first-confirmed basis. Submit the form below or contact our team to initiate a consultation about AI courses, learnership rollout, or individual career entry into artificial intelligence development.',
         ],
       },
@@ -159,7 +159,7 @@ export const seoLandingPages = [
         title: 'Programme Structure and Enrolment',
         paragraphs: [
           'The Data Science Practitioner qualification follows QCTO curriculum requirements encompassing knowledge modules on statistical foundations, data engineering basics, analytical techniques, and professional practice. Practical modules provide hands-on experience with industry-relevant tools and workflows, while workplace experience modules embed learners in operational analytics environments.',
-          'Delivery modes include classroom sessions at our Midrand campus, online facilitation for remote learners, and hybrid schedules suited to working professionals. Rise Institute supports corporate cohorts with customised rollout planning, learnership administration, and progress reporting aligned to SETA and skills levy requirements.',
+          'Delivery modes include classroom sessions at our Centurion campus, online facilitation for remote learners, and hybrid schedules suited to working professionals. Rise Institute supports corporate cohorts with customised rollout planning, learnership administration, and progress reporting aligned to SETA and skills levy requirements.',
           'Ready to pursue accredited data science courses in South Africa? Submit an enquiry below, explore the full programme specification, or visit our 4IR Academy to compare complementary digital qualifications that strengthen your career portfolio.',
         ],
       },
@@ -239,7 +239,7 @@ export const seoLandingPages = [
         title: 'Why Study Cloud Administration at Rise Training Institute?',
         paragraphs: [
           'Cloud infrastructure skills require hands-on repetition that vendor webinars alone cannot provide. Rise Institute\'s Cloud Administrator programme embeds learners in practical provisioning, monitoring, and troubleshooting exercises aligned to QCTO 118699, supported by workplace exposure with IT teams managing live environments.',
-          'Located in Midrand with national reach, we serve Gauteng\'s corporate hub while supporting learners in other provinces through online and hybrid delivery. Our relationship with employers hosting workplace modules ensures graduates enter the job market with referenceable experience.',
+          'Located in Centurion with national reach, we serve Gauteng\'s corporate hub while supporting learners in other provinces through online and hybrid delivery. Our relationship with employers hosting workplace modules ensures graduates enter the job market with referenceable experience.',
           'For organisations migrating legacy systems, Rise Institute offers learnership cohorts that develop cloud administrators internally — reducing recruitment costs while capturing skills development levy and transformation value. Individual career changers receive equal facilitation quality and assessment preparation support.',
           'Continuous professional development workshops supplement core qualification delivery, keeping cloud administrators current with platform updates and security advisories relevant to South African hosting environments.',
         ],
@@ -661,7 +661,7 @@ export const seoLandingPages = [
       {
         title: 'Who Should Pursue a Crop Produce Analyst Qualification?',
         paragraphs: [
-          'The programme suits quality control staff in packhouses and processing facilities, agricultural extension workers supporting farmer compliance, logistics coordinators managing cold chain integrity, and graduates entering the agri-food sector. Farmers supplying formal markets benefit personally from understanding grading standards that determine price realisation.',
+          'The programme suits quality control staff in packhouses and processing facilities, agricultural extension workers supporting farmer compliance, logistics coordinators managing cold chain integrity, and graduates entering the agri-food sector. Farmers supplying formal markets benefit personally from understanding grading standards that determine market returns.',
           'Export companies, supermarket fresh produce divisions, agricultural cooperatives, and government inspection services require analysts who combine technical grading skills with documentation and compliance knowledge. Learnership programmes help employers develop this specialised capacity while meeting skills development targets.',
           'Individuals with attention to detail, interest in agricultural science, and commitment to food quality standards thrive in this occupation. Prior agricultural exposure is valuable though Rise Institute supports learners from diverse entry points through structured practical training.',
           'Cold chain logistics coordinators and warehouse quality controllers increasingly pursue crop produce analyst qualifications to formalise experience and access supervisory roles within national fresh produce distribution networks.',
@@ -709,7 +709,7 @@ export const seoLandingPages = [
         title: 'Agricultural Quality Standards and Market Access',
         paragraphs: [
           'Domestic retail quality specifications and export phytosanitary requirements converge on rigorous produce grading and documentation standards that crop produce analysts implement daily in packhouses and inspection facilities nationwide.',
-          'Reduced post-harvest losses and improved price realisation for farmers depend on accurate classification and quality feedback throughout supply chains. Trained analysts bridge production and market expectations with consistent, auditable assessments recognised by major retailers and export agents.',
+          'Reduced post-harvest losses and improved market returns for farmers depend on accurate classification and quality feedback throughout supply chains. Trained analysts bridge production and market expectations with consistent, auditable assessments recognised by major retailers and export agents.',
           'Rise Training Institute develops crop produce analysts equipped for these responsibilities — supporting agricultural competitiveness, export revenue growth, and consumer confidence in South African fresh produce markets through accredited occupational training. Submit your enquiry to begin the Crop Produce Analyst qualification pathway. Industry grading references are supplied to all enrolled learners.',
         ],
       },

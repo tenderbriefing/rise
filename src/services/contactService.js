@@ -144,37 +144,72 @@ async function submitToFirestore(payload, meta) {
   }
 }
 
+/**
+ * Client validation aligned with firestore.rules `validPublicCreate`:
+ * fullName 2–119, company 2–159, email 6–159, phone 6–39,
+ * interest 1–119, message 6–2999.
+ */
 export function validateContactForm(payload) {
   const errors = {}
+  const fullName = payload.fullName?.trim() || ''
+  const company = payload.company?.trim() || ''
+  const email = payload.email?.trim() || ''
+  const phone = payload.phone?.trim() || ''
+  const interest = payload.interest || ''
+  const message = payload.message?.trim() || ''
 
-  if (!payload.fullName?.trim()) errors.fullName = 'Full name is required'
-  if (!payload.company?.trim()) errors.company = 'Company or organisation is required'
+  if (!fullName) errors.fullName = 'Full name is required'
+  else if (fullName.length < 2) errors.fullName = 'Full name must be at least 2 characters'
+  else if (fullName.length >= 120) errors.fullName = 'Full name must be under 120 characters'
 
-  if (!payload.email?.trim()) {
+  if (!company) errors.company = 'Company or organisation is required'
+  else if (company.length < 2) errors.company = 'Company name must be at least 2 characters'
+  else if (company.length >= 160) errors.company = 'Company name must be under 160 characters'
+
+  if (!email) {
     errors.email = 'Email address is required'
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+  } else if (email.length < 6 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     errors.email = 'Enter a valid email address'
+  } else if (email.length >= 160) {
+    errors.email = 'Email address must be under 160 characters'
   }
 
-  if (!payload.phone?.trim()) errors.phone = 'Contact number is required'
-  if (!payload.interest) errors.interest = 'Please select an area of interest'
-  if (!payload.message?.trim()) errors.message = 'Message is required'
+  if (!phone) errors.phone = 'Contact number is required'
+  else if (phone.length < 6) errors.phone = 'Contact number must be at least 6 characters'
+  else if (phone.length >= 40) errors.phone = 'Contact number must be under 40 characters'
+
+  if (!interest) errors.interest = 'Please select an area of interest'
+  else if (interest.length >= 120) errors.interest = 'Please select a valid area of interest'
+
+  if (!message) errors.message = 'Message is required'
+  else if (message.length < 6) errors.message = 'Message must be at least 6 characters'
+  else if (message.length >= 3000) errors.message = 'Message must be under 3000 characters'
 
   return errors
 }
 
 export function validateProgrammeEnquiry(payload) {
   const errors = {}
+  const fullName = payload.fullName?.trim() || ''
+  const email = payload.email?.trim() || ''
+  const phone = payload.phone?.trim() || ''
 
-  if (!payload.fullName?.trim()) errors.fullName = 'Full name is required'
+  if (!fullName) errors.fullName = 'Full name is required'
+  else if (fullName.length < 2) errors.fullName = 'Full name must be at least 2 characters'
+  else if (fullName.length >= 120) errors.fullName = 'Full name must be under 120 characters'
 
-  if (!payload.email?.trim()) {
+  if (!email) {
     errors.email = 'Email address is required'
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+  } else if (email.length < 6 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     errors.email = 'Enter a valid email address'
+  } else if (email.length >= 160) {
+    errors.email = 'Email address must be under 160 characters'
   }
 
-  if (!payload.phone?.trim()) errors.phone = 'Phone number is required'
+  if (!phone) errors.phone = 'Phone number is required'
+  else if (phone.length < 6) errors.phone = 'Phone number must be at least 6 characters'
+  else if (phone.length >= 40) errors.phone = 'Phone number must be under 40 characters'
+
   if (!payload.province) errors.province = 'Please select your province'
   if (!payload.qualification) errors.qualification = 'Please select a qualification'
 

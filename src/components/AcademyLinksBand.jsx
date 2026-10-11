@@ -7,50 +7,51 @@ const academies = [
   {
     label: '4IR Academy',
     path: '/4ir-academy',
-    description: 'AI, data science, cloud & IoT qualifications',
+    description: 'AI, data, cloud & IoT qualifications for digital workforce pipelines',
     icon: Cpu,
   },
   {
     label: 'Agriculture Academy',
+    description: 'Crop, poultry & livestock programmes for agri-sector partners',
     path: '/agriculture-academy',
-    description: 'Crop, poultry & livestock occupational training',
     icon: Leaf,
   },
   {
     label: 'OHS Academy',
     path: '/occupational-health-safety',
-    description: 'Workplace health, safety & compliance',
+    description: 'Workplace safety qualifications for industrial compliance',
     icon: ShieldCheck,
   },
 ]
 
 export default function AcademyLinksBand() {
   return (
-    <AnimatedSection className="section-padding-compact relative overflow-hidden border-y-2 border-sa-gold/30 bg-navy-dark">
-      <div className="hero-decor-dots pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
-      <div className="pointer-events-none absolute left-0 top-0 h-full w-1 bg-sa-gold" aria-hidden="true" />
+    <AnimatedSection className="section-padding-compact relative overflow-hidden border-y border-border bg-ivory">
       <Container className="relative z-10">
-        <p className="eyebrow-executive-light text-center">Faculty Pathways</p>
-        <p className="mx-auto mt-2 max-w-2xl text-center font-heading text-xl font-bold text-white sm:text-2xl">
-          Explore our specialised academies
+        <p className="text-center text-sm font-semibold text-accent">Academies</p>
+        <p className="mx-auto mt-2 max-w-2xl text-center font-heading text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Specialised training pathways
+        </p>
+        <p className="mx-auto mt-3 max-w-xl text-center text-sm text-muted">
+          Choose a faculty for learnership design, workplace hosting, and QCTO-aligned delivery.
         </p>
         <ul className="mt-8 grid gap-4 md:grid-cols-3">
           {academies.map(({ label, path, description, icon: Icon }) => (
             <li key={path}>
               <Link
                 to={path}
-                className="group flex h-full flex-col rounded-sm border border-white/15 bg-white/5 p-5 transition-colors hover:border-sa-gold/40 hover:bg-white/10"
+                className="group flex h-full flex-col rounded-sm border border-border bg-white p-6 shadow-soft transition-all hover:border-navy/25 hover:shadow-card"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-sm bg-sa-gold/15 text-sa-gold">
+                <span className="flex h-11 w-11 items-center justify-center rounded-sm bg-navy/10 text-navy">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
-                <span className="mt-4 font-heading text-base font-bold text-white group-hover:text-sa-gold">
+                <span className="mt-4 font-heading text-base font-bold text-ink group-hover:text-navy">
                   {label}
                 </span>
-                <span className="mt-2 flex-1 text-sm leading-relaxed text-white/70">
+                <span className="mt-2 flex-1 text-sm leading-relaxed text-muted">
                   {description}
                 </span>
-                <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-sa-gold">
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">
                   View academy
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </span>

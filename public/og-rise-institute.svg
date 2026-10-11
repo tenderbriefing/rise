@@ -33,6 +33,6 @@
   <text x="420" y="280" fill="#FFB612" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="600" letter-spacing="6">TRAINING INSTITUTE</text>
   <line x1="420" y1="300" x2="1080" y2="300" stroke="#FFB612" stroke-width="2" opacity="0.8"/>
   <text x="420" y="350" fill="#E8F2ED" font-family="'Source Sans 3', system-ui, sans-serif" font-size="26" font-weight="500">QCTO Accredited Occupational Training Provider</text>
-  <text x="420" y="400" fill="#FFFFFF" font-family="'Source Sans 3', system-ui, sans-serif" font-size="22" opacity="0.85">Midrand, Gauteng · South Africa</text>
+  <text x="420" y="400" fill="#FFFFFF" font-family="'Source Sans 3', system-ui, sans-serif" font-size="22" opacity="0.85">Centurion, Gauteng · South Africa</text>
   <text x="420" y="520" fill="#FFB612" font-family="'Source Sans 3', system-ui, sans-serif" font-size="20" font-weight="600">www.riseinstitute.co.za</text>
 </svg>

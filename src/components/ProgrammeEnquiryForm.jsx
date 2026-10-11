@@ -78,7 +78,7 @@ export default function ProgrammeEnquiryForm({
       (qualificationTitle ? { title: qualificationTitle, saqaId } : null)
 
     const interestLabel = selected
-      ? `${selected.saqaId} — ${selected.shortTitle || selected.title}`.slice(0, 120)
+      ? `${selected.saqaId} — ${selected.shortTitle || selected.title}`.slice(0, 119)
       : 'Programme Enquiry'
 
     const companyLabel = form.companyName?.trim() || 'Individual Learner'

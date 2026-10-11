@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -15,14 +16,24 @@ import OccupationalHealthSafety from './pages/OccupationalHealthSafety'
 import ProgrammeDetail from './pages/ProgrammeDetail'
 import CorporateFunding from './pages/CorporateFunding'
 import Contact from './pages/Contact'
-import AdminLayout from './layouts/AdminLayout'
-import AdminLogin from './pages/admin/AdminLogin'
-import AdminDashboard from './pages/admin/AdminDashboard'
-import AnalyticsDashboard from './pages/admin/AnalyticsDashboard'
-import LeadsList from './pages/admin/LeadsList'
-import LeadDetails from './pages/admin/LeadDetails'
 import SeoLandingPage from './pages/SeoLandingPage'
+import NotFound from './pages/NotFound'
 import { getSeoLandingPages } from './data/seoLandingPages'
+
+const AdminLayout = lazy(() => import('./layouts/AdminLayout'))
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
+const AnalyticsDashboard = lazy(() => import('./pages/admin/AnalyticsDashboard'))
+const LeadsList = lazy(() => import('./pages/admin/LeadsList'))
+const LeadDetails = lazy(() => import('./pages/admin/LeadDetails'))
+
+function AdminFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-ivory text-sm text-muted">
+      Loading admin…
+    </div>
+  )
+}
 
 function PublicSite() {
   usePageAnalytics()
@@ -46,6 +57,7 @@ function PublicSite() {
           {getSeoLandingPages().map((page) => (
             <Route key={page.path} path={page.path} element={<SeoLandingPage />} />
           ))}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
@@ -59,22 +71,25 @@ function AppRoutes() {
 
   if (isAdminRoute) {
     return (
-      <Routes>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<AdminDashboard />} />
-          <Route path="analytics" element={<AnalyticsDashboard />} />
-          <Route path="leads" element={<LeadsList />} />
-          <Route path="leads/:id" element={<LeadDetails />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<AdminFallback />}>
+        <Routes>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="analytics" element={<AnalyticsDashboard />} />
+            <Route path="leads" element={<LeadsList />} />
+            <Route path="leads/:id" element={<LeadDetails />} />
+          </Route>
+          <Route path="*" element={<AdminLogin />} />
+        </Routes>
+      </Suspense>
     )
   }
 

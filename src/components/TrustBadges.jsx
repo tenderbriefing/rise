@@ -19,7 +19,7 @@ export default function TrustBadges({ badges, variant = 'strip' }) {
                 variants={staggerItem}
                 className="flex items-center gap-3 text-sm font-medium tracking-wide text-charcoal"
               >
-                <span className="flex h-10 w-10 items-center justify-center border border-border bg-ivory text-primary transition-colors hover:border-primary/20">
+                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-accent/10 text-accent">
                   <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                 </span>
                 {label}
@@ -31,9 +31,10 @@ export default function TrustBadges({ badges, variant = 'strip' }) {
     )
   }
 
+  // Light footer badges
   return (
     <motion.ul
-      className="grid grid-cols-2 gap-4 sm:grid-cols-4"
+      className="grid grid-cols-2 gap-3 sm:grid-cols-4"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -43,14 +44,12 @@ export default function TrustBadges({ badges, variant = 'strip' }) {
         <motion.li
           key={label}
           variants={staggerItem}
-          className="flex flex-col items-center gap-3 border border-white/10 bg-white/5 p-5 text-center backdrop-blur-sm"
+          className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-white p-5 text-center shadow-soft"
         >
-          <span className="flex h-11 w-11 items-center justify-center border border-sa-gold/30 text-sa-gold">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent">
             <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
           </span>
-          <span className="text-xs font-semibold uppercase tracking-wider text-white/90 sm:text-sm">
-            {label}
-          </span>
+          <span className="text-xs font-semibold tracking-wide text-ink sm:text-sm">{label}</span>
         </motion.li>
       ))}
     </motion.ul>

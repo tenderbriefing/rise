@@ -1,1 +1,1 @@
-Expected: Maxwell Office Park Midrand, reception or consultation space.
+Expected: Byls Bridge Office Park Centurion, reception or consultation space.

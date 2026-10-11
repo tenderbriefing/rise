@@ -26,13 +26,13 @@ export function CorporatePositioningSection() {
             />
             <div className="mt-8">
               <Button
-                to="/contact"
+                to="/corporate-funding"
                 variant="primary"
                 size="lg"
-                analyticsLabel="partner_corporate_section"
+                analyticsLabel="corporate_funding_story"
                 analyticsLocation="home_corporate_story"
               >
-                Partner With Us
+                Corporate &amp; Funding Solutions
               </Button>
             </div>
           </motion.div>

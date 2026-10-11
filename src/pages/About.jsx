@@ -53,9 +53,8 @@ export default function About() {
           eyebrow="QCTO Framework"
           title="QCTO-Aligned Delivery"
           description="All Rise Institute qualifications are structured in accordance with the Quality Council for Trades and Occupations framework — spanning 4IR, agriculture, business, and occupational health and safety."
-          light
         />
-        <InstitutionalHighlights items={qctoDeliveryHighlights} variant="dark" columns={4} />
+        <InstitutionalHighlights items={qctoDeliveryHighlights} columns={4} />
       </SectionShell>
 
       <SectionShell tone="pattern" padding="default">
@@ -87,14 +86,20 @@ export default function About() {
               eyebrow="Location"
               title="Strategic Location"
               align="left"
-              description="Operating from Maxwell Office Park in Midrand, Gauteng, Rise Institute is strategically positioned within South Africa’s primary economic corridor."
+              description="Operating from Byls Bridge Office Park in Centurion, Gauteng, Rise Institute is strategically positioned within South Africa’s primary economic corridor."
             />
             <p className="mt-8 flex items-start gap-3 rounded-sm border border-border bg-surface p-5 text-charcoal shadow-soft">
               <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-gold" aria-hidden="true" />
-              {siteConfig.address}
+              <span>
+                {siteConfig.addressLines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </span>
             </p>
           </div>
-          <VisualPanel imageKey="midrandOffice" variant="workplace" className="min-h-[320px] shadow-card" />
+          <VisualPanel imageKey="centurionCampus" variant="workplace" className="min-h-[320px] shadow-card" />
         </div>
       </SectionShell>
 
@@ -103,9 +108,8 @@ export default function About() {
           eyebrow="Partnerships"
           title="Workplace Experience Partnerships"
           description="Rise Institute collaborates with employers and industry stakeholders to facilitate structured workplace experience aligned to QCTO requirements."
-          light
         />
-        <InstitutionalHighlights items={partnershipHighlights} variant="dark" columns={3} />
+        <InstitutionalHighlights items={partnershipHighlights} columns={3} />
       </SectionShell>
 
       <PremiumCTA {...ctaPresets.about} location="about_footer" variant="forest" />

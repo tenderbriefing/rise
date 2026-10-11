@@ -2,8 +2,10 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Administrators must hold a Firebase Auth custom claim: { "admin": true }.
+    // Signing in alone is not sufficient. Set the claim with the Admin SDK before deploying.
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null && request.auth.token.admin == true;
     }
 
     function validStatus(status) {

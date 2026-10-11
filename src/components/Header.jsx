@@ -16,10 +16,10 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const onHero = isHome && !scrolled && !mobileOpen
-  const isSolid = scrolled || mobileOpen
+  const isSolid = scrolled || mobileOpen || !isHome
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 16)
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
@@ -67,19 +67,20 @@ export default function Header() {
       onClick={() => handleNavClick(link)}
       className={({ isActive }) => {
         if (mobile) {
-          return `relative block border-l-2 px-4 py-3.5 text-base font-medium transition-colors ${
+          return `relative block rounded-sm px-4 py-3 text-base font-medium transition-colors ${
             isActive
-              ? 'border-sa-gold bg-ivory text-primary'
-              : 'border-transparent text-charcoal hover:border-sa-gold/40 hover:bg-ivory hover:text-primary'
+              ? 'bg-navy/5 text-navy'
+              : 'text-charcoal hover:bg-ivory hover:text-navy'
           }`
         }
-        if (onHero) {
-          return `relative text-xs font-medium tracking-wide transition-colors xl:text-sm ${
-            isActive ? 'text-sa-gold' : 'text-white/85 hover:text-white'
-          }`
-        }
-        return `relative text-xs font-medium tracking-wide transition-colors xl:text-sm ${
-          isActive ? 'text-primary' : 'text-charcoal hover:text-primary'
+        return `relative whitespace-nowrap text-sm font-medium transition-colors ${
+          isActive
+            ? onHero
+              ? 'text-white'
+              : 'text-navy'
+            : onHero
+              ? 'text-white/80 hover:text-white'
+              : 'text-muted hover:text-navy'
         }`
       }}
     >
@@ -89,7 +90,9 @@ export default function Header() {
           {isActive && !mobile && (
             <motion.span
               layoutId="nav-indicator"
-              className={`absolute -bottom-1.5 left-0 h-px w-full ${onHero ? 'bg-sa-gold' : 'bg-sa-gold'}`}
+              className={`absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full ${
+                onHero ? 'bg-sa-gold' : 'bg-gold'
+              }`}
               transition={{ type: 'spring', stiffness: 400, damping: 35 }}
             />
           )}
@@ -101,50 +104,54 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out ${
         isSolid
-          ? 'border-b-2 border-burgundy/10 bg-surface shadow-nav backdrop-blur-xl after:absolute after:inset-x-0 after:top-0 after:h-[3px] after:bg-gradient-to-r after:from-burgundy after:via-sa-gold after:to-burgundy'
+          ? 'border-b border-border/80 bg-white/95 shadow-nav backdrop-blur-xl'
           : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <BrandLogo onClick={closeMobile} />
 
-        <nav className="hidden items-center gap-4 xl:gap-5 lg:flex" aria-label="Main navigation">
+        {/* Desktop nav starts at xl (1280px) so eight institutional links are not cramped */}
+        <nav
+          className="hidden items-center gap-5 xl:flex 2xl:gap-6"
+          aria-label="Main navigation"
+        >
           {navLinks.map((link) => (
             <NavItem key={link.path} link={link} />
           ))}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <Button
             to="/contact"
             size="sm"
-            variant={onHero && !isSolid ? 'goldOutline' : 'primary'}
-            analyticsLabel="apply_now_header"
+            variant={onHero ? 'gold' : 'primary'}
+            analyticsLabel="partner_header"
             analyticsLocation="header_desktop"
           >
-            Apply Now
+            Enquire
           </Button>
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-2 xl:hidden">
           <Button
             to="/contact"
             size="sm"
-            variant={onHero && !isSolid ? 'goldOutline' : 'primary'}
-            analyticsLabel="apply_now_header_mobile"
+            variant="gold"
+            analyticsLabel="partner_header_mobile"
             analyticsLocation="header_mobile_sticky"
             className="!px-3 !py-2 text-xs"
           >
-            Apply
+            Enquire
           </Button>
           <button
             type="button"
-            className={`inline-flex items-center justify-center border p-2.5 transition-colors ${
-              onHero && !isSolid
-                ? 'border-white/25 text-white hover:border-white/40 hover:bg-white/5'
-                : 'border-border text-charcoal hover:bg-ivory'
+            className={`inline-flex items-center justify-center rounded-sm border p-2.5 transition-colors ${
+              onHero
+                ? 'border-white/30 bg-white/10 text-white hover:bg-white/20'
+                : 'border-border bg-white/80 text-charcoal hover:bg-ivory'
             }`}
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
@@ -164,7 +171,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 top-[65px] z-[-1] bg-ink/40 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 top-[65px] z-[-1] bg-ink/30 backdrop-blur-sm xl:hidden"
               aria-hidden="true"
               onClick={closeMobile}
             />
@@ -174,24 +181,25 @@ export default function Header() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="overflow-hidden border-t border-border bg-surface lg:hidden"
+              className="overflow-hidden border-t border-border bg-white/95 backdrop-blur-xl xl:hidden"
               aria-label="Mobile navigation"
             >
-              <ul className="flex flex-col px-2 py-3">
+              <ul className="flex max-h-[calc(100svh-65px)] flex-col overflow-y-auto px-3 py-3">
                 {navLinks.map((link) => (
                   <li key={link.path}>
                     <NavItem link={link} mobile />
                   </li>
                 ))}
-                <li className="px-2 pt-4">
+                <li className="px-1 pt-3">
                   <Button
                     to="/contact"
                     className="w-full"
+                    variant="gold"
                     onClick={closeMobile}
-                    analyticsLabel="apply_now_mobile_menu"
+                    analyticsLabel="partner_mobile_menu"
                     analyticsLocation="header_mobile_menu"
                   >
-                    Apply Now
+                    Enquire
                   </Button>
                 </li>
               </ul>

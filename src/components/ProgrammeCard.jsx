@@ -1,21 +1,28 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, BadgeCheck } from 'lucide-react'
+import { ArrowRight, Clock3, Layers } from 'lucide-react'
 import Button from './Button'
-import { cardHover } from '../utils/motion'
 import { recordAnalyticsEvent } from '../services/analyticsEventService'
+import { easePremium } from '../utils/motion'
 
 export default function ProgrammeCard({
   slug,
   title,
   shortTitle,
   nqf,
+  creditsLabel,
   credits,
   saqaId,
   category,
   faculty,
+  duration,
+  learningOutcomes,
   focus,
   compact = false,
 }) {
+  const creditText = creditsLabel || (typeof credits === 'number' ? `${credits} Credits` : credits)
+  const outcomes = (learningOutcomes || focus || []).slice(0, compact ? 2 : 3)
+
   const handleInterest = () => {
     recordAnalyticsEvent({
       eventName: 'qualification_interest',
@@ -31,62 +38,80 @@ export default function ProgrammeCard({
 
   return (
     <motion.article
-      className="card-programme group flex h-full flex-col p-6 sm:p-8"
-      initial="rest"
-      whileHover="hover"
-      variants={cardHover}
+      className="group flex h-full flex-col overflow-hidden rounded-sm border border-border bg-white shadow-soft"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, ease: easePremium }}
+      whileHover={{ y: -6, boxShadow: '0 20px 50px -20px rgb(0 35 149 / 0.16)' }}
     >
-      <div className="mb-5 flex items-start justify-between gap-4">
-        <span className="flex h-11 w-11 items-center justify-center rounded-sm border border-sa-gold/30 bg-ivory text-primary transition-colors group-hover:border-sa-gold group-hover:text-gold">
-          <BadgeCheck className="h-5 w-5" aria-hidden="true" />
-        </span>
-        <span className="badge-brand">{saqaId}</span>
+      <div className="border-b border-border bg-ivory/80 px-6 py-5 transition-colors group-hover:border-navy/15">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-navy px-2.5 py-1 text-[11px] font-bold tracking-wide text-white">
+            {nqf}
+          </span>
+          <span className="rounded-full border border-border bg-white px-2.5 py-1 text-[11px] font-semibold text-muted">
+            SAQA {saqaId}
+          </span>
+        </div>
+        <h3 className="mt-4 font-heading text-xl font-bold leading-snug tracking-tight text-ink">
+          <Link
+            to={`/programmes/${slug}`}
+            className="hover:text-navy"
+            onClick={handleInterest}
+          >
+            {shortTitle || title}
+          </Link>
+        </h3>
+        {category && <p className="mt-2 text-sm text-muted">{category}</p>}
       </div>
 
-      <h3 className="font-heading text-lg font-bold leading-snug tracking-tight text-primary">
-        {shortTitle || title}
-      </h3>
+      <div className="flex flex-1 flex-col p-6">
+        <div className="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted">
+              <Clock3 className="h-3.5 w-3.5 text-navy" aria-hidden="true" />
+              Duration
+            </p>
+            <p className="mt-1 font-semibold text-ink">{duration}</p>
+          </div>
+          <div>
+            <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted">
+              <Layers className="h-3.5 w-3.5 text-navy" aria-hidden="true" />
+              Credits
+            </p>
+            <p className="mt-1 font-semibold text-ink">{creditText}</p>
+          </div>
+        </div>
 
-      {category && (
-        <p className="mt-2 text-xs font-medium uppercase tracking-wider text-muted">{category}</p>
-      )}
-
-      <dl className="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide">
-        <div className="badge-brand">{nqf}</div>
-        {credits && (
-          <div className="rounded-sm border border-border bg-ivory px-2.5 py-1 text-charcoal">
-            {credits}
+        {outcomes.length > 0 && (
+          <div className="mt-5 flex-1">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">You will learn</p>
+            <ul className="mt-3 space-y-2">
+              {outcomes.map((item) => (
+                <li key={item} className="flex gap-2 text-sm leading-snug text-charcoal">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
-      </dl>
 
-      {!compact && focus?.length > 0 && (
-        <div className="mt-6 flex-1 border-t border-border/80 pt-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gold">Focus areas</p>
-          <ul className="mt-3 space-y-2.5">
-            {focus.slice(0, 4).map((item) => (
-              <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-muted">
-                <span className="mt-2 h-px w-3 shrink-0 bg-sa-gold" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
+        <div className="mt-6">
+          <Button
+            to={`/programmes/${slug}`}
+            variant="primary"
+            size="sm"
+            className="w-full"
+            onClick={handleInterest}
+            analyticsLabel={`view_course_${slug}`}
+            analyticsLocation="course_card"
+          >
+            Enquire about this programme
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </Button>
         </div>
-      )}
-
-      <div className="mt-8">
-        <Button
-          to={`/programmes/${slug}`}
-          variant="gold"
-          size="sm"
-          className="w-full sm:w-auto"
-          onClick={handleInterest}
-          analyticsLabel={`learn_more_${slug}`}
-          analyticsLocation="programme_card"
-        >
-          Learn More
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Button>
       </div>
     </motion.article>
   )

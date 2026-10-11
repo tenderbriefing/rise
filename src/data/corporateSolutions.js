@@ -1,4 +1,11 @@
-import { Building2, ClipboardCheck, Handshake, Users } from 'lucide-react'
+import { Briefcase, Building2, ClipboardCheck, Handshake, Users } from 'lucide-react'
+
+export const corporateHomeStats = [
+  { label: '9 QCTO Courses', icon: Briefcase, highlight: '9' },
+  { label: 'NQF Levels 3–5', icon: ClipboardCheck, highlight: 'NQF' },
+  { label: 'SETA-Aligned Delivery', icon: Building2, highlight: 'SETA' },
+  { label: 'B-BBEE Skills Development', icon: Handshake, highlight: 'B-BBEE' },
+]
 
 export const corporateBenefits = [
   'Enhanced B-BBEE scorecard performance',
@@ -9,8 +16,9 @@ export const corporateBenefits = [
 ]
 
 export const section12HClaims = [
-  'Up to R60,000 upon learner registration',
-  'An additional R60,000 upon successful programme completion',
+  'Employer tax incentives available upon learner registration',
+  'Additional incentives available upon successful programme completion',
+  'Confirm current Section 12H eligibility and amounts with your tax adviser',
 ]
 
 export const setaSupport = [

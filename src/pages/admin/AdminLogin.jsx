@@ -3,9 +3,10 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { AlertCircle, Loader2, Lock } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import BrandLogo from '../../components/BrandLogo'
+import SEO from '../../components/SEO'
 
 export default function AdminLogin() {
-  const { signIn, user, loading, isConfigured } = useAuth()
+  const { signIn, user, loading, isConfigured, isAdmin } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathname || '/admin'
@@ -15,7 +16,7 @@ export default function AdminLogin() {
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
 
-  if (!loading && user) {
+  if (!loading && user && isAdmin) {
     return <Navigate to={from} replace />
   }
 
@@ -36,7 +37,12 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-ink p-4">
+    <div className="flex min-h-screen items-center justify-center bg-mint p-4">
+      <SEO
+        title="Admin Sign In | Rise Institute"
+        description="Rise Institute administrator portal."
+        noindex
+      />
       <div className="w-full max-w-md rounded-sm border border-border bg-surface p-8 shadow-elevated sm:p-10">
         <div className="mb-8 text-center">
           <BrandLogo className="mx-auto justify-center" />
@@ -73,7 +79,7 @@ export default function AdminLogin() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-sm border border-border px-3 py-2.5 text-sm focus:border-forest focus:outline-none focus:ring-2 focus:ring-gold/30"
+              className="w-full rounded-sm border border-border px-3 py-2.5 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-gold/30"
             />
           </div>
 
@@ -88,7 +94,7 @@ export default function AdminLogin() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-sm border border-border px-3 py-2.5 text-sm focus:border-forest focus:outline-none focus:ring-2 focus:ring-gold/30"
+              className="w-full rounded-sm border border-border px-3 py-2.5 text-sm focus:border-navy focus:outline-none focus:ring-2 focus:ring-gold/30"
             />
           </div>
 
@@ -102,7 +108,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={submitting || !canSignIn}
-            className="flex w-full items-center justify-center gap-2 rounded-sm bg-forest py-3 text-sm font-semibold text-white transition-colors hover:bg-forest disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-sm bg-navy py-3 text-sm font-semibold text-white transition-colors hover:bg-navy-dark disabled:opacity-60"
           >
             {submitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -114,7 +120,7 @@ export default function AdminLogin() {
         </form>
 
         <p className="mt-6 text-center text-xs text-muted">
-          Admin accounts are created manually in Firebase Authentication.
+          Admin accounts require a Firebase Auth custom claim (<code>admin: true</code>).
         </p>
       </div>
     </div>

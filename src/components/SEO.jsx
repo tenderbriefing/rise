@@ -7,7 +7,7 @@ import { seoKeywords } from '../data/qualifications'
 const defaults = {
   title: 'Rise Institute | QCTO Accredited Occupational Training Provider in Gauteng',
   description:
-    'Rise Institute is a QCTO-accredited occupational training institution in Midrand, Gauteng, delivering nine workplace-integrated qualifications across 4IR, agriculture, project management, and occupational health and safety.',
+    'Rise Institute is a QCTO-accredited occupational training institution in Centurion, Gauteng, delivering nine workplace-integrated qualifications across 4IR, agriculture, project management, and occupational health and safety.',
   keywords: seoKeywords,
   ogType: 'website',
   ogImage: 'https://riseinstitute.co.za/og-rise-institute.jpg',
@@ -15,7 +15,7 @@ const defaults = {
   twitterSite: '@riseinstitute',
 }
 
-function buildCourseNodes(courses, canonicalUrl) {
+function buildCourseNodes(courses) {
   if (!courses?.length) return []
 
   return courses.map((course) => ({
@@ -38,18 +38,20 @@ function buildCourseNodes(courses, canonicalUrl) {
       courseMode: course.deliveryModes?.join(', ') || 'Blended',
       courseWorkload: course.duration,
     },
-    mainEntityOfPage: canonicalUrl,
   }))
 }
 
 function buildStructuredData({ canonicalUrl, description, breadcrumbs, courses }) {
   const address = {
     '@type': 'PostalAddress',
-    streetAddress: siteConfig.address,
-    addressLocality: 'Midrand',
-    addressRegion: 'Gauteng',
-    postalCode: '1685',
-    addressCountry: 'ZA',
+    streetAddress: siteConfig.streetAddress,
+    addressLocality: siteConfig.locality,
+    addressRegion: siteConfig.region,
+    addressCountry: siteConfig.country,
+  }
+
+  if (siteConfig.postalCode) {
+    address.postalCode = siteConfig.postalCode
   }
 
   return {
@@ -63,11 +65,6 @@ function buildStructuredData({ canonicalUrl, description, breadcrumbs, courses }
         description: defaults.description,
         publisher: { '@id': `${siteConfig.domain}/#organization` },
         inLanguage: 'en-ZA',
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: `${siteConfig.domain}/contact?q={search_term_string}`,
-          'query-input': 'required name=search_term_string',
-        },
       },
       {
         '@type': 'Organization',
@@ -115,13 +112,7 @@ function buildStructuredData({ canonicalUrl, description, breadcrumbs, courses }
         telephone: siteConfig.landline,
         image: defaults.ogImage,
         address,
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: -25.9991,
-          longitude: 28.1262,
-        },
         areaServed: 'South Africa',
-        priceRange: '$$',
       },
       {
         '@type': 'BreadcrumbList',
@@ -133,7 +124,7 @@ function buildStructuredData({ canonicalUrl, description, breadcrumbs, courses }
           item: `${siteConfig.domain}${item.path === '/' ? '' : item.path}`,
         })),
       },
-      ...buildCourseNodes(courses, canonicalUrl),
+      ...buildCourseNodes(courses),
     ],
   }
 }
@@ -170,7 +161,7 @@ export default function SEO({
   })
 
   return (
-    <Helmet>
+    <Helmet prioritizeSeoTags>
       <html lang="en-ZA" />
       <title>{pageTitle}</title>
       <meta name="description" content={description} />
@@ -178,6 +169,12 @@ export default function SEO({
       <meta name="author" content={siteConfig.name} />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
       <link rel="canonical" href={canonicalUrl} />
+      <link rel="manifest" href="/site.webmanifest" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+      <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <meta name="theme-color" content="#002395" />
 
       <meta property="og:site_name" content={siteConfig.name} />
       <meta property="og:title" content={socialTitle} />
@@ -203,7 +200,7 @@ export default function SEO({
       <meta name="twitter:image:alt" content={`${siteConfig.name} — QCTO Accredited Training`} />
 
       <meta name="geo.region" content="ZA-GP" />
-      <meta name="geo.placename" content="Midrand" />
+      <meta name="geo.placename" content="Centurion" />
 
       <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
     </Helmet>

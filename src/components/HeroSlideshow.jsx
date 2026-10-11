@@ -11,14 +11,14 @@ const CROSSFADE_DURATION = 1.8
 const trustBadges = [
   { label: 'QCTO Accredited', icon: Award },
   { label: 'SAQA Aligned', icon: BadgeCheck },
-  { label: 'Midrand, Gauteng', icon: MapPin },
+  { label: 'Centurion, Gauteng', icon: MapPin },
 ]
 
 const authorityItems = [
   { label: 'QCTO Accredited', icon: Award },
   { label: 'NQF Levels 3–5', icon: BadgeCheck },
   { label: 'Workplace-Integrated Learning', icon: ShieldCheck },
-  { label: 'Midrand, Gauteng', icon: MapPin },
+  { label: 'Centurion, Gauteng', icon: MapPin },
 ]
 
 export default function HeroSlideshow() {
@@ -52,7 +52,7 @@ export default function HeroSlideshow() {
 
   return (
     <section
-      className="relative isolate min-h-[100svh] overflow-hidden bg-ink text-white"
+      className="relative isolate min-h-[100svh] overflow-hidden bg-navy-dark text-white"
       aria-label="Rise Institute hero"
     >
       {activeSlide?.alt && (
@@ -64,7 +64,7 @@ export default function HeroSlideshow() {
       <div className="absolute inset-0" aria-hidden="true">
         <AnimatePresence initial={false}>
           {activeSlide && (
-            <div
+            <motion.div
               key={activeSlide.id}
               className="absolute inset-0"
               initial={{ opacity: 0 }}
@@ -89,15 +89,9 @@ export default function HeroSlideshow() {
               ) : (
                 <div
                   className={`h-full w-full bg-gradient-to-br ${activeSlide.fallbackGradient}`}
-                  initial={{ scale: 1 }}
-                  animate={{ scale: prefersReducedMotion ? 1 : 1.05 }}
-                  transition={{
-                    duration: prefersReducedMotion ? 0 : HERO_SLIDE_INTERVAL_MS / 1000,
-                    ease: 'linear',
-                  }}
                 />
               )}
-            </div>
+            </motion.div>
           )}
         </AnimatePresence>
 
@@ -110,22 +104,22 @@ export default function HeroSlideshow() {
       </div>
 
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy/40 to-navy-dark/30"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-full max-w-xl bg-gradient-to-r from-ink/75 via-ink/30 to-transparent lg:max-w-2xl"
+        className="pointer-events-none absolute inset-y-0 left-0 w-full max-w-xl bg-gradient-to-r from-navy-dark/80 via-navy/35 to-transparent lg:max-w-2xl"
         aria-hidden="true"
       />
 
       <Container className="relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 sm:justify-center sm:pb-20 sm:pt-36">
-        <div
+        <motion.div
           className="max-w-4xl lg:max-w-5xl"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
         >
-          <div variants={staggerItem} className="sa-accent-bar mb-8" aria-hidden="true" />
+          <motion.div variants={staggerItem} className="sa-accent-bar mb-8" aria-hidden="true" />
 
           <motion.p
             variants={staggerItem}
@@ -149,13 +143,13 @@ export default function HeroSlideshow() {
             Cloud Computing, Agriculture, Occupational Health &amp; Safety, and Project Management.
           </motion.p>
 
-          <div
+          <motion.div
             variants={staggerItem}
             className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
           >
             <Button
               to="/contact"
-              variant="primary"
+              variant="gold"
               size="lg"
               analyticsLabel="apply_now_hero"
               analyticsLocation="home_hero"
@@ -166,29 +160,26 @@ export default function HeroSlideshow() {
               to="/programmes"
               variant="goldOutline"
               size="lg"
-              analyticsLabel="download_prospectus_hero"
+              analyticsLabel="browse_programmes_hero"
               analyticsLocation="home_hero"
             >
-              Download Prospectus
+              View Programmes
             </Button>
-          </div>
+          </motion.div>
 
-          <div variants={staggerItem} className="mt-14 flex flex-wrap gap-3">
+          <motion.div variants={staggerItem} className="mt-14 flex flex-wrap gap-3">
             {trustBadges.map((badge) => (
               <span
                 key={badge.label}
-                className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-white/90 backdrop-blur-sm transition-colors hover:border-sa-gold/25"
+                className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-white/90 backdrop-blur-sm"
               >
                 <badge.icon className="h-3.5 w-3.5 text-sa-gold" aria-hidden="true" />
                 {badge.label}
               </span>
             ))}
-          </div>
+          </motion.div>
 
-          <div
-            variants={staggerItem}
-            className="hero-trust-glass mt-8 rounded-sm p-6 sm:p-8"
-          >
+          <motion.div variants={staggerItem} className="hero-trust-glass mt-8 rounded-sm p-6 sm:p-8">
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {authorityItems.map(({ label, icon: Icon }) => (
                 <li key={label} className="flex items-center gap-3 border-l border-sa-gold/40 pl-4">
@@ -197,8 +188,8 @@ export default function HeroSlideshow() {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
   )

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import riseMark from '../assets/brand/rise-mark.png'
-import riseWordmark from '../assets/brand/rise-wordmark.png'
-import riseLogo from '../assets/brand/rise-logo.png'
+import riseMark from '../assets/brand/rise-mark.svg'
+import riseWordmark from '../assets/brand/rise-wordmark.svg'
+import riseLogo from '../assets/brand/rise-logo.svg'
 
 const assets = {
   crest: riseMark,
@@ -10,6 +10,10 @@ const assets = {
   full: riseLogo,
 }
 
+/**
+ * Institutional Rise Institute crest / lockup (navy #002395 + gold #FFB612).
+ * @param {'header' | 'full' | 'mark-only' | 'crest' | 'wordmark' | 'compact' | 'institutional'} variant
+ */
 export default function BrandLogo({
   className = '',
   showText = true,
@@ -31,8 +35,8 @@ export default function BrandLogo({
     assetKey === 'crest'
       ? 'h-11 w-11 sm:h-12 sm:w-12'
       : assetKey === 'wordmark'
-        ? 'h-12 w-auto max-w-[168px] sm:h-14 sm:max-w-[196px]'
-        : 'h-auto w-full max-w-[220px] sm:max-w-[260px]'
+        ? 'h-10 w-auto max-w-[200px] sm:h-12 sm:max-w-[240px]'
+        : 'h-auto w-full max-w-[220px] sm:max-w-[280px]'
 
   return (
     <Link

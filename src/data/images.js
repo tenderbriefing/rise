@@ -43,7 +43,7 @@ export const imageRegistry = {
   },
   classroomLearning: {
     src: null,
-    alt: 'Facilitator-led classroom learning at Rise Institute, Midrand',
+    alt: 'Facilitator-led classroom learning at Rise Institute, Centurion',
     variant: 'classroom',
     folder: 'about',
   },
@@ -53,9 +53,9 @@ export const imageRegistry = {
     variant: 'workplace',
     folder: 'corporate',
   },
-  midrandOffice: {
+  centurionCampus: {
     src: null,
-    alt: 'Rise Institute training centre at Maxwell Office Park, Midrand, Gauteng',
+    alt: 'Rise Institute training centre at Byls Bridge Office Park, Centurion, Gauteng',
     variant: 'workplace',
     folder: 'contact',
   },

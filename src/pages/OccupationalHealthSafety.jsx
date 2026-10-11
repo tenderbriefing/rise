@@ -52,9 +52,8 @@ export default function OccupationalHealthSafety() {
           eyebrow="Workplace Safety"
           title="Protecting People, Assets & Operations"
           description="Occupational health and safety training aligned to national compliance frameworks and real-world workplace requirements."
-          light
         />
-        <InstitutionalHighlights items={ohsHighlights} variant="dark" columns={3} />
+        <InstitutionalHighlights items={ohsHighlights} columns={3} />
       </SectionShell>
 
       <SectionShell tone="pattern" padding="default" containerSize="content">

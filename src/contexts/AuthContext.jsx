@@ -8,8 +8,20 @@ import { ensureFirebaseInitialized, getFirebaseAuth } from '../lib/firebase'
 
 const AuthContext = createContext(null)
 
+async function resolveAdminClaim(user) {
+  if (!user) return false
+  try {
+    const token = await user.getIdTokenResult(true)
+    return token.claims?.admin === true
+  } catch (error) {
+    console.error('[auth] Failed to read admin claim', error)
+    return false
+  }
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true)
   const [configured, setConfigured] = useState(false)
 
@@ -35,8 +47,13 @@ export function AuthProvider({ children }) {
         return
       }
 
-      unsubscribe = onAuthStateChanged(authInstance, (nextUser) => {
+      unsubscribe = onAuthStateChanged(authInstance, async (nextUser) => {
+        if (cancelled) return
+        setLoading(true)
         setUser(nextUser)
+        const admin = await resolveAdminClaim(nextUser)
+        if (cancelled) return
+        setIsAdmin(admin)
         setLoading(false)
       })
     })
@@ -63,6 +80,19 @@ export function AuthProvider({ children }) {
       email.trim(),
       password,
     )
+
+    const admin = await resolveAdminClaim(credential.user)
+    setIsAdmin(admin)
+
+    if (!admin) {
+      await firebaseSignOut(authInstance)
+      setUser(null)
+      setIsAdmin(false)
+      throw new Error(
+        'This account is signed in to Firebase but is not authorised as a Rise Institute administrator. An admin custom claim is required.',
+      )
+    }
+
     return credential.user
   }, [])
 
@@ -70,6 +100,7 @@ export function AuthProvider({ children }) {
     const authInstance = getFirebaseAuth()
     if (authInstance) await firebaseSignOut(authInstance)
     setUser(null)
+    setIsAdmin(false)
   }, [])
 
   const value = useMemo(
@@ -77,11 +108,12 @@ export function AuthProvider({ children }) {
       user,
       loading,
       isAuthenticated: Boolean(user),
+      isAdmin,
       isConfigured: configured,
       signIn,
       signOut,
     }),
-    [user, loading, configured, signIn, signOut],
+    [user, loading, isAdmin, configured, signIn, signOut],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

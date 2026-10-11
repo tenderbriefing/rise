@@ -11,7 +11,7 @@ export default function ImageFeatureCard({
   image,
   alt,
   icon: Icon,
-  fallbackGradient = 'from-navy-dark via-navy to-navy-dark',
+  fallbackGradient = 'from-mint via-accent/20 to-ivory',
   priority = false,
   className = '',
   aspectClass = 'aspect-[4/3]',
